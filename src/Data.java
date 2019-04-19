@@ -56,39 +56,49 @@ class Data {
 		attributeSet[4] = new DiscreteAttribute("PlayTennis", 4, playTennisValues);
 	}
 	
-	public int getNumberOfExamples(){
+	int getNumberOfExamples(){
 		return numberOfExamples;
 	}
 	
-	public int getNumberOfAttributes(){
+	int getNumberOfAttributes(){
 		return attributeSet.length;
 	}	
 	
-	public Object getAttributeValue(int exampleIndex, int attributeIndex){
+	Object getAttributeValue(int exampleIndex, int attributeIndex){
 		return data[exampleIndex][attributeIndex];
 	}
 	
-	public Attribute getAttribute(int index){
+	Attribute getAttribute(int index){
 		return attributeSet[index];
+	}
+
+	Tuple getItemSet(int index) {
+		Tuple tuple = new Tuple(attributeSet.length);
+		for(int i=0; i<attributeSet.length; i++)
+			tuple.add(new DiscreteItem((DiscreteAttribute)attributeSet[i], (String)data[index][i]), i);
+		
+		return tuple;
 	}
 	
 	public String toString(){
-		String result="";
+		String str="";
 		
-		for(int i=0; i<this.getNumberOfAttributes(); i++) {
-			result += attributeSet[i] + ", ";
+		for(int i=0; i<this.getNumberOfAttributes()-1; i++) {
+			str += attributeSet[i] + ", ";
 		}
-		result += "\n";
+		str += attributeSet[this.getNumberOfAttributes()-1];
+		str += "\n";
 		
 		for(int i=0; i<this.getNumberOfExamples(); i++) {
-			result += (i+1) + ": ";
-			for(int j=0; j<this.getNumberOfAttributes(); j++) {
-				result += this.getAttributeValue(i, j) + ", ";
+			str += (i+1) + ": ";
+			for(int j=0; j<this.getNumberOfAttributes()-1; j++) {
+				str += this.getAttributeValue(i, j) + ", ";
 			}
-			result += "\n";
+			str += this.getAttributeValue(i, this.getNumberOfAttributes()-1);
+			str += "\n";
 		}
 		
-		return result;
+		return str;
 	}
 
 	public static void main(String args[]){
