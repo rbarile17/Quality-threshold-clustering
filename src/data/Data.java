@@ -1,4 +1,9 @@
 package data;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeSet;
+
 public class Data {
 	private Object data [][] =
 		{
@@ -16,45 +21,45 @@ public class Data {
 			{"overcast", "mild", "high",   "strong", "yes"},
 			{"overcast", "hot",  "normal", "weak",   "yes"},
 			{"rain",     "mild", "high",   "strong", "no" }
-		}; //una matrice nXm di tipo Object dove ogni riga modella una transazione
-	private int numberOfExamples;	//cardinalità dell’insieme di transazioni 
-	private Attribute attributeSet[];	//un vettore degli attributi in ciascuna tupla (schema della tabella di dati)
+		}; 
+	private int numberOfExamples;
+	List<Attribute> attributeSet;
 	
 	public Data(){
 		numberOfExamples=14;		 
-		attributeSet = new Attribute[5];
+		attributeSet = new LinkedList<Attribute>();
 		
 		//outlookValues
-		String outLookValues[]=new String[3];
-		outLookValues[0]="overcast";
-		outLookValues[1]="rain";
-		outLookValues[2]="sunny";
-		attributeSet[0] = new DiscreteAttribute("Outlook", 0, outLookValues);
+		TreeSet<String> outLookValues = new TreeSet<String>();
+		outLookValues.add("overcast");
+		outLookValues.add("rain");
+		outLookValues.add("sunny");
+		attributeSet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
 
 		//temperatureValues
-		String temperatureValues[]=new String[3];
-		temperatureValues[0]="cool";
-		temperatureValues[1]="hot";
-		temperatureValues[2]="mild";
-		attributeSet[1] = new DiscreteAttribute("Temperature", 1, temperatureValues);
+		TreeSet<String> temperatureValues = new TreeSet<String>();
+		temperatureValues.add("cool");
+		temperatureValues.add("hot");
+		temperatureValues.add("mild");
+		attributeSet.add(new DiscreteAttribute("Temperature", 1, temperatureValues));
 		
 		//humidityValues
-		String humidityValues[]=new String[2];
-		humidityValues[0]="high";
-		humidityValues[1]="normal";
-		attributeSet[2] = new DiscreteAttribute("Humidity", 2, humidityValues);
+		TreeSet<String> humidityValues = new TreeSet<String>();
+		humidityValues.add("high");
+		humidityValues.add("normal");
+		attributeSet.add(new DiscreteAttribute("Humidity", 2, humidityValues));
 
 		//windValues
-		String windValues[]=new String[3];
-		windValues[0]="strong";
-		windValues[1]="weak";
-		attributeSet[3] = new DiscreteAttribute("Wind", 3, windValues);
+		TreeSet<String> windValues = new TreeSet<String>();
+		windValues.add("strong");
+		windValues.add("weak");
+		attributeSet.add(new DiscreteAttribute("Wind", 3, windValues));
 		
 		//playTennisValues
-		String playTennisValues[]=new String[2];
-		windValues[0]="no";
-		windValues[1]="yes";
-		attributeSet[4] = new DiscreteAttribute("PlayTennis", 4, playTennisValues);
+		TreeSet<String> playTennisValues = new TreeSet<String>();
+		playTennisValues.add("no");
+		playTennisValues.add("yes");
+		attributeSet.add(new DiscreteAttribute("PlayTennis", 4, playTennisValues));
 	}
 	
 	public int getNumberOfExamples(){
@@ -62,7 +67,7 @@ public class Data {
 	}
 	
 	public int getNumberOfAttributes(){
-		return attributeSet.length;
+		return attributeSet.size();
 	}	
 	
 	public Object getAttributeValue(int exampleIndex, int attributeIndex){
@@ -70,13 +75,17 @@ public class Data {
 	}
 	
 	Attribute getAttribute(int index){
-		return attributeSet[index];
+		return attributeSet.get(index);
 	}
 
 	public Tuple getItemSet(int index) {
-		Tuple tuple = new Tuple(attributeSet.length);
-		for(int i=0; i<attributeSet.length; i++)
-			tuple.add(new DiscreteItem((DiscreteAttribute)attributeSet[i], (String)data[index][i]), i);
+		Tuple tuple = new Tuple(this.getNumberOfAttributes());
+		
+		int i=0;
+		for(Attribute att : attributeSet) {
+			tuple.add(new DiscreteItem((DiscreteAttribute) att, (String)data[index][i]), i);
+			i++;
+		}
 		
 		return tuple;
 	}
@@ -84,10 +93,9 @@ public class Data {
 	public String toString(){
 		String str="";
 		
-		for(int i=0; i<this.getNumberOfAttributes()-1; i++) {
-			str += attributeSet[i] + ", ";
+		for(Attribute att : attributeSet) {
+			str += att + " ";
 		}
-		str += attributeSet[this.getNumberOfAttributes()-1];
 		str += "\n";
 		
 		for(int i=0; i<this.getNumberOfExamples(); i++) {

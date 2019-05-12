@@ -1,20 +1,23 @@
 package data;
-class DiscreteAttribute extends Attribute{
-	String values[];
-	//array di oggetti String, uno per ciascun valore del dominio discreto. 
-	//I  valori del dominio sono memorizzati in values seguendo un ordine lessicografico. 
+
+import java.util.Iterator;
+import java.util.TreeSet;
+
+class DiscreteAttribute extends Attribute implements Iterable<String>{
+	TreeSet<String> values;
 	 
-	DiscreteAttribute(String name, int index, String values[]) {
+	DiscreteAttribute(String name, int index, TreeSet<String> values) {
 		super(name, index);
 		
 		this.values = values;
 	}
 	
 	int getNumberOfDistinctValues() {
-		return values.length;
+		return values.size();
 	}
 	
-	String getValue(int i) {
-		return values[i];
+	
+	public Iterator<String> iterator() {
+		return this.values.iterator();
 	}
 }

@@ -1,13 +1,17 @@
 package mining;
 
-import utility.ArraySet;
 import data.Tuple;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import data.Data;
 
-class Cluster {
+class Cluster implements Iterable<Integer>, Comparable<Cluster>{
 	private Tuple centroid;
 
-	private ArraySet clusteredData; 
+	private Set<Integer> clusteredData; 
 	
 	/*Cluster(){
 		
@@ -15,7 +19,7 @@ class Cluster {
 
 	Cluster(Tuple centroid) {
 		this.centroid = centroid;
-		clusteredData = new ArraySet();
+		clusteredData = new HashSet<Integer>();
 	}
 		
 	Tuple getCentroid() {
@@ -29,20 +33,16 @@ class Cluster {
 	
 	//verify that a transation is in the cluster 
 	boolean contain(int id) {
-		return clusteredData.get(id);
+		return clusteredData.contains(id);
 	}
 
 	//remove the tuple that has changed the cluster
 	void removeTuple(int id) {
-		clusteredData.delete(id);
+		clusteredData.remove(id);
 	}
 	
 	int  getSize() {
 		return clusteredData.size();
-	}
-	
-	int[] iterator() {
-		return clusteredData.toArray();
 	}
 	
 	public String toString() {
@@ -55,19 +55,32 @@ class Cluster {
 	}
 	
 	public String toString(Data data) {
-		String str="Centroid=( ";
+		String str = "Centroid=( ";
 		for(int i=0; i<centroid.getLength(); i++)
-			str += centroid.get(i)+ " ";
+			str += centroid.get(i) + " ";
 		str += ")\nExamples:\n";
-		int array[] = clusteredData.toArray();
-		for(int i=0; i<array.length; i++){
+
+		for(int i : this){
 			str += "[";
 			for(int j=0; j<data.getNumberOfAttributes(); j++)
-				str += data.getAttributeValue(array[i], j)+" ";
-			str += "] dist=" + getCentroid().getDistance(data.getItemSet(array[i])) + "\n";
+				str += data.getAttributeValue(i, j)+" ";
+			str += "] dist=" + getCentroid().getDistance(data.getItemSet(i)) + "\n";
 		}
-		str+="\nAvgDistance="+getCentroid().avgDistance(data, array);
+		str+="\nAvgDistance="+getCentroid().avgDistance(data, clusteredData);
 		
 		return str;
+	}
+
+	@Override
+	public int compareTo(Cluster o) {
+		if (this.getSize() > o.getSize())
+			return 1;
+		else
+			return -1;
+	}
+	
+	@Override
+	public Iterator<Integer> iterator() {
+		return this.clusteredData.iterator();
 	}
 }

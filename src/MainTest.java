@@ -1,7 +1,7 @@
 import data.Data;
-import data.EmptyDatasetException;
+import exceptions.ClusteringRadiusException;
+import exceptions.EmptyDatasetException;
 import keyboardinput.Keyboard;
-import mining.ClusteringRadiusException;
 import mining.QTMiner;
 
 public class MainTest {
