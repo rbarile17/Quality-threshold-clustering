@@ -1,14 +1,33 @@
 package mining;
 
 import data.Data;
-import exceptions.ClusteringRadiusException;
-import exceptions.EmptyDatasetException;
+import data.EmptyDatasetException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 public class QTMiner {
 	private ClusterSet C;
 	private double radius;
+	
+	public QTMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
+		FileInputStream inFile = new FileInputStream(fileName);
+		ObjectInputStream inStream = new ObjectInputStream(inFile);
+		this.C = (ClusterSet) inStream.readObject();
+		inStream.close();
+	}
+	
+	public void save(String fileName) throws FileNotFoundException, IOException {
+		FileOutputStream outFile = new FileOutputStream(fileName);
+		ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+		outStream.writeObject(this.C);
+		outStream.close();
+	}
 	
 	public QTMiner(double radius) {
 		C = new ClusterSet();
@@ -17,6 +36,10 @@ public class QTMiner {
 	
 	public ClusterSet getC() {
 		return C;
+	}
+	
+	public String toString() {
+		return C.toString();
 	}
 	
 	public int compute(Data data) throws ClusteringRadiusException, EmptyDatasetException {

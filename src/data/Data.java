@@ -7,20 +7,20 @@ import java.util.TreeSet;
 public class Data {
 	private Object data [][] =
 		{
-			{"sunny",    "hot",  "high",   "weak",   "no" },
-			{"sunny",    "hot",  "high",   "strong", "no" },
-			{"overcast", "hot",  "high",   "weak",   "yes"},
-			{"rain",     "mild", "high",   "weak",   "yes"},
-			{"rain",     "cool", "normal", "weak",   "yes"},
-			{"rain", 	 "cool", "normal", "strong", "no" },
-			{"overcast", "cool", "normal", "strong", "yes"},
-			{"sunny",    "mild", "high",   "weak",   "no" },
-			{"sunny",    "cool", "normal", "weak",   "yes"},
-			{"rain",     "mild", "normal", "weak",   "yes"},
-			{"sunny",    "mild", "normal", "strong", "yes"},
-			{"overcast", "mild", "high",   "strong", "yes"},
-			{"overcast", "hot",  "normal", "weak",   "yes"},
-			{"rain",     "mild", "high",   "strong", "no" }
+			{"sunny",    30.3,  "high",   "weak",   "no" },
+			{"sunny",    30.3,  "high",   "strong", "no" },
+			{"overcast", 30.0,  "high",   "weak",   "yes"},
+			{"rain",     13.0,  "high",   "weak",   "yes"},
+			{"rain",     0.0,   "normal", "weak",   "yes"},
+			{"rain", 	 0.0,   "normal", "strong", "no" },
+			{"overcast", 0.1,   "normal", "strong", "yes"},
+			{"sunny",    13.0,  "high",   "weak",   "no" },
+			{"sunny",    0.1,   "normal", "weak",   "yes"},
+			{"rain",     12.0,  "normal", "weak",   "yes"},
+			{"sunny",    12.5,  "normal", "strong", "yes"},
+			{"overcast", 12.5,  "high",   "strong", "yes"},
+			{"overcast", 29.21, "normal", "weak",   "yes"},
+			{"rain",     12.5,  "high",   "strong", "no" }
 		}; 
 	private int numberOfExamples;
 	List<Attribute> attributeSet;
@@ -37,11 +37,7 @@ public class Data {
 		attributeSet.add(new DiscreteAttribute("Outlook", 0, outLookValues));
 
 		//temperatureValues
-		TreeSet<String> temperatureValues = new TreeSet<String>();
-		temperatureValues.add("cool");
-		temperatureValues.add("hot");
-		temperatureValues.add("mild");
-		attributeSet.add(new DiscreteAttribute("Temperature", 1, temperatureValues));
+		attributeSet.add(new ContinuousAttribute("Temperature", 1, 3.2, 38.7));
 		
 		//humidityValues
 		TreeSet<String> humidityValues = new TreeSet<String>();
@@ -83,7 +79,10 @@ public class Data {
 		
 		int i=0;
 		for(Attribute att : attributeSet) {
-			tuple.add(new DiscreteItem((DiscreteAttribute) att, (String)data[index][i]), i);
+			if (att instanceof DiscreteAttribute)
+				tuple.add(new DiscreteItem((DiscreteAttribute) att, (String) data[index][i]), i);
+			else
+				tuple.add(new ContinuousItem((ContinuousAttribute) att, (Double) data[index][i]), i);
 			i++;
 		}
 		

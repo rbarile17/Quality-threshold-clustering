@@ -1,12 +1,13 @@
 package mining;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 import data.Data;
 
-public class ClusterSet implements Iterable<Cluster>{
+public class ClusterSet implements Iterable<Cluster>, Serializable{
 	private Set<Cluster> C = new TreeSet<Cluster>();
 	
 	void add(Cluster c) {
@@ -17,7 +18,7 @@ public class ClusterSet implements Iterable<Cluster>{
 		String str = "";
 		
 		for(Cluster c : C) {
-			str += c;
+			str += c + "\n";
 		}
 		
 		return str;
