@@ -108,9 +108,4 @@ public class Data {
 		
 		return str;
 	}
-
-	public static void main(String args[]){
-		Data trainingSet=new Data();
-		System.out.println(trainingSet);
-	}
 }
