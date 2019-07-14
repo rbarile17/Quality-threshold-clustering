@@ -29,7 +29,7 @@ public class ServerOneClient extends Thread {
 	 
 	 public void run() {
 		 boolean loop = true;
-		 int radius, answer = 0;
+		 int radius,answer = 0;
 		 String table = "";
 		 Data data;
 
@@ -38,9 +38,7 @@ public class ServerOneClient extends Thread {
 				 answer = (int)in.readObject();
 				 switch (answer) {
 				 case 0:
-					 do {
-						 data = learningFromDB();
-					 } while((int)in.readObject() != 0);
+					 data = learningFromDB();
 					 compute(data);
 					 storeClusterInFile();
 				 case 3:
@@ -57,6 +55,7 @@ public class ServerOneClient extends Thread {
 	 
 	 private Data learningFromDB() {
 		 try {
+			 System.out.println("Waiting table name");
 			 String table = (String)in.readObject();
 			 Data data = new Data(table);
 			 out.writeObject("OK");
@@ -82,12 +81,14 @@ public class ServerOneClient extends Thread {
 	 
 	 private void compute(Data data) {
 		 try {
+			 System.out.println("Waiting Radius");
 			 int radius = (int)in.readObject();
 			 kmeans = new QTMiner(radius);
 			 int result = kmeans.compute(data);
 			 if (!((Integer)result).equals(null)) {
 				 out.writeObject("OK");
 				 out.writeObject(result);
+				 out.writeObject(kmeans.getC().toString());
 			 }
 			 else
 				 out.writeObject("NOT OK");
