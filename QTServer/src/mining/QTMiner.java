@@ -73,11 +73,12 @@ public class QTMiner {
 							c.addData(j);
 					}
 				
-				if(biggestC == null)  
-					biggestC = c;
-				else 
+				try {
 					if(c.getSize() > biggestC.getSize()) 
 						biggestC = c;
+				} catch (NullPointerException e) { 
+					biggestC = c;
+				}
 			}
 		}
 
