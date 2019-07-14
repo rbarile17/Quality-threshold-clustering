@@ -100,6 +100,8 @@ public class ServerOneClient extends Thread {
 	 
 	 private void storeClusterInFile() {
 			try {
+				System.out.println("choose "+in.readObject());
+				System.out.println("Waiting file name");
 				String fileName = (String)in.readObject();
 				kmeans.salva(fileName);
 			} catch (FileNotFoundException e) {
