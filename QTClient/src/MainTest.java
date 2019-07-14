@@ -98,8 +98,8 @@ public class MainTest {
 		
 	}
 	public static void main(String[] args) {
-		String ip=args[0];
-		int port=new Integer(args[1]).intValue();
+		String ip = "127.0.0.1";
+		int port = 8080;
 		MainTest main=null;
 		try{
 			main=new MainTest(ip,port);

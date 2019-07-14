@@ -29,7 +29,7 @@ public class ServerOneClient extends Thread {
 	 
 	 public void run() {
 		 boolean loop = true;
-		 int radius,answer = 0;
+		 int radius, answer = 0;
 		 String table = "";
 		 Data data;
 
