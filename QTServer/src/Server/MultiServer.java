@@ -13,7 +13,7 @@ public class MultiServer {
 		this.PORT = port;
 		listen();
 	}
-	private void listen() {// Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di crichiesta di connessioni da parte del client. Ad ogni nuova richiesta connessione si istanzia ServerOneClient.
+	private void listen() {// Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di richiesta di connessioni da parte del client. Ad ogni nuova richiesta connessione si istanzia ServerOneClient.
 		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(PORT);
@@ -22,12 +22,11 @@ public class MultiServer {
 				try {
 					new ServerOneClient(socket);
 				} catch(IOException e) {
-				socket.close();
+					socket.close();
 				}
-
 			}
-
 		} catch(IOException e) {
+			
 		}
 	}	   
 }

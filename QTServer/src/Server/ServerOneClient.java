@@ -3,11 +3,14 @@ package Server;
 import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
 
 import mining.QTMiner;
+import mining.ClusterSet;
 import mining.ClusteringRadiusException;
 
 import data.EmptyDatasetException;
@@ -24,28 +27,28 @@ public class ServerOneClient extends Thread {
 		 this.socket = s;
 		 out = new ObjectOutputStream(socket.getOutputStream());
 		 in = new ObjectInputStream(socket.getInputStream());
+		 in.reset();
 		 this.start();
 	 }
 	 
 	 public void run() {
 		 System.out.println("Client accepted");
-		 boolean loop = true;
 		 int radius, answer = 0;
 		 String table = "";
 		 Data data;
 
 		 try {
-			 while (loop) {
-				 answer = (int)in.readObject();
+			 while (true) {
+				 answer = (int) in.readObject();
 				 switch (answer) {
 				 case 0:
 					 data = learningFromDB();
 					 compute(data);
-					 storeClusterInFile();
+					 storeClusterInFile(data);
 				 case 3:
 					 learningFromFile();
 				 default:
-					 loop = false;
+					 break;
 				 }
 			 }
 		 } catch (IOException | ClassNotFoundException e ){
@@ -70,10 +73,11 @@ public class ServerOneClient extends Thread {
 	 
 	 private void learningFromFile() {
 		 try {
-			 String table = (String)in.readObject();
-			 kmeans = new QTMiner(table+".dmp");
-			 out.writeObject("OK");
-			 out.writeObject(kmeans.toString());
+			String fileName = (String) in.readObject();
+			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName));
+			ClusterSet c = (ClusterSet) serialIn.readObject();
+			out.writeObject(c.toString());
+			out.writeObject("OK");
 		 }
 		 catch (IOException | ClassNotFoundException e) {
 			 System.out.println(e);
@@ -99,12 +103,12 @@ public class ServerOneClient extends Thread {
 		 }
 	 }
 	 
-	 private void storeClusterInFile() {
+	 private void storeClusterInFile(Data data) {
 			try {
 				System.out.println("choose "+in.readObject());
 				System.out.println("Waiting file name");
 				String fileName = (String)in.readObject();
-				kmeans.salva(fileName);
+				kmeans.salva(fileName, data);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

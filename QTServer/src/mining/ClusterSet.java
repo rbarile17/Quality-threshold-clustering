@@ -31,7 +31,7 @@ public class ClusterSet implements Iterable<Cluster>,Serializable {
 		return C.iterator();
 	}
 	
-	public String toString(Data data ){
+	public String toString(Data data){
 		String str="";
 		Iterator<Cluster> it = C.iterator();
 		int i = 1;

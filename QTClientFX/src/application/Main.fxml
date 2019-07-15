@@ -6,27 +6,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <Label layoutX="113.0" layoutY="23.0" prefHeight="68.0" prefWidth="374.0" text="Quality Threshold Clustering">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="loadFromDatabase" editable="false" layoutX="37.0" layoutY="222.0" prefHeight="25.0" prefWidth="470.0" promptText="Table name" />
+      <TextField fx:id="loadFromDatabase" layoutX="37.0" layoutY="222.0" prefHeight="25.0" prefWidth="470.0" promptText="Table name" />
       <Label layoutX="37.0" layoutY="172.0" text="Load from database">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="loadFromFile" editable="false" layoutX="37.0" layoutY="335.0" prefHeight="25.0" prefWidth="470.0" promptText="File name" />
+      <TextField fx:id="loadFromFile" layoutX="37.0" layoutY="335.0" prefHeight="25.0" prefWidth="470.0" promptText="File name" />
       <Label layoutX="37.0" layoutY="285.0" text="Load from file">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="521.0" layoutY="222.0" mnemonicParsing="false" text="Load" />
-      <Button layoutX="521.0" layoutY="335.0" mnemonicParsing="false" text="Load" />
+      <Button fx:id="loadDB" disable="true" layoutX="521.0" layoutY="222.0" mnemonicParsing="false" onAction="#loadDBCLick" text="Load" />
+      <Button fx:id="loadFile" disable="true" layoutX="521.0" layoutY="335.0" mnemonicParsing="false" onAction="#loadFileClick" text="Load" />
       <Button fx:id="connect" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#connectClick" text="Connect" />
       <Label fx:id="connected" layoutX="37.0" layoutY="116.0" prefHeight="25.0" prefWidth="110.0" text="Not connected" textFill="RED">
          <font>

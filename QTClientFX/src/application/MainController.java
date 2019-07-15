@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import javafx.fxml.FXML;
@@ -22,14 +24,18 @@ public class MainController {
 	private Label connected;
 	
 	@FXML
-	private TextField loadFromDatabase;
+	private Button loadDB;
 	
 	@FXML
-	private TextField loadFromFile;
+	private Button loadFile;
+	
+	@FXML
+	private TextField fileName;
 	
 	private Socket server;
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 	
-	@FXML
 	public void connectClick() {
 		try {
 			Stage settings = new Stage();
@@ -48,12 +54,49 @@ public class MainController {
 		}
 	}
 	
+	public void loadDBCLick() {
+		try {
+            Stage settings = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/application/DBLoader.fxml")); 
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            settings.setScene(scene);
+            settings.setResizable(false);
+            settings.show();
+            
+        } catch(IOException | NullPointerException e) {
+            new AlertException(e);
+        }
+	}
+	
+	public void loadFileClick() {
+		try {
+            Stage settings = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/application/FileLoader.fxml")); 
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            settings.setScene(scene);
+            settings.setResizable(false);
+            settings.show();
+            out.writeObject(3);
+            out.writeObject(fileName.getText());
+            
+        } catch(IOException | NullPointerException e) {
+            new AlertException(e);
+        }
+	}
 
 	public void setServer(Socket server) {
 		this.server = server;
-		connected.setText("Connected");
-		connected.setTextFill(Color.GREEN);
-		loadFromFile.setEditable(true);
-		loadFromFile.setEditable(true);
+		try {
+			out = new ObjectOutputStream(server.getOutputStream());
+			in = new ObjectInputStream(server.getInputStream());
+			connected.setText("Connected");
+			connected.setTextFill(Color.GREEN);
+			loadDB.setDisable(false);
+			loadFile.setDisable(false);
+		} catch (IOException e) {
+			new AlertException(e);
+		}
 	}
 }
