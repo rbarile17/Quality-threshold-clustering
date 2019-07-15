@@ -28,6 +28,7 @@ public class ServerOneClient extends Thread {
 	 }
 	 
 	 public void run() {
+		 System.out.println("Client accepted");
 		 boolean loop = true;
 		 int radius,answer = 0;
 		 String table = "";
