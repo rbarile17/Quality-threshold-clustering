@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <Label layoutX="113.0" layoutY="23.0" prefHeight="68.0" prefWidth="374.0" text="Quality Threshold Clustering">
          <font>
@@ -27,7 +27,7 @@
       </Label>
       <Button layoutX="521.0" layoutY="222.0" mnemonicParsing="false" text="Load" />
       <Button layoutX="521.0" layoutY="335.0" mnemonicParsing="false" text="Load" />
-      <Button layoutX="185.0" layoutY="116.0" mnemonicParsing="false" text="Connect" />
+      <Button fx:id="connect" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#connectClick" text="Connect" />
       <Label layoutX="37.0" layoutY="116.0" prefHeight="25.0" prefWidth="110.0" text="Not connected" textFill="RED">
          <font>
             <Font size="16.0" />
