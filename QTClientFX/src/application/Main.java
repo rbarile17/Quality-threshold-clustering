@@ -25,7 +25,6 @@ public class Main extends Application {
 			primaryStage.show();
 		} catch(IOException | NullPointerException e) {
 			Alert alert = new Alert(AlertType.ERROR);
-<<<<<<< HEAD
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
@@ -33,15 +32,6 @@ public class Main extends Application {
             alert.setHeaderText("Exception Thrown");
             alert.setContentText(sw.toString());
             alert.show();
-=======
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			alert.setTitle("Exception");
-			alert.setHeaderText("Exception Thrown");
-			alert.setContentText(sw.toString());
-			alert.show();
->>>>>>> 34a03dd109bfb8d47b08fb07212102cd51d3b8bc
 		}
 	}
 	
