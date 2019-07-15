@@ -22,15 +22,15 @@ public class ServerOneClient extends Thread {
 	 
 	 public ServerOneClient(Socket s) throws IOException {
 		 this.socket = s;
-		 in = new ObjectInputStream(socket.getInputStream());
 		 out = new ObjectOutputStream(socket.getOutputStream());
+		 in = new ObjectInputStream(socket.getInputStream());
 		 this.start();
 	 }
 	 
 	 public void run() {
 		 System.out.println("Client accepted");
 		 boolean loop = true;
-		 int radius,answer = 0;
+		 int radius, answer = 0;
 		 String table = "";
 		 Data data;
 

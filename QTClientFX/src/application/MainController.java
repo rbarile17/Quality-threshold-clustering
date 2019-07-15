@@ -28,14 +28,7 @@ public class MainController {
 			settings.setResizable(false);
 			settings.show();
 		} catch(IOException | NullPointerException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            alert.setTitle("Exception");
-            alert.setHeaderText("Exception Thrown");
-            alert.setContentText(sw.toString());
-            alert.show();
+			new AlertException(e);
 		}
 	}
 }

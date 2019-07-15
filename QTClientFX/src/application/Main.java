@@ -3,6 +3,9 @@ package application;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,14 +27,7 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch(IOException | NullPointerException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            alert.setTitle("Exception");
-            alert.setHeaderText("Exception Thrown");
-            alert.setContentText(sw.toString());
-            alert.show();
+			new AlertException(e);
 		}
 	}
 	
