@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class FileLoaderController {
+public class FileLoaderController extends Controller{
 	
 }

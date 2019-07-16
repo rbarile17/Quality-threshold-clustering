@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,8 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utility.ExceptionAlert;
 
-public class SettingsController {
+public class SettingsController extends Controller {
 	@FXML
 	private Button apply;
 	@FXML
@@ -23,8 +24,6 @@ public class SettingsController {
 	
 	private MainController main;
 
-	
-	@FXML
 	public void applyClick(ActionEvent event) {
 		String ipS = ip.getText();
 		String portS = port.getText();
@@ -32,20 +31,11 @@ public class SettingsController {
 			ipS = "127.0.0.1";
 		if (portS.equals(""))
 			portS = "8080";
-		
-		InetAddress addr;
-		Socket server = null;
 		try {
-			addr = InetAddress.getByName(ipS);
-			try {
-				server = new Socket(InetAddress.getByName(ipS), Integer.parseInt(portS));
-				main.setServer(server);
-				((Stage)((Node) event.getSource()).getScene().getWindow()).hide();
-			} catch (IOException e) {
-				new AlertException(e);
-			} 
-		} catch (UnknownHostException e1) {
-			new AlertException(e1);
+			main.connect(ipS,portS);
+			((Stage)((Node) event.getSource()).getScene().getWindow()).close();
+		} catch (IOException e) {
+			new ExceptionAlert(e);
 		}
 	}
 	
