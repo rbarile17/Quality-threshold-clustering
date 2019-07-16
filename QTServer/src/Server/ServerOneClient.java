@@ -73,8 +73,9 @@ public class ServerOneClient extends Thread {
 	 
 	 private void learningFromFile() {
 		 try {
+			System.out.println("File");
 			String fileName = (String) in.readObject();
-			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName));
+			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName+".dmp"));
 			ClusterSet C = (ClusterSet) serialIn.readObject();
 			serialIn.close();
 			List<List<Object>> l = C.toList();
@@ -89,7 +90,8 @@ public class ServerOneClient extends Thread {
 	 private void compute(Data data) {
 		 try {
 			 System.out.println("Waiting Radius");
-			 int radius = (int)in.readObject();
+			 //int radius = (int)in.readObject();
+			 int radius = 2;
 			 kmeans = new QTMiner(radius);
 			 int result = kmeans.compute(data);
 			 if (!((Integer)result).equals(null)) {
@@ -100,27 +102,29 @@ public class ServerOneClient extends Thread {
 			 else
 				 out.writeObject("NOT OK");
 		 }
-		 catch (IOException | ClassNotFoundException | EmptyDatasetException | ClusteringRadiusException e) {
+		 catch (IOException |/* ClassNotFoundException |*/ EmptyDatasetException | ClusteringRadiusException e) {
 			 System.out.println(e);
 		 }
 	 }
 	 
 	 private void storeClusterInFile(Data data) {
-			try {
+		 System.out.println("sto");
+			try {/*
 				System.out.println("choose "+in.readObject());
 				System.out.println("Waiting file name");
 				String fileName = (String)in.readObject();
-				fileName += ".dmp";
-				kmeans.save(fileName, data);
+				fileName += ".dmp";*/
+				kmeans.save("file.dmp", data);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			} /*catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			}
+			}*/
+			System.out.println("finito");
 	 }
 }

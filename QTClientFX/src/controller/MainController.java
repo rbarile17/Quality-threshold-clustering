@@ -57,8 +57,8 @@ public class MainController extends Controller{
 	
 	public void loadDBCLick() {
 		try {
-            ((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
             serverModel.clusterDBTable(tableName.getText());
+            ((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
             
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
@@ -67,9 +67,8 @@ public class MainController extends Controller{
 	
 	public void loadFileClick() {
 		try {
-			((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
 			serverModel.loadFile(fileName.getText());
-            
+			((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
         }

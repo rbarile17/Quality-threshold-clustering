@@ -24,13 +24,17 @@ public class ServerModel {
 	}
 	
 	public void loadFile(String fileName) throws IOException{
+		System.out.println("prima 3");
         out.writeObject(3);
+        System.out.println("dopo 3");
         out.writeObject(fileName);
+        System.out.println("file mandato");
 	}
 	
 	public void clusterDBTable(String tableName) throws IOException{
-        out.writeObject(3);
+        out.writeObject(0);
         out.writeObject(tableName);
+        
 	}
 	
 	public List<List<Object>> getFileData() throws IOException{
