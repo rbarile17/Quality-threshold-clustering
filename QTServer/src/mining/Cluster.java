@@ -11,14 +11,9 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
 
 	private Set<Integer> clusteredData;
 	
-	/*Cluster(){
-		
-	}*/
-
 	Cluster(Tuple centroid){
 		this.centroid=centroid;
-		clusteredData =new HashSet<Integer>();
-		
+		clusteredData =new HashSet<Integer>();	
 	}
 		
 	Tuple getCentroid(){

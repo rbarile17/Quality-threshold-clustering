@@ -67,12 +67,11 @@ public class MainController extends Controller{
 	
 	public void loadFileClick() {
 		try {
-			newWindow("../graphic/FileLoader.fxml");
+			((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
 			serverModel.loadFile(fileName.getText());
             
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
-            e.printStackTrace();
         }
 	}
 

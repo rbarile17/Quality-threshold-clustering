@@ -3,12 +3,14 @@ package mining;
 import java.util.TreeSet;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import data.Data;
 import java.io.Serializable;
 
 public class ClusterSet implements Iterable<Cluster>,Serializable {
 	private Set<Cluster> C = new TreeSet<Cluster>();
-
 	
 	ClusterSet() {}
 	
@@ -25,6 +27,16 @@ public class ClusterSet implements Iterable<Cluster>,Serializable {
 			i++;
 		}
 		return out;
+	}
+	
+	public List<List<Object>> toList() {
+		List<List<Object>> l = new LinkedList<List<Object>>();
+		
+		for(Cluster c : this.C) {
+			l.add(c.getCentroid().toList());
+		}
+		
+		return l;
 	}
 	
 	public Iterator<Cluster> iterator() {

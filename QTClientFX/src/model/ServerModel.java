@@ -33,13 +33,15 @@ public class ServerModel {
         out.writeObject(tableName);
 	}
 	
-	public Pair<List<String>,List<String>> getClusteringResult() throws IOException{
-		Pair<List<String>,List<String>> data = null;
+	public List<List<Object>> getFileData() throws IOException{
+		List<List<Object>> data = null;
+
 		try {
-			data = (Pair<List<String>,List<String>>)in.readObject();
+			data = (List<List<Object>>) in.readObject();
 		} catch (ClassNotFoundException e) {
-			new ExceptionAlert(e);
+			e.printStackTrace();
 		}
+
 		return data;
 	}
 	

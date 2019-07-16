@@ -1,6 +1,7 @@
 package Server;
 
 import java.net.Socket;
+import java.util.List;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
@@ -74,9 +75,11 @@ public class ServerOneClient extends Thread {
 		 try {
 			String fileName = (String) in.readObject();
 			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName));
-			ClusterSet c = (ClusterSet) serialIn.readObject();
-			out.writeObject(c.toString());
-			out.writeObject("OK");
+			ClusterSet C = (ClusterSet) serialIn.readObject();
+			serialIn.close();
+			List<List<Object>> l = C.toList();
+			System.out.println("Lista creata");
+			out.writeObject(l);
 		 }
 		 catch (IOException | ClassNotFoundException e) {
 			 System.out.println(e);
@@ -107,7 +110,8 @@ public class ServerOneClient extends Thread {
 				System.out.println("choose "+in.readObject());
 				System.out.println("Waiting file name");
 				String fileName = (String)in.readObject();
-				kmeans.salva(fileName, data);
+				fileName += ".dmp";
+				kmeans.save(fileName, data);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

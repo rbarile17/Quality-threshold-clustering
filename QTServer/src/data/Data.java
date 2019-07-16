@@ -12,41 +12,21 @@ import database.EmptySetException;
 import java.sql.SQLException;
 
 public class Data {
-	/*
-	private Object data [][] =
-		{
-			{"sunny",    30.3,  "high",   "weak",   "no" },
-			{"sunny",    30.3,  "high",   "strong", "no" },
-			{"overcast", 30.0,  "high",   "weak",   "yes"},
-			{"rain",     13.0,  "high",   "weak",   "yes"},
-			{"rain",     0.0,   "normal", "weak",   "yes"},
-			{"rain", 	 0.0,   "normal", "strong", "no" },
-			{"overcast", 0.1,   "normal", "strong", "yes"},
-			{"sunny",    13.0,  "high",   "weak",   "no" },
-			{"sunny",    0.1,   "normal", "weak",   "yes"},
-			{"rain",     12.0,  "normal", "weak",   "yes"},
-			{"sunny",    12.5,  "normal", "strong", "yes"},
-			{"overcast", 12.5,  "high",   "strong", "yes"},
-			{"overcast", 29.21, "normal", "weak",   "yes"},
-			{"rain",     12.5,  "high",   "strong", "no" }
-		};*/
-	private List<Example> data=new ArrayList<Example>(); 
+	private List<Example> data = new ArrayList<Example>(); 
 
 	private int numberOfExamples;
 	private List<Attribute> attributeSet;
 	
-	
-	public Data(String table){
-		
+	public Data(String table){	
 		numberOfExamples=14;		 
 		
 		attributeSet = new LinkedList<Attribute>();
 		
-		TreeSet<String> outLookValues =new TreeSet<String>();
+		TreeSet<String> outLookValues = new TreeSet<String>();
 		outLookValues.add("Overcast");
 		outLookValues.add("Rain");
 		outLookValues.add("Sunny");
-		attributeSet.add(0, new DiscreteAttribute("Outlook",0, outLookValues));
+		attributeSet.add(0, new DiscreteAttribute("Outlook", 0, outLookValues));
 		
 		attributeSet.add(1,  new ContinuousAttribute("Temperture", 1, 0, 30.3));
 
@@ -88,8 +68,6 @@ public class Data {
 		return attributeSet.size();
 	}
 	
-	
-	
 	public Object getAttributeValue(int exampleIndex, int attributeIndex){
 		return data.get(exampleIndex).get(attributeIndex);
 	}
@@ -97,7 +75,6 @@ public class Data {
 	Attribute getAttribute(int index){
 		return attributeSet.get(index);
 	}
-	
 	
 	public String toString(){
 		String output = new String();

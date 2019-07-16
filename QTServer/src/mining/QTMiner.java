@@ -85,9 +85,9 @@ public class QTMiner {
 		return biggestC;
 	}
 	
-	public void salva(String fileName, Data data) throws FileNotFoundException,IOException {
+	public void save(String fileName, Data data) throws FileNotFoundException,IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
-		out.writeObject(C.toString(data));
+		out.writeObject(C);
 		out.close();
 	}
 	
