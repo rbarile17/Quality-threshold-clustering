@@ -6,32 +6,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane fx:id="anchorPane" prefHeight="324.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <Label layoutX="113.0" layoutY="23.0" prefHeight="68.0" prefWidth="374.0" text="Quality Threshold Clustering">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="tableName" layoutX="37.0" layoutY="222.0" prefHeight="25.0" prefWidth="470.0" promptText="Table name" />
-      <Label layoutX="37.0" layoutY="172.0" text="Load from database">
+      <TextField fx:id="tableName" layoutX="37.0" layoutY="171.0" prefHeight="25.0" prefWidth="230.0" promptText="Table name" />
+      <Label layoutX="37.0" layoutY="138.0" text="Load from database">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="fileName" layoutX="37.0" layoutY="335.0" prefHeight="25.0" prefWidth="470.0" promptText="File name" />
-      <Label layoutX="37.0" layoutY="285.0" text="Load from file">
+      <Label layoutX="37.0" layoutY="222.0" text="Load from file">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="loadDB" disable="true" layoutX="521.0" layoutY="222.0" mnemonicParsing="false" onAction="#loadDBCLick" text="Load" />
-      <Button fx:id="loadFile" disable="true" layoutX="521.0" layoutY="335.0" mnemonicParsing="false" onAction="#loadFileClick" text="Load" />
-      <Button fx:id="connect" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#connectClick" text="Connect" />
-      <Label fx:id="connected" layoutX="37.0" layoutY="116.0" prefHeight="25.0" prefWidth="110.0" text="Not connected" textFill="RED">
+      <Button fx:id="loadDB" disable="true" layoutX="521.0" layoutY="171.0" mnemonicParsing="false" onAction="#loadDBCLick" text="Load" />
+      <Button fx:id="loadFile" disable="true" layoutX="521.0" layoutY="258.0" mnemonicParsing="false" onAction="#loadFileClick" text="Load" />
+      <Button fx:id="connect" layoutX="178.0" layoutY="99.0" mnemonicParsing="false" onAction="#connectClick" text="Connect" />
+      <Label fx:id="connected" layoutX="37.0" layoutY="99.0" prefHeight="25.0" prefWidth="110.0" text="Not connected" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
+      <TextField fx:id="radius" layoutX="277.0" layoutY="171.0" prefHeight="25.0" prefWidth="230.0" promptText="Radius" />
+      <TextField fx:id="fileName" layoutX="37.0" layoutY="258.0" prefHeight="25.0" prefWidth="471.0" promptText="File name" />
    </children>
 </AnchorPane>

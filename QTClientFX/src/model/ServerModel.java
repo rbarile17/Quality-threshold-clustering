@@ -22,22 +22,31 @@ public class ServerModel {
 		out = new ObjectOutputStream(server.getOutputStream());
 		in = new ObjectInputStream(server.getInputStream());
 	}
-	
-	public void loadFile(String fileName) throws IOException{
-		System.out.println("prima 3");
+
+	public void loadFile(String fileName) throws IOException {
         out.writeObject(3);
-        System.out.println("dopo 3");
         out.writeObject(fileName);
-        System.out.println("file mandato");
 	}
 	
-	public void clusterDBTable(String tableName) throws IOException{
+	public void clusterDBTable(String tableName, double radius) throws IOException {
         out.writeObject(0);
         out.writeObject(tableName);
-        
+        out.writeObject(radius);
 	}
 	
-	public List<List<Object>> getFileData() throws IOException{
+	public int getCentroidsNumber() throws IOException {
+		int centroidsNumber = -1;
+		
+		try {
+			centroidsNumber = (int) in.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		
+		return centroidsNumber;
+	}
+	
+	public List<List<Object>> getCentroids() throws IOException {
 		List<List<Object>> data = null;
 
 		try {

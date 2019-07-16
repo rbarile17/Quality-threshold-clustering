@@ -42,6 +42,9 @@ public class MainController extends Controller{
 	private TextField tableName;
 	
 	@FXML
+	private TextField radius;
+	
+	@FXML
 	private AnchorPane anchorPane;
 	
 	private ServerModel serverModel;
@@ -57,7 +60,7 @@ public class MainController extends Controller{
 	
 	public void loadDBCLick() {
 		try {
-            serverModel.clusterDBTable(tableName.getText());
+            serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText()));
             ((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
             
         } catch(IOException | NullPointerException e) {
@@ -75,7 +78,7 @@ public class MainController extends Controller{
 	}
 
 	public void connect(String ip, String port) throws IOException{
-		this.serverModel = new ServerModel(ip,port);
+		this.serverModel = new ServerModel(ip, port);
 		connected.setText("Connected");
 		connected.setTextFill(Color.GREEN);
 		loadDB.setDisable(false);
@@ -102,10 +105,11 @@ public class MainController extends Controller{
 		stage.show();
 		return controller;
 	}
-	/*
+	
 	public void initialize() {
-		Scene scene = connected.getScene();
-		Stage stage = (Stage) scene.getWindow();
-		stage.setOnCloseRequest((e)->{serverModel.close();});
-	}*/
+		Scene scene = anchorPane.getScene();
+		System.out.println(scene);
+		//Stage stage = (Stage) scene.getWindow();
+		//stage.setOnCloseRequest((e)->{serverModel.close();});
+	}
 }

@@ -5,6 +5,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import controller.Controller;
+import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -13,16 +15,26 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("graphic/Main.fxml")); 
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource("graphic/Main.fxml").openStream());  
+			MainController controller = (MainController)loader.getController(); 
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("graphic/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
+			primaryStage.setOnCloseRequest((e) -> {
+				try {
+					controller.disconnect();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			});
 			primaryStage.show();
 		} catch(IOException | NullPointerException e) {
 			e.printStackTrace();

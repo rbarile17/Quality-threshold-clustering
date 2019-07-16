@@ -33,20 +33,20 @@ public class ServerOneClient extends Thread {
 	 
 	 public void run() {
 		 System.out.println("Client accepted");
-		 int radius, answer = 0;
-		 String table = "";
 		 Data data;
 
 		 try {
 			 while (true) {
-				 answer = (int) in.readObject();
+				 int answer = (int) in.readObject();
 				 switch (answer) {
 				 case 0:
 					 data = learningFromDB();
 					 compute(data);
-					 storeClusterInFile(data);
+					 //storeClusterInFile(data);
+					 break;
 				 case 3:
 					 learningFromFile();
+					 break;
 				 default:
 					 break;
 				 }
@@ -55,31 +55,26 @@ public class ServerOneClient extends Thread {
 			 e.printStackTrace();
 		 }
 	 }
-
 	 
 	 private Data learningFromDB() {
 		 try {
-			 System.out.println("Waiting table name");
-			 String table = (String)in.readObject();
+			 String table = (String) in.readObject();
 			 Data data = new Data(table);
-			 out.writeObject("OK");
 			 return data;
 		 }
 		 catch (IOException | ClassNotFoundException e) {
-			 System.out.println(e);
+			 e.printStackTrace();
 		 }
 		 return null;
 	 }
 	 
 	 private void learningFromFile() {
 		 try {
-			System.out.println("File");
 			String fileName = (String) in.readObject();
 			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName+".dmp"));
 			ClusterSet C = (ClusterSet) serialIn.readObject();
 			serialIn.close();
 			List<List<Object>> l = C.toList();
-			System.out.println("Lista creata");
 			out.writeObject(l);
 		 }
 		 catch (IOException | ClassNotFoundException e) {
@@ -89,20 +84,12 @@ public class ServerOneClient extends Thread {
 	 
 	 private void compute(Data data) {
 		 try {
-			 System.out.println("Waiting Radius");
-			 //int radius = (int)in.readObject();
-			 int radius = 2;
+			 double radius = (double) in.readObject();
 			 kmeans = new QTMiner(radius);
 			 int result = kmeans.compute(data);
-			 if (!((Integer)result).equals(null)) {
-				 out.writeObject("OK");
-				 out.writeObject(result);
-				 out.writeObject(kmeans.getC().toString());
-			 }
-			 else
-				 out.writeObject("NOT OK");
-		 }
-		 catch (IOException |/* ClassNotFoundException |*/ EmptyDatasetException | ClusteringRadiusException e) {
+			 out.writeObject(result);
+			 out.writeObject(kmeans.getC().toList());
+		 } catch (IOException | ClassNotFoundException | EmptyDatasetException | ClusteringRadiusException e) {
 			 System.out.println(e);
 		 }
 	 }

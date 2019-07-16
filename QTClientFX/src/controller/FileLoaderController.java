@@ -25,7 +25,7 @@ public class FileLoaderController extends Controller{
 		
 		List<List<Object>> centroids;
 		try {
-			centroids = serverModel.getFileData();
+			centroids = serverModel.getCentroids();
 			ObservableList<List<Object>> list = FXCollections.observableArrayList(centroids);
 			System.out.println("fatto\n"+centroids);
 			for(int i=0; i<centroids.get(0).size(); i++) {
