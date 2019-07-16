@@ -39,7 +39,7 @@ public class SettingsController extends Controller {
 		}
 	}
 	
-	public void init(MainController main) {
+	public void initialize(MainController main) {
 		this.main = main;
 	}
 }

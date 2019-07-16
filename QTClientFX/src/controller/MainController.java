@@ -48,7 +48,7 @@ public class MainController extends Controller{
 	
 	public void connectClick() {
 		try {
-			((SettingsController)newWindow("../graphic/Settings.fxml")).init(this);
+			((SettingsController)newWindow("../graphic/Settings.fxml")).initialize(this);
 		} catch(IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class MainController extends Controller{
 	
 	public void loadDBCLick() {
 		try {
-            newWindow("../graphic/DBLoader.fxml"); 
+            ((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
             serverModel.clusterDBTable(tableName.getText());
             
         } catch(IOException | NullPointerException e) {
@@ -104,10 +104,10 @@ public class MainController extends Controller{
 		stage.show();
 		return controller;
 	}
-	
+	/*
 	public void initialize() {
 		Scene scene = connected.getScene();
 		Stage stage = (Stage) scene.getWindow();
 		stage.setOnCloseRequest((e)->{serverModel.close();});
-	}
+	}*/
 }
