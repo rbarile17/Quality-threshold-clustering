@@ -3,10 +3,8 @@ package database;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class Example implements Comparable<Example>{
-	private List<Object> example=new ArrayList<Object>();
+	private List<Object> example = new ArrayList<Object>();
 
 	public void add(Object o){
 		example.add(o);
@@ -18,7 +16,7 @@ public class Example implements Comparable<Example>{
 	public int compareTo(Example ex) {
 		
 		int i=0;
-		for(Object o:ex.example){
+		for(Object o : ex.example){
 			if(!o.equals(this.example.get(i)))
 				return ((Comparable)o).compareTo(example.get(i));
 			i++;

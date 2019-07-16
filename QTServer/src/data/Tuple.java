@@ -7,6 +7,10 @@ import java.util.List;
 import java.io.Serializable;
 
 public class Tuple implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3782053023012533177L;
 	private Item[] tuple;
 	
 	Tuple(int size) {

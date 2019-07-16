@@ -4,13 +4,16 @@ import java.util.TreeSet;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import data.Data;
 import java.io.Serializable;
 
 public class ClusterSet implements Iterable<Cluster>,Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6423140876509792857L;
 	private Set<Cluster> C = new TreeSet<Cluster>();
 	
 	ClusterSet() {}

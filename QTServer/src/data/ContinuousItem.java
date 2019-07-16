@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class ContinuousItem extends Item implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6279908508744923995L;
+
 	public ContinuousItem(ContinuousAttribute attribute , double value) {
 		super(attribute,value);
 	}

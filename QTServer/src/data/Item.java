@@ -3,6 +3,10 @@ package data;
 import java.io.Serializable;
 
 public abstract class Item implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -349107164823808253L;
 	protected Attribute attribute;
 	protected Object value;
 	

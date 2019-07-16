@@ -53,9 +53,8 @@ public class Data {
 			} catch (DatabaseConnectionException exc) {
 				System.out.println(exc.getMessage());
 			}
-				data = new TableData(db).getDistinctTransazioni(table);
+			data = new TableData(db).getDistinctTransactions(table);
 		} catch (SQLException  | EmptySetException e ) {
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

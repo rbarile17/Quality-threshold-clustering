@@ -52,7 +52,9 @@ public class DbAccess {
 		try {
 			conn.close();
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			ex.getMessage();
+			ex.getErrorCode();
+			ex.getSQLState();
 		}
 	}
 }

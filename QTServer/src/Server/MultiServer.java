@@ -7,7 +7,7 @@ import java.io.IOException;
 public class MultiServer {
 	private int PORT = 8080;
 	public static void main(String[] args) { //istanzia un oggetto di tipo MultiServer.
-		MultiServer server = new MultiServer(8080);
+		new MultiServer(8080);
 	}
 	public MultiServer(int port) {//Costruttore di classe. Inizializza la porta ed invoca run()
 		this.PORT = port;

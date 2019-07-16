@@ -6,11 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import javafx.util.Pair;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import utility.ExceptionAlert;
 
 public class ServerModel {
@@ -25,9 +21,24 @@ public class ServerModel {
 		in = new ObjectInputStream(server.getInputStream());
 	}
 
-	public void loadFile(String fileName) throws IOException {
+	public boolean loadFile(String fileName) throws IOException {
+		String OK = "OK";
         out.writeObject(3);
         out.writeObject(fileName);
+        
+        String answer;
+		try {
+			answer = (String) in.readObject();
+	        if (!answer.equals(OK)) {
+	        	new ExceptionAlert(answer);
+	        	return false;
+	        }
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public void clusterDBTable(String tableName, double radius) throws IOException {

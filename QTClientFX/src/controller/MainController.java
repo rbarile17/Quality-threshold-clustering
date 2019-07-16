@@ -1,16 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,8 +62,8 @@ public class MainController extends Controller{
 	
 	public void loadFileClick() {
 		try {
-			serverModel.loadFile(fileName.getText());
-			((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
+			if (serverModel.loadFile(fileName.getText()) == true)
+				((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
         }

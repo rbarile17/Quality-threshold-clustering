@@ -3,6 +3,10 @@ package data;
 import java.io.Serializable;
 
 public class ContinuousAttribute extends Attribute implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 971180948596186229L;
 	private double max;
 	private double min;
 	

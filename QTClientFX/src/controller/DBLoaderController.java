@@ -2,14 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.util.Pair;
 import model.ServerModel;
 import utility.ExceptionAlert;
-
 
 public class DBLoaderController extends Controller{
 	@FXML

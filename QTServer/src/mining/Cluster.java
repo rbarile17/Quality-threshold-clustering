@@ -7,6 +7,11 @@ import data.Tuple;
 import data.Data;
 
 class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3998359756241982723L;
+
 	private Tuple centroid;
 
 	private Set<Integer> clusteredData;
@@ -38,7 +43,7 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
 		
 	}
 	
-	int  getSize(){
+	int getSize(){
 		return clusteredData.size();
 	}
 	
@@ -77,6 +82,5 @@ class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
 		}
 		str+="\nAvgDistance="+getCentroid().avgDistance(data, this.clusteredData);
 		return str;
-		
 	}
 }

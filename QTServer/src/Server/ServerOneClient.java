@@ -6,17 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
-
 import mining.QTMiner;
 import mining.ClusterSet;
 import mining.ClusteringRadiusException;
-
 import data.EmptyDatasetException;
 import data.Data;
-
 
 public class ServerOneClient extends Thread {
 	 private Socket socket;
@@ -71,15 +67,19 @@ public class ServerOneClient extends Thread {
 	 private void learningFromFile() {
 		 try {
 			String fileName = (String) in.readObject();
-			ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName+".dmp"));
-			ClusterSet C = (ClusterSet) serialIn.readObject();
-			serialIn.close();
-			List<List<Object>> l = C.toList();
-			out.writeObject(l);
-		 }
-		 catch (IOException | ClassNotFoundException e) {
+			try {
+				ObjectInputStream serialIn = new ObjectInputStream(new FileInputStream(fileName+".dmp"));
+				out.writeObject("OK");
+				ClusterSet C = (ClusterSet) serialIn.readObject();
+				serialIn.close();
+				List<List<Object>> l = C.toList();
+				out.writeObject(l);
+			} catch(FileNotFoundException e) {
+				out.writeObject("File not found.");
+			}
+		 } catch (IOException | ClassNotFoundException  e) {
 			 System.out.println(e);
-		 }
+		 } 
 	 }
 	 
 	 private void compute(Data data) {

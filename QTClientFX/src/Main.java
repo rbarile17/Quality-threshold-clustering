@@ -1,20 +1,10 @@
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import controller.Controller;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import utility.ExceptionAlert;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class Main extends Application {
@@ -37,7 +27,6 @@ public class Main extends Application {
 			});
 			primaryStage.show();
 		} catch(IOException | NullPointerException e) {
-			e.printStackTrace();
 			new ExceptionAlert(e);
 		}
 	}
