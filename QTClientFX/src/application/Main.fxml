@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane fx:id="anchorPane" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <Label layoutX="113.0" layoutY="23.0" prefHeight="68.0" prefWidth="374.0" text="Quality Threshold Clustering">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="loadFromDatabase" layoutX="37.0" layoutY="222.0" prefHeight="25.0" prefWidth="470.0" promptText="Table name" />
+      <TextField fx:id="tableName" layoutX="37.0" layoutY="222.0" prefHeight="25.0" prefWidth="470.0" promptText="Table name" />
       <Label layoutX="37.0" layoutY="172.0" text="Load from database">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="loadFromFile" layoutX="37.0" layoutY="335.0" prefHeight="25.0" prefWidth="470.0" promptText="File name" />
+      <TextField fx:id="fileName" layoutX="37.0" layoutY="335.0" prefHeight="25.0" prefWidth="470.0" promptText="File name" />
       <Label layoutX="37.0" layoutY="285.0" text="Load from file">
          <font>
             <Font size="16.0" />

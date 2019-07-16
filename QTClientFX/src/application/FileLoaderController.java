@@ -9,6 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class FileLoaderController {
+public class FileLoaderController extends Controller{
 	
 }

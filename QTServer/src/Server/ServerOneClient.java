@@ -27,7 +27,6 @@ public class ServerOneClient extends Thread {
 		 this.socket = s;
 		 out = new ObjectOutputStream(socket.getOutputStream());
 		 in = new ObjectInputStream(socket.getInputStream());
-		 in.reset();
 		 this.start();
 	 }
 	 
