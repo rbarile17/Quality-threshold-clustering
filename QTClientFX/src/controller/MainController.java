@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,8 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import utility.ExceptionAlert;
+import model.ServerModel;
 
-public class MainController extends Controller implements Initializable {
+public class MainController extends Controller{
 	@FXML
 	private Button connect;
 	
@@ -46,30 +48,30 @@ public class MainController extends Controller implements Initializable {
 	
 	public void connectClick() {
 		try {
-			((SettingsController)newWindow("/application/Settings.fxml")).init(this);
+			((SettingsController)newWindow("../graphic/Settings.fxml")).init(this);
 		} catch(IOException | NullPointerException e) {
-			new AlertException(e);
+			new ExceptionAlert(e);
 			e.printStackTrace();
 		}
 	}
 	
 	public void loadDBCLick() {
 		try {
-            newWindow("/application/DBLoader.fxml"); 
+            newWindow("../graphic/DBLoader.fxml"); 
             serverModel.clusterDBTable(tableName.getText());
             
         } catch(IOException | NullPointerException e) {
-            new AlertException(e);
+            new ExceptionAlert(e);
         }
 	}
 	
 	public void loadFileClick() {
 		try {
-			newWindow("/application/FileLoader.fxml");
+			newWindow("../graphic/FileLoader.fxml");
 			serverModel.loadFile(fileName.getText());
             
         } catch(IOException | NullPointerException e) {
-            new AlertException(e);
+            new ExceptionAlert(e);
             e.printStackTrace();
         }
 	}
@@ -90,24 +92,22 @@ public class MainController extends Controller implements Initializable {
 		loadFile.setDisable(true);
 	}
 	
-	private Controller newWindow(String path) throws IOException,NullPointerException {
+	private Controller newWindow(String path) throws IOException, NullPointerException {
 		Stage stage = new Stage();
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(path).openStream());  
 		Controller controller = (Controller)loader.getController();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("../graphic/application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
 		return controller;
 	}
-
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		Scene scene = anchorPane.getScene();
+	
+	public void initialize() {
+		Scene scene = connected.getScene();
 		Stage stage = (Stage) scene.getWindow();
-		//stage.setOnCloseRequest((e)->{serverModel.close();});
+		stage.setOnCloseRequest((e)->{serverModel.close();});
 	}
 }

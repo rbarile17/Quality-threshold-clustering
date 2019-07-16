@@ -1,13 +1,12 @@
-package application;
-
+package utility;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javafx.scene.control.Alert;
 
-public class AlertException extends Alert {
+public class ExceptionAlert extends Alert {
 
-	public AlertException(Exception e) {
+	public ExceptionAlert(Exception e) {
 		super(AlertType.ERROR);
 		
         StringWriter sw = new StringWriter();

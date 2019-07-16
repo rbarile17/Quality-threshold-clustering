@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import utility.ExceptionAlert;
 
 public class SettingsController extends Controller {
 	@FXML
@@ -23,8 +24,6 @@ public class SettingsController extends Controller {
 	
 	private MainController main;
 
-	
-	@FXML
 	public void applyClick(ActionEvent event) {
 		String ipS = ip.getText();
 		String portS = port.getText();
@@ -36,7 +35,7 @@ public class SettingsController extends Controller {
 			main.connect(ipS,portS);
 			((Stage)((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
-			new AlertException(e);
+			new ExceptionAlert(e);
 		}
 	}
 	

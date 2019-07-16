@@ -1,4 +1,4 @@
-package application;
+package model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,13 +7,15 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import utility.ExceptionAlert;
+
 public class ServerModel {
 	
 	private Socket server;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	
-	ServerModel(String ip, String port) throws IOException, UnknownHostException {
+	public ServerModel(String ip, String port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), Integer.parseInt(port));
 		out = new ObjectOutputStream(server.getOutputStream());
 		in = new ObjectInputStream(server.getInputStream());
@@ -33,7 +35,8 @@ public class ServerModel {
 		try {
 			server.close();
 		} catch (IOException e) {
-			new AlertException(e);
+			new ExceptionAlert(e);
 		}
 	}
  }
+
