@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ public class DBLoaderController extends Controller{
 	public void initialize (MainController main, ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.main = main;
-		List<List<Object>> centroids;
+		ArrayList<ArrayList<Object>> centroids;
 
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();

@@ -1,8 +1,11 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,29 +17,36 @@ import utility.ExceptionAlert;
 
 public class FileLoaderController extends Controller{
 	@FXML
-	private TableView<List<Object>> table;
+	private TableView<List<ObjectProperty>> table;
 	
 	private ServerModel serverModel;
 	private MainController main;
+	private int iterator;
 	
 	public void initialize(MainController main, ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.main = main;
 		
-		List<List<Object>> centroids;
+		ArrayList<ArrayList<Object>> centroids;
 		try {
 			centroids = serverModel.getCentroids();
-			ObservableList<List<Object>> list = FXCollections.observableArrayList(centroids);
+			ObservableList<List<ObjectProperty>> list = FXCollections.observableArrayList();
 			System.out.println("fatto\n"+centroids);
-			for(int i=0; i<centroids.get(0).size(); i++) {
-				TableColumn c = new TableColumn<List<Object>, Object>();
-				c.setCellValueFactory(new PropertyValueFactory<>("ok"));
+			for(iterator=0; iterator<centroids.get(0).size(); iterator++) {
+				TableColumn<List<ObjectProperty>, Object> c = new TableColumn<>();
+				c.setCellValueFactory(data -> data.getValue().get(iterator));
 				table.getColumns().add(c);
 			}
 
-			for(List<Object> l : centroids)
-				table.getItems().addAll(l);
-			
+			for(List<Object> l : centroids) {
+				List<ObjectProperty> oList = new ArrayList();
+				int j = 0 ;
+				for(Object o : l) {
+					oList.add(j,new SimpleObjectProperty(o));
+					j++;
+				}
+				list.add(oList);
+			}
 			table.setItems(list);
 			
 		} catch (IOException e) {

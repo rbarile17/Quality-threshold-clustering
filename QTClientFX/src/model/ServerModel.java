@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import javafx.util.Pair;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import utility.ExceptionAlert;
@@ -46,11 +48,11 @@ public class ServerModel {
 		return centroidsNumber;
 	}
 	
-	public List<List<Object>> getCentroids() throws IOException {
-		List<List<Object>> data = null;
+	public ArrayList<ArrayList<Object>> getCentroids() throws IOException {
+		ArrayList<ArrayList<Object>> data = null;
 
 		try {
-			data = (List<List<Object>>) in.readObject();
+			data = (ArrayList<ArrayList<Object>>) in.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
