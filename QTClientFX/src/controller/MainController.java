@@ -105,11 +105,4 @@ public class MainController extends Controller{
 		stage.show();
 		return controller;
 	}
-	
-	public void initialize() {
-		Scene scene = anchorPane.getScene();
-		System.out.println(scene);
-		//Stage stage = (Stage) scene.getWindow();
-		//stage.setOnCloseRequest((e)->{serverModel.close();});
-	}
 }

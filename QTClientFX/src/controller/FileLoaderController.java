@@ -21,7 +21,6 @@ public class FileLoaderController extends Controller{
 	
 	private ServerModel serverModel;
 	private MainController main;
-	private int iterator;
 	
 	public void initialize(MainController main, ServerModel serverModel) {
 		this.serverModel = serverModel;
@@ -31,18 +30,19 @@ public class FileLoaderController extends Controller{
 		try {
 			centroids = serverModel.getCentroids();
 			ObservableList<List<ObjectProperty>> list = FXCollections.observableArrayList();
-			System.out.println("fatto\n"+centroids);
-			for(iterator=0; iterator<centroids.get(0).size(); iterator++) {
-				TableColumn<List<ObjectProperty>, Object> c = new TableColumn<>();
-				c.setCellValueFactory(data -> data.getValue().get(iterator));
+
+			for(int iterator=0; iterator<centroids.get(0).size(); iterator++) {
+				final int j = iterator;
+				TableColumn<List<ObjectProperty>, Object> c = new TableColumn<>("Attribute " + (iterator+1));
+				c.setCellValueFactory(data -> data.getValue().get(j));
 				table.getColumns().add(c);
 			}
-
-			for(List<Object> l : centroids) {
+						
+			for(ArrayList<Object> l : centroids) {
 				List<ObjectProperty> oList = new ArrayList();
-				int j = 0 ;
+				int j = 0;
 				for(Object o : l) {
-					oList.add(j,new SimpleObjectProperty(o));
+					oList.add(j, new SimpleObjectProperty(o));
 					j++;
 				}
 				list.add(oList);
