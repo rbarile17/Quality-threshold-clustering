@@ -116,7 +116,10 @@ public class ServerModel {
 	
 	public String saveFile(String file) throws IOException,ClassNotFoundException {
 		out.writeObject(FILE_SAVING);
+		System.out.println("comando");
+		out.writeObject(file);
 		String answer = (String)in.readObject();
+		System.out.println("risposta");
 		if(answer.equals(OK))
 			return "";
 		else

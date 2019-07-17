@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.ServerModel;
 import utility.ExceptionAlert;
@@ -25,6 +27,12 @@ public class DBLoaderController extends Controller{
 	
 	@FXML
 	private Button tabular;
+	
+	@FXML
+	private Button saveOnFile;
+	
+	@FXML
+	private TextField fileName;
 	
 	private ServerModel serverModel;
 	private LinkedList<LinkedList<String>> centroids;
@@ -44,7 +52,7 @@ public class DBLoaderController extends Controller{
 			TableColumn<List<StringProperty>, String> buttons = new TableColumn<List<StringProperty>, String>();
 			buttons.setCellValueFactory(data -> data.getValue().get(0));
 			table.getColumns().add(buttons);
-			int i=1;
+			int i=0;
 			for(String s : names) {
 				final int j = i;
 				TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
@@ -55,8 +63,7 @@ public class DBLoaderController extends Controller{
 						
 			for(LinkedList<String> l : centroids) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
-				oList.add(0, new SimpleStringProperty("View tuples"));
-				int j = 1;
+				int j = 0;
 				for(String s : l) {
 					oList.add(j, new SimpleStringProperty(s));
 					j++;
@@ -74,6 +81,22 @@ public class DBLoaderController extends Controller{
 			((ClustersTuplesController)newWindow(new Stage(), "../graphic/ClustersTuples.fxml")).initialize(serverModel, centroids);
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
+		}
+	}
+	
+	public void onSaveClick() throws ClassNotFoundException{
+		String name = fileName.getText();
+		if(name.equals("")) {
+			new ExceptionAlert("File name","File name cannot be empty",AlertType.WARNING);
+			return;
+		}
+		try {
+			String answer = serverModel.saveFile(name);
+			if(answer.equals("")) {
+				new ExceptionAlert("Saved!","File successfully saved",AlertType.INFORMATION);
+			}
+		} catch (IOException e) {
+			new ExceptionAlert("Connection lost","File not saved",AlertType.ERROR);
 		}
 	}
 }

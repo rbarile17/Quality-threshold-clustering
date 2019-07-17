@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javafx.beans.property.StringProperty;

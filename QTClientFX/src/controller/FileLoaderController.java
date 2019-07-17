@@ -24,18 +24,10 @@ public class FileLoaderController extends Controller{
 	@FXML
 	private TableView<List<StringProperty>> table;
 	
-	@FXML 
-	private Button saveOnFile;
-	
-	@FXML 
-	private TextField fileName;
-	
 	private ServerModel serverModel;
-	private MainController main;
 	
-	public void initialize(MainController main, ServerModel serverModel) {
+	public void initialize(ServerModel serverModel) {
 		this.serverModel = serverModel;
-		this.main = main;
 		
 		LinkedList<LinkedList<String>> centroids;
 		try {
@@ -64,22 +56,6 @@ public class FileLoaderController extends Controller{
 			
 		} catch (IOException e) {
 			new ExceptionAlert(e);
-		}
-	}
-	
-	public void onSaveAction() throws ClassNotFoundException{
-		String name = fileName.getText();
-		if(name.equals("")) {
-			new ExceptionAlert("File name","File name cannot be empty",AlertType.WARNING);
-			return;
-		}
-		try {
-			String answer = serverModel.saveFile(name);
-			if(answer.equals("")) {
-				new ExceptionAlert("Saved!","File successfully saved",AlertType.INFORMATION);
-			}
-		} catch (IOException e) {
-			new ExceptionAlert("Connection lost","File not saved",AlertType.ERROR);
 		}
 	}
 }

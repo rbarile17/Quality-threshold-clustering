@@ -50,7 +50,7 @@ public class ServerOneClient extends Thread {
 					 if(choice ==  FILE_SAVING)
 						 storeClusterInFile(data);
 					 else if (choice == DATA_SENDING){
-						 out.writeObject(data.toSet(kmeans.getC()));
+						 //out.writeObject(data.toSet(kmeans.getC()));
 					 }
 					 break;
 				 case FILE_LOADING:
@@ -126,9 +126,11 @@ public class ServerOneClient extends Thread {
 			try {
 				try {
 					String fileName = (String)in.readObject();
+					System.out.println("nome");
 					fileName += ".dmp";
-					kmeans.save("file.dmp", data);
+					kmeans.save(fileName, data);
 					out.writeObject(OK);
+					System.out.println("ok");
 				} catch (FileNotFoundException e) {
 					out.writeObject("Wrong path");
 				}
