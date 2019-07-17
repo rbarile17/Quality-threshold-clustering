@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import model.ServerModel;
 import utility.ExceptionAlert;
 
@@ -26,12 +27,10 @@ public class DBLoaderController extends Controller{
 	private Button tabular;
 	
 	private ServerModel serverModel;
-	private MainController main;
+	private LinkedList<LinkedList<String>> centroids;
 	
-	public void initialize (MainController main, ServerModel serverModel) {
+	public void initialize (ServerModel serverModel) {
 		this.serverModel = serverModel;
-		this.main = main;
-		LinkedList<LinkedList<String>> centroids;
 		LinkedList<String> names;
 
 		try {
@@ -71,6 +70,10 @@ public class DBLoaderController extends Controller{
 	}
 	
 	public void tabularClick() {
-		
+		try {
+			((ClustersTuplesController)newWindow(new Stage(), "../graphic/ClustersTuples.fxml")).initialize(serverModel, centroids);
+		} catch (IOException | NullPointerException e) {
+			new ExceptionAlert(e);
+		}
 	}
 }

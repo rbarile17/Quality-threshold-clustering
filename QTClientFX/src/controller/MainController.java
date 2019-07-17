@@ -1,19 +1,14 @@
 package controller;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import utility.ExceptionAlert;
@@ -48,10 +43,9 @@ public class MainController extends Controller{
 	
 	public void connectClick() {
 		try {
-			((SettingsController)newWindow(new Stage(),"../graphic/Settings.fxml")).initialize(this);
+			((SettingsController)newWindow(new Stage(), "../graphic/Settings.fxml")).initialize(this);
 		} catch(IOException | NullPointerException e) {
 			new ExceptionAlert(e);
-			e.printStackTrace();
 		}
 	}
 	
@@ -59,7 +53,8 @@ public class MainController extends Controller{
 		try {
 			try {
 				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
-					((DBLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()),"../graphic/DBLoader.fxml")).initialize(this, serverModel); 
+					((DBLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()), 
+													"../graphic/DBLoader.fxml")).initialize(serverModel); 
 			} catch (NumberFormatException e) {
 				new ExceptionAlert("Radius error","Radius must be a number!",AlertType.WARNING);
 			}
@@ -72,7 +67,8 @@ public class MainController extends Controller{
 		try {
 			
 			if (serverModel.loadFile(fileName.getText()) == true)
-				((FileLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()),"../graphic/FileLoader.fxml")).initialize(this, serverModel);
+				((FileLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()),
+												"../graphic/FileLoader.fxml")).initialize(serverModel);
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
         }
