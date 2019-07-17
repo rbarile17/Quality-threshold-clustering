@@ -36,10 +36,10 @@ public class DBLoaderController extends Controller{
 	
 	private ServerModel serverModel;
 	private LinkedList<LinkedList<String>> centroids;
+	LinkedList<String> names;
 	
 	public void initialize (ServerModel serverModel) {
 		this.serverModel = serverModel;
-		LinkedList<String> names;
 
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();
@@ -49,9 +49,6 @@ public class DBLoaderController extends Controller{
 			
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 			
-			TableColumn<List<StringProperty>, String> buttons = new TableColumn<List<StringProperty>, String>();
-			buttons.setCellValueFactory(data -> data.getValue().get(0));
-			table.getColumns().add(buttons);
 			int i=0;
 			for(String s : names) {
 				final int j = i;
@@ -78,7 +75,8 @@ public class DBLoaderController extends Controller{
 	
 	public void tabularClick() {
 		try {
-			((ClustersTuplesController)newWindow(new Stage(), "../graphic/ClustersTuples.fxml")).initialize(serverModel, centroids);
+			((ClustersTuplesController)newWindow(new Stage(), "../graphic/ClustersTuples.fxml"))
+			.initialize(serverModel, centroids, names);
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}
@@ -87,16 +85,16 @@ public class DBLoaderController extends Controller{
 	public void onSaveClick() throws ClassNotFoundException{
 		String name = fileName.getText();
 		if(name.equals("")) {
-			new ExceptionAlert("File name","File name cannot be empty",AlertType.WARNING);
+			new ExceptionAlert("File name", "File name cannot be empty",AlertType.WARNING);
 			return;
 		}
 		try {
 			String answer = serverModel.saveFile(name);
 			if(answer.equals("")) {
-				new ExceptionAlert("Saved!","File successfully saved",AlertType.INFORMATION);
+				new ExceptionAlert("Saved!", "File successfully saved",AlertType.INFORMATION);
 			}
 		} catch (IOException e) {
-			new ExceptionAlert("Connection lost","File not saved",AlertType.ERROR);
+			new ExceptionAlert("Connection lost", "File not saved",AlertType.ERROR);
 		}
 	}
 }

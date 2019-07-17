@@ -6,7 +6,7 @@ import java.io.Serializable;
 import data.Tuple;
 import data.Data;
 
-class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
+public class Cluster implements Iterable<Integer>, Comparable<Cluster>,Serializable {
 	/**
 	 * 
 	 */

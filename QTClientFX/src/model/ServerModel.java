@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
+import java.util.List;
 
 import javafx.scene.control.Alert.AlertType;
 import utility.ExceptionAlert;
@@ -17,6 +18,7 @@ public class ServerModel {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";
+	private static final int DATA_RECEIVING = 4;
 	private static final int FILE_LOADING = 3;
 	private static final int FILE_SAVING = 2;
 	private static final int DB_CLUSTERING = 1;
@@ -103,12 +105,24 @@ public class ServerModel {
 		return data;
 	}
 	
+	public LinkedList<List<List<String>>> getData() throws IOException{
+		LinkedList<List<List<String>>> data = null;
+		
+		out.writeObject(DATA_RECEIVING);
+		
+		try {
+			data = (LinkedList<List<List<String>>>) in.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return data;
+	}
+	
 	public void close() {
 		try {
 			out.writeObject(CONNECTION_CLOSING);
-			System.out.println("Sto per chiudere");
 			server.close();
-			System.out.println("Chiuso");
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}

@@ -13,6 +13,8 @@ import database.DatabaseConnectionException;
 import database.EmptySetException;
 import java.sql.SQLException;
 import database.TableSchema;
+import mining.Cluster;
+import mining.ClusterSet;
 
 public class Data {
 	private List<Example> data = new ArrayList<Example>(); 
@@ -23,31 +25,6 @@ public class Data {
 	public Data(String table) throws NoValueException{		 
 		
 		attributeSet = new LinkedList<Attribute>();
-		
-		/*
-		TreeSet<String> outLookValues = new TreeSet<String>();
-		outLookValues.add("Overcast");
-		outLookValues.add("Rain");
-		outLookValues.add("Sunny");
-		attributeSet.add(0, new DiscreteAttribute("Outlook", 0, outLookValues));
-		
-		attributeSet.add(1,  new ContinuousAttribute("Temperture", 1, 0, 30.3));
-
-		TreeSet<String> humidityValues = new TreeSet<String>();
-		humidityValues.add("High");
-		humidityValues.add("Normal");
-		attributeSet.add(2, new DiscreteAttribute("Humidity",2, humidityValues));
-
-		TreeSet<String> windValues = new TreeSet<String>();
-		windValues.add("Weak");
-		windValues.add("Strong");
-		attributeSet.add(3, new DiscreteAttribute("Wind",3, windValues));
-		
-		TreeSet<String> playTennisValues = new TreeSet<String>();
-		playTennisValues.add("Yes");
-		playTennisValues.add("No");
-		attributeSet.add(4, new DiscreteAttribute("PlayTennis",4, playTennisValues));
-		*/
 
 		DbAccess db;
 		try {
@@ -107,6 +84,20 @@ public class Data {
 		}
 		
 		return names;
+	}
+	
+	public List<List<List<String>>> toList(ClusterSet C) {
+		List<List<List<String>>> data = new LinkedList<List<List<String>>>();
+		
+		for(Cluster c :  C) {
+			LinkedList<List<String>> l = new LinkedList<List<String>>();
+			for(int i : c) {
+				l.add(this.getItemSet(i).toList());
+			}
+			data.add(l);
+		}
+		
+		return data;
 	}
 	
 	public Tuple getItemSet(int index) {
