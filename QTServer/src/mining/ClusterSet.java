@@ -2,8 +2,8 @@ package mining;
 
 import java.util.TreeSet;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import data.Data;
@@ -23,18 +23,28 @@ public class ClusterSet implements Iterable<Cluster>,Serializable {
 	}
 	
 	public String toString() {
-		String out = "";
-		Iterator<Cluster> it = C.iterator();
-		int i = 1;
-		while(it.hasNext()) {
-			out += i+":"+it.next().toString()+'\n';
-			i++;
-		}
-		return out;
+		String str = "";
+		
+		for(Cluster c : C) 
+			str += c + "\n";
+		
+		return str;
 	}
 	
-	public List<List<Object>> toList() {
-		List<List<Object>> l = new ArrayList<List<Object>>();
+	public String toString(Data data) {
+		String str = "";
+		
+		int i=0;
+		for(Cluster c : C) {
+			if (c != null)
+				str += (i++) +":"+c.toString(data)+"\n";
+			str += "\n";
+		}
+		return str;
+	}
+	
+	public List<List<String>> toList() {
+		List<List<String>> l = new LinkedList<List<String>>();
 		
 		for(Cluster c : this.C) {
 			l.add(c.getCentroid().toList());
@@ -46,19 +56,4 @@ public class ClusterSet implements Iterable<Cluster>,Serializable {
 	public Iterator<Cluster> iterator() {
 		return C.iterator();
 	}
-	
-	public String toString(Data data){
-		String str="";
-		Iterator<Cluster> it = C.iterator();
-		int i = 1;
-		while(it.hasNext()) {
-			Cluster c = it.next();
-			if (c !=null){
-				str+= i + ":" + c.toString(data)+"\n";
-			}
-			i++;
-		}
-		return str;
-	}
-
 }

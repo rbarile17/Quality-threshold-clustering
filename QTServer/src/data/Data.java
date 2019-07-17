@@ -49,8 +49,7 @@ public class Data {
 		playTennisValues.add("No");
 		attributeSet.add(4, new DiscreteAttribute("PlayTennis",4, playTennisValues));
 		*/
-		
-		
+
 		DbAccess db;
 		try {
 			db = new DbAccess();
@@ -67,8 +66,9 @@ public class Data {
 			for(int i = 0; i < tableSchema.getNumberOfAttributes();i++) {
 				TableSchema.Column col = tableSchema.getColumn(i);
 				if(col.isNumber()) {
-					attributeSet.add(i,new ContinuousAttribute(col.getColumnName(), i, (double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MIN),
-							(double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MAX)));
+					attributeSet.add(i,new ContinuousAttribute(col.getColumnName(), i, 
+									(double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MIN),
+									(double)tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MAX)));
 				}
 				else {
 					TreeSet<String> distinctValues = new TreeSet<String>();
@@ -99,30 +99,44 @@ public class Data {
 		return attributeSet.get(index);
 	}
 	
-	public String toString(){
-		String output = new String();
-		output = "";
-		for(int i = 0; i < this.getNumberOfAttributes(); i++) {
-			output = output+attributeSet.get(i).getName()+",";
+	public List<String> getAttributesNames() {
+		List<String> names = new LinkedList<String>();  
+		
+		for(Attribute a : attributeSet) {
+			names.add(a.toString());
 		}
-		output = output+"\n";
-		for(int i = 0; i < numberOfExamples; i++) {
-			output = output + (i+1) + ": ";
-			for(int j = 0; j < this.getNumberOfAttributes() ; j++ )
-				output = output + data.get(i).get(j)+",";
-			output = output +"\n";
-		}
-		return output;
+		
+		return names;
 	}
-
-	public Tuple getItemSet(int index){
-		Tuple tuple=new Tuple(attributeSet.size());
-		for(int i=0;i<attributeSet.size();i++) {
-			if(attributeSet.get(i) instanceof DiscreteAttribute)
-				tuple.add(new DiscreteItem((DiscreteAttribute)attributeSet.get(i),(String)data.get(index).get(i)),i);
+	
+	public Tuple getItemSet(int index) {
+		Tuple tuple = new Tuple(this.getNumberOfAttributes());
+		
+		int i=0;
+		for(Attribute att : attributeSet) {
+			if (att instanceof DiscreteAttribute)
+				tuple.add(new DiscreteItem((DiscreteAttribute) att, (String) this.getAttributeValue(index, i)), i);
 			else
-				tuple.add(new ContinuousItem((ContinuousAttribute)attributeSet.get(i),(Double)data.get(index).get(i)),i);
+				tuple.add(new ContinuousItem((ContinuousAttribute) att, (Double) this.getAttributeValue(index, i)), i);
+			i++;
 		}
+		
 		return tuple;
+	}
+	
+	public String toString(){
+		String str="";
+		
+		for(Attribute att : attributeSet) 
+			str += att + " ";
+		str += "\n";
+		
+		for(Example e : data) {
+			for(Object o : e) 
+				str += o + " ";
+			str += "\n";
+		}
+		
+		return str;
 	}
 }

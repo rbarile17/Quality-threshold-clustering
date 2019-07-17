@@ -12,7 +12,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="74.0" text="Centroids">
+      <Label fx:id="centroidsLabel" layoutX="46.0" layoutY="74.0" text="Centroids">
          <font>
             <Font size="17.0" />
          </font>

@@ -52,7 +52,7 @@ public class QTMiner {
 		 }
 		
 		if (numClusters == 1) {
-			throw new ClusteringRadiusException("Only one cluster found, try bigger radius.");
+			throw new ClusteringRadiusException("Only one cluster found, try smaller radius.");
 		}
 		return numClusters;
 	}

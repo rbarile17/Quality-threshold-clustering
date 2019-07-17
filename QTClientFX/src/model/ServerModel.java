@@ -6,7 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+
+import javafx.scene.control.Alert.AlertType;
 import utility.ExceptionAlert;
 
 public class ServerModel {
@@ -14,6 +16,7 @@ public class ServerModel {
 	private Socket server;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
+	private static final String OK = "OK";
 	
 	public ServerModel(String ip, String port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), Integer.parseInt(port));
@@ -22,15 +25,14 @@ public class ServerModel {
 	}
 
 	public boolean loadFile(String fileName) throws IOException {
-		String OK = "OK";
         out.writeObject(3);
         out.writeObject(fileName);
         
-        String answer;
+        String serverAnswer;
 		try {
-			answer = (String) in.readObject();
-	        if (!answer.equals(OK)) {
-	        	new ExceptionAlert(answer);
+			serverAnswer = (String) in.readObject();
+	        if (!serverAnswer.equals(OK)) {
+	        	new ExceptionAlert(serverAnswer);
 	        	return false;
 	        }
 		} catch (ClassNotFoundException e) {
@@ -45,9 +47,9 @@ public class ServerModel {
         out.writeObject(0);
         out.writeObject(tableName);
         try {
-        	String loadResult = (String)in.readObject();
-            if (!loadResult.equals("OK")) {
-            	new ExceptionAlert(loadResult);
+        	String serverAnswer = (String)in.readObject();
+            if (!serverAnswer.equals(OK)) {
+            	new ExceptionAlert(serverAnswer);
             	return false;
             }
         } catch(ClassNotFoundException e) {
@@ -58,10 +60,25 @@ public class ServerModel {
         return true;
 	}
 	
-	public int getCentroidsNumber() throws IOException {
-		int centroidsNumber = -1;
+	public LinkedList<String> getAttributesNames() throws IOException{
+		LinkedList<String> names = null;
 		
 		try {
+			names = (LinkedList<String>) in.readObject();
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return names;
+	}
+	
+	public int getCentroidsNumber() throws IOException {
+		int centroidsNumber = 1;
+		
+		try {
+			String serverAnswer = (String) in.readObject();
+			if(!serverAnswer.equals(OK))
+				new ExceptionAlert(serverAnswer, AlertType.INFORMATION);
 			centroidsNumber = (int) in.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -70,11 +87,11 @@ public class ServerModel {
 		return centroidsNumber;
 	}
 	
-	public ArrayList<ArrayList<Object>> getCentroids() throws IOException {
-		ArrayList<ArrayList<Object>> data = null;
+	public LinkedList<LinkedList<String>> getCentroids() throws IOException {
+		LinkedList<LinkedList<String>> data = null;
 
 		try {
-			data = (ArrayList<ArrayList<Object>>) in.readObject();
+			data = (LinkedList<LinkedList<String>>) in.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

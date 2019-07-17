@@ -82,7 +82,7 @@ public class TableData {
 		return valueSet;
 	}
 
-	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException, NoValueException {
+	public  Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate) throws SQLException, NoValueException {
 		Statement statement;
 		Object value = null;
 		String aggregateOp = "";
@@ -99,7 +99,7 @@ public class TableData {
 		ResultSet rs = statement.executeQuery(query);
 		if (rs.next()) {
 				if(column.isNumber())
-					value = rs.getFloat(1);
+					value = rs.getDouble(1);
 				else
 					value = rs.getString(1);
 			

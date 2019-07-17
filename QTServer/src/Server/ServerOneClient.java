@@ -78,7 +78,7 @@ public class ServerOneClient extends Thread {
 				out.writeObject("OK");
 				ClusterSet C = (ClusterSet) serialIn.readObject();
 				serialIn.close();
-				List<List<Object>> l = C.toList();
+				List<List<String>> l = C.toList();
 				out.writeObject(l);
 			} catch(FileNotFoundException e) {
 				out.writeObject("File not found.");
@@ -92,10 +92,18 @@ public class ServerOneClient extends Thread {
 		 try {
 			 double radius = (double) in.readObject();
 			 kmeans = new QTMiner(radius);
-			 int result = kmeans.compute(data);
+			 int result = 1;
+			 try {
+				 result = kmeans.compute(data);
+				 out.writeObject("OK");
+			 } catch (ClusteringRadiusException e1) {
+				 out.writeObject(e1.getMessage());
+			 }
 			 out.writeObject(result);
+			 List<String> names = data.getAttributesNames();
+			 out.writeObject(names);
 			 out.writeObject(kmeans.getC().toList());
-		 } catch (IOException | ClassNotFoundException | EmptyDatasetException | ClusteringRadiusException e) {
+		 } catch (IOException | ClassNotFoundException | EmptyDatasetException e) {
 			 System.out.println(e);
 		 }
 	 }

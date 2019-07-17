@@ -1,8 +1,8 @@
 package data;
 
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.io.Serializable;
 
@@ -54,11 +54,11 @@ public class Tuple implements Serializable{
 		return sumD/clusteredData.size();
 	}
 	
-	public List<Object> toList() {
-		List<Object> l = new ArrayList<Object>();
+	public List<String> toList() {
+		List<String> l = new LinkedList<String>();
 		
 		for(int i=0; i<this.getLength(); i++) {
-			l.add(tuple[i].getValue());
+			l.add(tuple[i].toString());
 		}
 		
 		return l;

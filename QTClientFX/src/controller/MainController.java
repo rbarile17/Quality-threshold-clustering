@@ -54,7 +54,7 @@ public class MainController extends Controller{
 		try {
 			try {
 				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
-					((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
+					((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this, serverModel); 
 			} catch (NumberFormatException e) {
 				new ExceptionAlert("Radius must be a number!");
 			}
