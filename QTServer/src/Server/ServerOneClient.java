@@ -46,11 +46,11 @@ public class ServerOneClient extends Thread {
 				 case DB_CLUSTERING:
 					 data = learningFromDB();
 					 compute(data);
-					 int choise = (int)in.readObject();
-					 if(choise ==  FILE_SAVING)
+					 int choice = (int)in.readObject();
+					 if(choice ==  FILE_SAVING)
 						 storeClusterInFile(data);
-					 else {
-						 //altre scelte
+					 else if (choice == DATA_SENDING){
+						 out.writeObject(data.toSet(kmeans.getC()));
 					 }
 					 break;
 				 case FILE_LOADING:
@@ -128,17 +128,13 @@ public class ServerOneClient extends Thread {
 					String fileName = (String)in.readObject();
 					fileName += ".dmp";
 					kmeans.save("file.dmp", data);
+					out.writeObject(OK);
 				} catch (FileNotFoundException e) {
-				out.writeObject(OK);
-				e.printStackTrace();
+					out.writeObject("Wrong path");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} /*catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}*/
+			} 
 			System.out.println("finito");
 	 }
 }
