@@ -3,6 +3,10 @@ package controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.sun.prism.paint.Color;
+
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -11,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.ServerModel;

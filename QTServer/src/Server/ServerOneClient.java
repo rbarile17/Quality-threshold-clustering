@@ -97,7 +97,7 @@ public class ServerOneClient extends Thread {
 				out.writeObject("File not found.");
 			}
 		 } catch (IOException | ClassNotFoundException  e) {
-			 System.out.println(e);
+			 e.printStackTrace();
 		 } 
 	 }
 	 
@@ -117,7 +117,7 @@ public class ServerOneClient extends Thread {
 			 out.writeObject(names);
 			 out.writeObject(kmeans.getC().toList());
 		 } catch (IOException | ClassNotFoundException | EmptyDatasetException e) {
-			 System.out.println(e);
+			 e.printStackTrace();
 		 }
 	 }
 	 
