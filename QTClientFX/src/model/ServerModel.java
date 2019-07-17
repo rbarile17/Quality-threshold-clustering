@@ -78,7 +78,7 @@ public class ServerModel {
 		try {
 			String serverAnswer = (String) in.readObject();
 			if(!serverAnswer.equals(OK))
-				new ExceptionAlert(serverAnswer, AlertType.INFORMATION);
+				new ExceptionAlert("Message",serverAnswer, AlertType.INFORMATION);
 			centroidsNumber = (int) in.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -101,7 +101,10 @@ public class ServerModel {
 	
 	public void close() {
 		try {
+			out.writeObject(-1);
+			System.out.println("Sto per chiudere");
 			server.close();
+			System.out.println("Chiuso");
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}

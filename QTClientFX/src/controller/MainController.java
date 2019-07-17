@@ -4,6 +4,8 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -56,7 +58,7 @@ public class MainController extends Controller{
 				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
 					((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this, serverModel); 
 			} catch (NumberFormatException e) {
-				new ExceptionAlert("Radius must be a number!");
+				new ExceptionAlert("Radius error","Radius must be a number!",AlertType.WARNING);
 			}
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);

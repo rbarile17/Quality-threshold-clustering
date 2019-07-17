@@ -31,9 +31,9 @@ public class ServerOneClient extends Thread {
 	 public void run() {
 		 System.out.println("Client accepted");
 		 Data data;
-
+		 Boolean active = true;
 		 try {
-			 while (true) {
+			 while (active) {
 				 int answer = (int) in.readObject();
 				 switch (answer) {
 				 case 0:
@@ -45,12 +45,13 @@ public class ServerOneClient extends Thread {
 					 learningFromFile();
 					 break;
 				 default:
-					 break;
+					 active = false;
 				 }
 			 }
 		 } catch (IOException | ClassNotFoundException e ){
 			 e.printStackTrace();
 		 }
+		 System.out.println("Client connection closed");
 	 }
 	 
 	 private Data learningFromDB() {

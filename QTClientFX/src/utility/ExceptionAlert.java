@@ -31,8 +31,16 @@ public class ExceptionAlert extends Alert {
 		super(at);
 		
         this.setTitle("Exception");
-        this.setHeaderText("Message");
+        this.setHeaderText(at.toString());
         this.setContentText(s);
+        this.show();
+	}
+	
+	public ExceptionAlert(String subTitle, String content, AlertType at) {
+		super(at);
+        this.setTitle(at.toString());
+        this.setHeaderText(subTitle);
+        this.setContentText(content);
         this.show();
 	}
 	

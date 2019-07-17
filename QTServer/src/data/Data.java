@@ -20,8 +20,7 @@ public class Data {
 	private int numberOfExamples;
 	private List<Attribute> attributeSet;
 	
-	public Data(String table) throws NoValueException{	
-		numberOfExamples=14;		 
+	public Data(String table) throws NoValueException{		 
 		
 		attributeSet = new LinkedList<Attribute>();
 		
@@ -62,6 +61,7 @@ public class Data {
 			TableSchema tableSchema = new TableSchema(db,table);
 			
 			data = tableData.getDistinctTransactions();
+			numberOfExamples=data.size();	
 			
 			for(int i = 0; i < tableSchema.getNumberOfAttributes();i++) {
 				TableSchema.Column col = tableSchema.getColumn(i);
