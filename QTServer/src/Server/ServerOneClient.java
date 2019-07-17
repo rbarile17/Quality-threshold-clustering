@@ -20,6 +20,13 @@ public class ServerOneClient extends Thread {
 	 private ObjectInputStream in;
 	 private ObjectOutputStream out;
 	 private QTMiner kmeans;
+
+	 private static final int FILE_LOADING = 3;
+	 private static final int FILE_SAVING = 2;
+	 private static final int DB_CLUSTERING = 1;
+	 private static final int CONNECTION_CLOSING = -1;
+	 private static final int DATA_SENDING = 4;
+	 private static final String OK = "OK";
 	 
 	 public ServerOneClient(Socket s) throws IOException {
 		 this.socket = s;
@@ -36,12 +43,17 @@ public class ServerOneClient extends Thread {
 			 while (active) {
 				 int answer = (int) in.readObject();
 				 switch (answer) {
-				 case 0:
+				 case DB_CLUSTERING:
 					 data = learningFromDB();
 					 compute(data);
-					 //storeClusterInFile(data);
+					 int choise = (int)in.readObject();
+					 if(choise ==  FILE_SAVING)
+						 storeClusterInFile(data);
+					 else {
+						 //altre scelte
+					 }
 					 break;
-				 case 3:
+				 case FILE_LOADING:
 					 learningFromFile();
 					 break;
 				 default:
@@ -109,17 +121,17 @@ public class ServerOneClient extends Thread {
 		 }
 	 }
 	 
-	 private void storeClusterInFile(Data data) {
+	 private void storeClusterInFile(Data data) throws ClassNotFoundException{
 		 System.out.println("sto");
-			try {/*
-				System.out.println("choose "+in.readObject());
-				System.out.println("Waiting file name");
-				String fileName = (String)in.readObject();
-				fileName += ".dmp";*/
-				kmeans.save("file.dmp", data);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+			try {
+				try {
+					String fileName = (String)in.readObject();
+					fileName += ".dmp";
+					kmeans.save("file.dmp", data);
+				} catch (FileNotFoundException e) {
+				out.writeObject(OK);
 				e.printStackTrace();
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

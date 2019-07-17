@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public abstract class Controller {
 
-	private Controller newWindow(Stage stage,String path) throws IOException, NullPointerException {
+	protected Controller newWindow(Stage stage,String path) throws IOException, NullPointerException {
 		FXMLLoader loader = new FXMLLoader();
 		Pane root = loader.load(getClass().getResource(path).openStream());  
 		Controller controller = (Controller)loader.getController();

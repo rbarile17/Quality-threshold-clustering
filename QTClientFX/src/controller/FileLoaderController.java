@@ -8,9 +8,12 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.ServerModel;
 import utility.ExceptionAlert;
 
@@ -20,6 +23,12 @@ public class FileLoaderController extends Controller{
 	
 	@FXML
 	private TableView<List<StringProperty>> table;
+	
+	@FXML 
+	private Button saveOnFile;
+	
+	@FXML 
+	private TextField fileName;
 	
 	private ServerModel serverModel;
 	private MainController main;
@@ -56,6 +65,21 @@ public class FileLoaderController extends Controller{
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
-		
+	}
+	
+	public void onSaveAction() throws ClassNotFoundException{
+		String name = fileName.getText();
+		if(name.equals("")) {
+			new ExceptionAlert("File name","File name cannot be empty",AlertType.WARNING);
+			return;
+		}
+		try {
+			String answer = serverModel.saveFile(name);
+			if(answer.equals("")) {
+				new ExceptionAlert("Saved!","File successfully saved",AlertType.INFORMATION);
+			}
+		} catch (IOException e) {
+			new ExceptionAlert("Connection lost","File not saved",AlertType.ERROR);
+		}
 	}
 }

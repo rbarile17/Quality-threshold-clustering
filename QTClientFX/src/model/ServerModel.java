@@ -17,6 +17,10 @@ public class ServerModel {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";
+	private static final int FILE_LOADING = 3;
+	private static final int FILE_SAVING = 2;
+	private static final int DB_CLUSTERING = 1;
+	private static final int CONNECTION_CLOSING = -1;
 	
 	public ServerModel(String ip, String port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), Integer.parseInt(port));
@@ -25,7 +29,7 @@ public class ServerModel {
 	}
 
 	public boolean loadFile(String fileName) throws IOException {
-        out.writeObject(3);
+        out.writeObject(FILE_LOADING);
         out.writeObject(fileName);
         
         String serverAnswer;
@@ -44,7 +48,7 @@ public class ServerModel {
 	}
 	
 	public boolean clusterDBTable(String tableName, double radius) throws IOException {
-        out.writeObject(0);
+        out.writeObject(DB_CLUSTERING);
         out.writeObject(tableName);
         try {
         	String serverAnswer = (String)in.readObject();
@@ -101,13 +105,22 @@ public class ServerModel {
 	
 	public void close() {
 		try {
-			out.writeObject(-1);
+			out.writeObject(CONNECTION_CLOSING);
 			System.out.println("Sto per chiudere");
 			server.close();
 			System.out.println("Chiuso");
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
+	}
+	
+	public String saveFile(String file) throws IOException,ClassNotFoundException {
+		out.writeObject(FILE_SAVING);
+		String answer = (String)in.readObject();
+		if(answer.equals(OK))
+			return "";
+		else
+			return answer;
 	}
  }
 
