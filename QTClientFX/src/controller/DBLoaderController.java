@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,6 +21,9 @@ public class DBLoaderController extends Controller{
 	
 	@FXML
 	private TableView<List<StringProperty>> table;
+	
+	@FXML
+	private Button tabular;
 	
 	private ServerModel serverModel;
 	private MainController main;
@@ -38,7 +42,10 @@ public class DBLoaderController extends Controller{
 			
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 			
-			int i=0;
+			TableColumn<List<StringProperty>, String> buttons = new TableColumn<List<StringProperty>, String>();
+			buttons.setCellValueFactory(data -> data.getValue().get(0));
+			table.getColumns().add(buttons);
+			int i=1;
 			for(String s : names) {
 				final int j = i;
 				TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
@@ -49,7 +56,8 @@ public class DBLoaderController extends Controller{
 						
 			for(LinkedList<String> l : centroids) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
-				int j = 0;
+				oList.add(0, new SimpleStringProperty("View tuples"));
+				int j = 1;
 				for(String s : l) {
 					oList.add(j, new SimpleStringProperty(s));
 					j++;
@@ -60,5 +68,9 @@ public class DBLoaderController extends Controller{
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
+	}
+	
+	public void tabularClick() {
+		
 	}
 }

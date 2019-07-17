@@ -39,7 +39,7 @@ public class Tuple implements Serializable{
 	
 	public double getDistance(Tuple obj) {
 		double distance = 0.0;
-		for (int i = 0; i < this.getLength();i++) {
+		for (int i = 0; i < this.getLength(); i++) {
 			distance = distance + tuple[i].distance(obj.get(i).getValue());
 		}
 		return distance;

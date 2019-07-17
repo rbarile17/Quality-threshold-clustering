@@ -19,8 +19,8 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <TableView fx:id="table" layoutX="46.0" layoutY="110.0" prefHeight="119.0" prefWidth="510.0" />
-      <Button layoutX="196.0" layoutY="245.0" mnemonicParsing="false" text="Textual" />
+      <TableView fx:id="table" layoutX="44.0" layoutY="110.0" prefHeight="119.0" prefWidth="512.0" />
+      <Button fx:id="tabular" layoutX="196.0" layoutY="245.0" mnemonicParsing="false" onAction="#tabularCLick" text="Tabular" />
       <Button layoutX="267.0" layoutY="245.0" mnemonicParsing="false" text="Graphical" />
       <Label layoutX="46.0" layoutY="291.0" text="Save your clustering">
          <font>
