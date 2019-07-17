@@ -1,8 +1,11 @@
 package controller;
 
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -45,18 +48,18 @@ public class MainController extends Controller{
 	
 	public void connectClick() {
 		try {
-			((SettingsController)newWindow("../graphic/Settings.fxml")).initialize(this);
+			((SettingsController)newWindow(new Stage(),"../graphic/Settings.fxml")).initialize(this);
 		} catch(IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 			e.printStackTrace();
 		}
 	}
 	
-	public void loadDBCLick() {
+	public void loadDBCLick(ActionEvent event) {
 		try {
 			try {
 				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
-					((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this, serverModel); 
+					((DBLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()),"../graphic/DBLoader.fxml")).initialize(this, serverModel); 
 			} catch (NumberFormatException e) {
 				new ExceptionAlert("Radius error","Radius must be a number!",AlertType.WARNING);
 			}
@@ -65,10 +68,11 @@ public class MainController extends Controller{
         }
 	}
 	
-	public void loadFileClick() {
+	public void loadFileClick(ActionEvent event) {
 		try {
+			
 			if (serverModel.loadFile(fileName.getText()) == true)
-				((FileLoaderController)newWindow("../graphic/FileLoader.fxml")).initialize(this, serverModel);
+				((FileLoaderController)newWindow(((Stage)((Node)event.getSource()).getScene().getWindow()),"../graphic/FileLoader.fxml")).initialize(this, serverModel);
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
         }
@@ -90,16 +94,4 @@ public class MainController extends Controller{
 		loadFile.setDisable(true);
 	}
 	
-	private Controller newWindow(String path) throws IOException, NullPointerException {
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		Pane root = loader.load(getClass().getResource(path).openStream());  
-		Controller controller = (Controller)loader.getController();
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("../graphic/application.css").toExternalForm());
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
-		return controller;
-	}
 }
