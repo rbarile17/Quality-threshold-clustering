@@ -41,10 +41,21 @@ public class ServerModel {
 		return true;
 	}
 	
-	public void clusterDBTable(String tableName, double radius) throws IOException {
+	public boolean clusterDBTable(String tableName, double radius) throws IOException {
         out.writeObject(0);
         out.writeObject(tableName);
+        try {
+        	String loadResult = (String)in.readObject();
+            if (!loadResult.equals("OK")) {
+            	new ExceptionAlert(loadResult);
+            	return false;
+            }
+        } catch(ClassNotFoundException e) {
+        	e.printStackTrace();
+        	return false;
+        }
         out.writeObject(radius);
+        return true;
 	}
 	
 	public int getCentroidsNumber() throws IOException {

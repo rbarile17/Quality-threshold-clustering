@@ -6,10 +6,13 @@ import java.util.TreeSet;
 import java.util.ArrayList;
 import database.TableData;
 import database.Example;
+import database.NoValueException;
+import database.QUERY_TYPE;
 import database.DbAccess;
 import database.DatabaseConnectionException;
 import database.EmptySetException;
 import java.sql.SQLException;
+import database.TableSchema;
 
 public class Data {
 	private List<Example> data = new ArrayList<Example>(); 
@@ -17,11 +20,12 @@ public class Data {
 	private int numberOfExamples;
 	private List<Attribute> attributeSet;
 	
-	public Data(String table){	
+	public Data(String table) throws NoValueException{	
 		numberOfExamples=14;		 
 		
 		attributeSet = new LinkedList<Attribute>();
 		
+		/*
 		TreeSet<String> outLookValues = new TreeSet<String>();
 		outLookValues.add("Overcast");
 		outLookValues.add("Rain");
@@ -44,6 +48,8 @@ public class Data {
 		playTennisValues.add("Yes");
 		playTennisValues.add("No");
 		attributeSet.add(4, new DiscreteAttribute("PlayTennis",4, playTennisValues));
+		*/
+		
 		
 		DbAccess db;
 		try {
@@ -53,7 +59,25 @@ public class Data {
 			} catch (DatabaseConnectionException exc) {
 				System.out.println(exc.getMessage());
 			}
-			data = new TableData(db).getDistinctTransactions(table);
+			TableData tableData = new TableData(db,table);
+			TableSchema tableSchema = new TableSchema(db,table);
+			
+			data = tableData.getDistinctTransactions();
+			
+			for(int i = 0; i < tableSchema.getNumberOfAttributes();i++) {
+				TableSchema.Column col = tableSchema.getColumn(i);
+				if(col.isNumber()) {
+					attributeSet.add(i,new ContinuousAttribute(col.getColumnName(), i, (double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MIN),
+							(double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MAX)));
+				}
+				else {
+					TreeSet<String> distinctValues = new TreeSet<String>();
+					distinctValues.addAll(tableData.getDistinctColumnValues(table, col));
+					attributeSet.add(i , new DiscreteAttribute(col.getColumnName(),i, distinctValues ));
+				}
+			}
+			
+			
 		} catch (SQLException  | EmptySetException e ) {
 			e.printStackTrace();
 		}

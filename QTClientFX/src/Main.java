@@ -25,6 +25,7 @@ public class Main extends Application {
 					e1.printStackTrace();
 				}
 			});
+			primaryStage.setTitle("QT Clustering");
 			primaryStage.show();
 		} catch(IOException | NullPointerException e) {
 			new ExceptionAlert(e);

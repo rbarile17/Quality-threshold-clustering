@@ -13,15 +13,16 @@ import database.TableSchema.Column;
 public class TableData {
 
 	DbAccess db;
-
-	public TableData(DbAccess db) {
+	TableSchema tSchema;
+	
+	public TableData(DbAccess db,String table) throws SQLException {
 		this.db=db;
+		tSchema = new TableSchema(db,table);
 	}
 
-	public List<Example> getDistinctTransactions(String table) throws SQLException, EmptySetException{
+	public List<Example> getDistinctTransactions() throws SQLException, EmptySetException{
 		LinkedList<Example> transSet = new LinkedList<Example>();
 		Statement statement;
-		TableSchema tSchema=new TableSchema(db, table);
 
 		String query="select distinct ";
 	
@@ -33,7 +34,7 @@ public class TableData {
 		}
 		if(tSchema.getNumberOfAttributes()==0)
 			throw new SQLException();
-		query += (" FROM "+table);
+		query += (" FROM "+tSchema.getTableName());
 		
 		statement = db.getConnection().createStatement();
 		ResultSet rs = statement.executeQuery(query);
@@ -56,10 +57,9 @@ public class TableData {
 
 	}
 	
-	public Set<Object> getDistinctColumnValues(String table,Column column) throws SQLException{
-		Set<Object> valueSet = new TreeSet<Object>();
+	public Set<String> getDistinctColumnValues(String table,Column column) throws SQLException{
+		Set<String> valueSet = new TreeSet<String>();
 		Statement statement;
-		TableSchema tSchema = new TableSchema(db, table);
 
 		String query="select distinct ";
 		
@@ -71,7 +71,7 @@ public class TableData {
 		ResultSet rs = statement.executeQuery(query);
 		while (rs.next()) {
 			if(column.isNumber())
-				valueSet.add(rs.getDouble(1));
+				valueSet.add(String.valueOf(rs.getDouble(1)));
 			else
 				valueSet.add(rs.getString(1));			
 		}
@@ -84,7 +84,6 @@ public class TableData {
 
 	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException, NoValueException {
 		Statement statement;
-		TableSchema tSchema = new TableSchema(db,table);
 		Object value = null;
 		String aggregateOp = "";
 		
@@ -113,9 +112,4 @@ public class TableData {
 		return value;
 
 	}
-
-	
-
-	
-
 }

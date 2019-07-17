@@ -12,6 +12,7 @@ import mining.QTMiner;
 import mining.ClusterSet;
 import mining.ClusteringRadiusException;
 import data.EmptyDatasetException;
+import database.NoValueException;
 import data.Data;
 
 public class ServerOneClient extends Thread {
@@ -55,8 +56,13 @@ public class ServerOneClient extends Thread {
 	 private Data learningFromDB() {
 		 try {
 			 String table = (String) in.readObject();
-			 Data data = new Data(table);
-			 return data;
+			 try {
+				 Data data = new Data(table);
+				 out.writeObject("OK");
+				 return data;
+			 } catch (NoValueException e) {
+				 out.writeObject(e.getMessage());
+			 }
 		 }
 		 catch (IOException | ClassNotFoundException e) {
 			 e.printStackTrace();

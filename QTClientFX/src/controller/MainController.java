@@ -52,9 +52,12 @@ public class MainController extends Controller{
 	
 	public void loadDBCLick() {
 		try {
-            serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText()));
-            ((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
-            
+			try {
+				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
+					((DBLoaderController)newWindow("../graphic/DBLoader.fxml")).initialize(this,serverModel); 
+			} catch (NumberFormatException e) {
+				new ExceptionAlert("Radius must be a number!");
+			}
         } catch(IOException | NullPointerException e) {
             new ExceptionAlert(e);
         }
