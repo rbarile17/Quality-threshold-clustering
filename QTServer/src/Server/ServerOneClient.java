@@ -29,6 +29,7 @@ public class ServerOneClient extends Thread {
 	private static final int DB_CLUSTERING = 1;
 	private static final int CONNECTION_CLOSING = -1;
 	private static final int DATA_SENDING = 4;
+	private static final int GOING_BACK = 0;
 	private static final String OK = "OK";
 
 	public ServerOneClient(Socket s) throws IOException {
@@ -57,7 +58,7 @@ public class ServerOneClient extends Thread {
 							storeClusterInFile(data);
 						else if (choice == DATA_SENDING)
 							out.writeObject(data.toList(kmeans.getC()));
-						else if (choice == CONNECTION_CLOSING)
+						else if (choice == CONNECTION_CLOSING || choice == GOING_BACK)
 							break;
 					}
 					break;

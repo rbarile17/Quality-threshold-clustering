@@ -18,11 +18,12 @@ public class ServerModel {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";
-	private static final int DATA_RECEIVING = 4;
-	private static final int FILE_LOADING = 3;
-	private static final int FILE_SAVING = 2;
-	private static final int DB_CLUSTERING = 1;
-	private static final int CONNECTION_CLOSING = -1;
+	private static final int RECEIVE_DATA = 4;
+	private static final int LOAD_FILE = 3;
+	private static final int SAVE_FILE = 2;
+	private static final int CLUSTER_DB = 1;
+	private static final int CLOSE_CONNECTION = -1;
+	private static final int GO_BACK = 0;
 
 	public ServerModel(String ip, int port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), port);
@@ -31,7 +32,7 @@ public class ServerModel {
 	}
 
 	public boolean loadFile(String fileName) throws IOException {
-		out.writeObject(FILE_LOADING);
+		out.writeObject(LOAD_FILE);
 		out.writeObject(fileName);
 
 		String serverAnswer;
@@ -50,7 +51,7 @@ public class ServerModel {
 	}
 
 	public boolean clusterDBTable(String tableName, double radius) throws IOException {
-		out.writeObject(DB_CLUSTERING);
+		out.writeObject(CLUSTER_DB);
 		out.writeObject(tableName);
 		try {
 			String serverAnswer = (String) in.readObject();
@@ -108,7 +109,7 @@ public class ServerModel {
 	public LinkedList<List<List<String>>> getData() throws IOException {
 		LinkedList<List<List<String>>> data = null;
 
-		out.writeObject(DATA_RECEIVING);
+		out.writeObject(RECEIVE_DATA);
 
 		try {
 			data = (LinkedList<List<List<String>>>) in.readObject();
@@ -121,7 +122,7 @@ public class ServerModel {
 
 	public void close() {
 		try {
-			out.writeObject(CONNECTION_CLOSING);
+			out.writeObject(CLOSE_CONNECTION);
 			server.close();
 		} catch (IOException e) {
 			new ExceptionAlert(e);
@@ -129,12 +130,20 @@ public class ServerModel {
 	}
 
 	public String saveFile(String file) throws IOException, ClassNotFoundException {
-		out.writeObject(FILE_SAVING);
+		out.writeObject(SAVE_FILE);
 		out.writeObject(file);
 		String answer = (String) in.readObject();
 		if (answer.equals(OK))
 			return "";
 		else
 			return answer;
+	}
+	
+	public void goBack() {
+		try {
+			out.writeObject(GO_BACK);
+		} catch (IOException e) {
+			new ExceptionAlert(e);
+		}
 	}
 }
