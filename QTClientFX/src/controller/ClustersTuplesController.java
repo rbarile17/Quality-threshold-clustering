@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -47,12 +48,12 @@ public class ClustersTuplesController extends Controller{
 				i++;
 			}
 						
-			int k=0;
+			Iterator<LinkedList<String>> centroid = centroids.iterator();
 			for(List<List<String>> l : tuples) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
 				int j = 0;
 
-				for(String s : centroids.get(k)) {
+				for(String s : centroid.next()) {
 					oList.add(j, new SimpleStringProperty(s));
 					j++;
 				}	
@@ -67,7 +68,6 @@ public class ClustersTuplesController extends Controller{
 					}
 					list.add(oList);
 				}
-				k++;
 			}
 			table.setItems(list);
 		} catch (IOException e) {
