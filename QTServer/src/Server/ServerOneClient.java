@@ -1,6 +1,7 @@
 package Server;
 
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +13,8 @@ import mining.QTMiner;
 import mining.ClusterSet;
 import mining.ClusteringRadiusException;
 import data.EmptyDatasetException;
+import database.DatabaseConnectionException;
+import database.EmptySetException;
 import database.NoValueException;
 import data.Data;
 
@@ -45,6 +48,7 @@ public class ServerOneClient extends Thread {
 				 switch (answer) {
 				 case DB_CLUSTERING:
 					 data = learningFromDB();
+					 if (data == null) break;
 					 compute(data);
 					 int choice = (int)in.readObject();
 					 if(choice ==  FILE_SAVING)
@@ -70,16 +74,23 @@ public class ServerOneClient extends Thread {
 		 try {
 			 String table = (String) in.readObject();
 			 try {
-				 Data data = new Data(table);
+				 Data data;
+				 data = new Data(table);
 				 out.writeObject("OK");
 				 return data;
 			 } catch (NoValueException e) {
 				 out.writeObject(e.getMessage());
+			 } catch (DatabaseConnectionException e) {
+				 out.writeObject(e.getMessage());
+			 } catch (SQLException e) {
+				 out.writeObject(e.getMessage() + "\n" + e.getErrorCode() + "\n" + e.getSQLState());
+			 } catch (EmptySetException e) {
+				 out.writeObject(e.getMessage());
 			 }
-		 }
-		 catch (IOException | ClassNotFoundException e) {
+		 } catch (IOException | ClassNotFoundException e) {
 			 e.printStackTrace();
 		 }
+		 
 		 return null;
 	 }
 	 

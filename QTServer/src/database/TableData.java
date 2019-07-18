@@ -54,7 +54,6 @@ public class TableData {
 		if(empty) throw new EmptySetException();
 
 		return transSet;
-
 	}
 	
 	public Set<String> getDistinctColumnValues(String table,Column column) throws SQLException{

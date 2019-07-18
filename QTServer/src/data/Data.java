@@ -22,41 +22,30 @@ public class Data {
 	private int numberOfExamples;
 	private List<Attribute> attributeSet;
 	
-	public Data(String table) throws NoValueException{		 
-		
+	public Data(String table) throws NoValueException, DatabaseConnectionException, SQLException, EmptySetException {		 
 		attributeSet = new LinkedList<Attribute>();
 
 		DbAccess db;
-		try {
-			db = new DbAccess();
-			try {
-				db.initConnection();
-			} catch (DatabaseConnectionException exc) {
-				System.out.println(exc.getMessage());
+		db = new DbAccess();
+		db.initConnection();
+
+		TableData tableData = new TableData(db,table);
+		TableSchema tableSchema = new TableSchema(db,table);
+			
+		data = tableData.getDistinctTransactions();
+		numberOfExamples=data.size();	
+			
+		for(int i = 0; i < tableSchema.getNumberOfAttributes();i++) {
+			TableSchema.Column col = tableSchema.getColumn(i);
+			if(col.isNumber()) 
+				attributeSet.add(i,new ContinuousAttribute(col.getColumnName(), i, 
+								(double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MIN),
+								(double)tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MAX)));
+			else {
+				TreeSet<String> distinctValues = new TreeSet<String>();
+				distinctValues.addAll(tableData.getDistinctColumnValues(table, col));
+				attributeSet.add(i , new DiscreteAttribute(col.getColumnName(),i, distinctValues ));
 			}
-			TableData tableData = new TableData(db,table);
-			TableSchema tableSchema = new TableSchema(db,table);
-			
-			data = tableData.getDistinctTransactions();
-			numberOfExamples=data.size();	
-			
-			for(int i = 0; i < tableSchema.getNumberOfAttributes();i++) {
-				TableSchema.Column col = tableSchema.getColumn(i);
-				if(col.isNumber()) {
-					attributeSet.add(i,new ContinuousAttribute(col.getColumnName(), i, 
-									(double) tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MIN),
-									(double)tableData.getAggregateColumnValue(table, col, QUERY_TYPE.MAX)));
-				}
-				else {
-					TreeSet<String> distinctValues = new TreeSet<String>();
-					distinctValues.addAll(tableData.getDistinctColumnValues(table, col));
-					attributeSet.add(i , new DiscreteAttribute(col.getColumnName(),i, distinctValues ));
-				}
-			}
-			
-			
-		} catch (SQLException  | EmptySetException e ) {
-			e.printStackTrace();
 		}
 	}
 	

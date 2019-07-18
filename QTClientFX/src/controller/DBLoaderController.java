@@ -83,6 +83,7 @@ public class DBLoaderController extends Controller{
 		try {
 			((ClustersTuplesController)newWindow(new Stage(), "../graphic/ClustersTuples.fxml"))
 			.initialize(serverModel, centroids, names);
+			System.out.println("fasfd");
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}

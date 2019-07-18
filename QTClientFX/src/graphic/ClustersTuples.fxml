@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="277.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClustersTuplesController">
+<AnchorPane prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClustersTuplesController">
    <children>
       <Label layoutX="201.0" layoutY="32.0" text="Whole Clustering">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <TableView fx:id="table" layoutX="44.0" layoutY="85.0" prefHeight="119.0" prefWidth="512.0" />
-      <Label layoutX="44.0" layoutY="221.0" text="Filter">
+      <TableView fx:id="table" layoutX="44.0" layoutY="85.0" prefHeight="194.0" prefWidth="512.0" />
+      <Label layoutX="44.0" layoutY="303.0" text="Filter">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Button fx:id="applyFilter" layoutX="341.0" layoutY="222.0" mnemonicParsing="false" onAction="#applyFilterClick" text="Apply filter" />
-      <TextField fx:id="filter" layoutX="102.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="Type centroid number" />
+      <Button fx:id="applyFilter" layoutX="341.0" layoutY="304.0" mnemonicParsing="false" onAction="#applyFilterClick" text="Apply filter" />
+      <TextField fx:id="filter" layoutX="102.0" layoutY="304.0" prefHeight="25.0" prefWidth="220.0" promptText="Type centroid number" />
    </children>
 </AnchorPane>
