@@ -7,12 +7,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.ServerModel;
@@ -27,20 +31,29 @@ public class DBLoaderController extends Controller {
 
 	@FXML
 	private Button tabular;
+	
+	@FXML
+	private Button graphic;
 
 	@FXML
 	private Button saveOnFile;
+	
+	@FXML
+	private ImageView home;
 
 	@FXML
 	private TextField fileName;
+	
+	private Scene homeScene;
 
 	private ServerModel serverModel;
 	private LinkedList<LinkedList<String>> centroids;
 	LinkedList<String> names;
 
-	public void initialize(ServerModel serverModel) {
+	public void initialize(ServerModel serverModel, Scene homeScene) {
 		this.serverModel = serverModel;
-
+		this.homeScene = homeScene;
+		
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();
 			centroidsLabel.setText(centroidsNumber + " " + centroidsLabel.getText());
@@ -97,5 +110,14 @@ public class DBLoaderController extends Controller {
 		} catch (IOException e) {
 			new ExceptionAlert("Connection lost", "File not saved", AlertType.ERROR);
 		}
+	}
+	
+	public void onHomeClick(/*ActionEvent event*/) {
+		Stage stage = ((Stage) (home.getScene().getWindow()));
+		stage.setScene(homeScene);
+		stage.show();
+	}
+	
+	public void onGraphicClick(ActionEvent event) {
 	}
 }

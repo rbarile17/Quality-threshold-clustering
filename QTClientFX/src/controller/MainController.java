@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,9 +53,11 @@ public class MainController extends Controller {
 	public void loadDBCLick(ActionEvent event) {
 		try {
 			try {
-				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true)
-					((DBLoaderController) newWindow(((Stage) ((Node) event.getSource()).getScene().getWindow()),
-							"../graphic/DBLoader.fxml")).initialize(serverModel);
+				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true) {
+					Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					Scene mainScene = mainStage.getScene();
+					((DBLoaderController) newWindow(mainStage,"../graphic/DBLoader.fxml")).initialize(serverModel,mainScene);
+				}
 			} catch (NumberFormatException e) {
 				new ExceptionAlert("Radius error", "Radius must be a number!", AlertType.WARNING);
 			}
@@ -66,9 +69,11 @@ public class MainController extends Controller {
 	public void loadFileClick(ActionEvent event) {
 		try {
 
-			if (serverModel.loadFile(fileName.getText()) == true)
-				((FileLoaderController) newWindow(((Stage) ((Node) event.getSource()).getScene().getWindow()),
-						"../graphic/FileLoader.fxml")).initialize(serverModel);
+			if (serverModel.loadFile(fileName.getText()) == true) {
+				Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				Scene mainScene = mainStage.getScene();
+				((FileLoaderController) newWindow(mainStage,"../graphic/FileLoader.fxml")).initialize(serverModel,mainScene);
+			}
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -21,7 +22,7 @@
       </Label>
       <TableView fx:id="table" layoutX="44.0" layoutY="110.0" prefHeight="119.0" prefWidth="512.0" />
       <Button fx:id="tabular" layoutX="196.0" layoutY="245.0" mnemonicParsing="false" onAction="#tabularClick" text="Tabular" />
-      <Button layoutX="267.0" layoutY="245.0" mnemonicParsing="false" text="Graphical" />
+      <Button fx:id="graphic" layoutX="267.0" layoutY="245.0" mnemonicParsing="false" onAction="#onGraphicClick" text="Graphical" />
       <Label layoutX="46.0" layoutY="291.0" text="Save your clustering">
          <font>
             <Font size="14.0" />
@@ -35,5 +36,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <ImageView fx:id="home" fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#onHomeClick" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
