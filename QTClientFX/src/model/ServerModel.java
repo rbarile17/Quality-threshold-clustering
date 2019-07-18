@@ -18,13 +18,15 @@ public class ServerModel {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";
-	private static final int RECEIVE_DATA = 4;
-	private static final int LOAD_FILE = 3;
-	private static final int SAVE_FILE = 2;
-	private static final int CLUSTER_DB = 1;
+
 	private static final int CLOSE_CONNECTION = -1;
 	private static final int GO_BACK = 0;
-
+	private static final int CLUSTER_DB = 1;
+	private static final int SAVE_FILE = 2;
+	private static final int LOAD_FILE = 3;
+	private static final int RECEIVE_DATA = 4;
+	private static final int RECEIVE_DISTANCES = 5;
+	
 	public ServerModel(String ip, int port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), port);
 		out = new ObjectOutputStream(server.getOutputStream());
@@ -145,5 +147,19 @@ public class ServerModel {
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
+	}
+	
+	public LinkedList<List<Double>> getDistances() throws IOException {
+		LinkedList<List<Double>> distances = null;
+		System.out.println("vabb");
+		out.write(RECEIVE_DISTANCES);
+		System.out.println("mandato");
+		try {
+			distances = (LinkedList<List<Double>>) in.readObject();
+			System.out.println("ricevuto");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return distances;
 	}
 }

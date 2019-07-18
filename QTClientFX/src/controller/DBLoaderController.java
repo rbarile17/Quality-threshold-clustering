@@ -49,7 +49,8 @@ public class DBLoaderController extends Controller {
 	private ServerModel serverModel;
 	private LinkedList<List<List<String>>> tuples;
 	private LinkedList<LinkedList<String>> centroids;
-	LinkedList<String> names;
+	private LinkedList<String> names;
+	private LinkedList<List<Double>> distances;
 
 	public void initialize(ServerModel serverModel, Scene homeScene) {
 		this.serverModel = serverModel;
@@ -94,7 +95,6 @@ public class DBLoaderController extends Controller {
 			}
 			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml"))
 					.initialize(centroids, names, tuples);
-			System.out.println("fasfd");
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}
@@ -124,5 +124,16 @@ public class DBLoaderController extends Controller {
 	}
 	
 	public void onGraphicClick(ActionEvent event) {
+		try {
+			System.out.println("ok");
+			if(distances == null) {
+				distances = serverModel.getDistances();
+				System.out.println("sitance");
+			}
+			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml")).initialize(distances);
+		} catch (IOException | NullPointerException e) {
+			e.printStackTrace();
+			new ExceptionAlert(e);
+		}
 	}
 }

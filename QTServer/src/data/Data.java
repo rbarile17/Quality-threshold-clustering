@@ -93,8 +93,8 @@ public class Data {
 		return data;
 	}
 	
-	public List<List<Double>> getDistances(ClusterSet C) {
-		List<List<Double>> distances = new LinkedList<List<Double>>();
+	public LinkedList<List<Double>> getDistances(ClusterSet C) {
+		LinkedList<List<Double>> distances = new LinkedList<List<Double>>();
 
 		for (Cluster c : C) {
 			LinkedList<Double> l = new LinkedList<Double>();
