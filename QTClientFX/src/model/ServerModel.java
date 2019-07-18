@@ -36,7 +36,6 @@ public class ServerModel {
 	public boolean loadFile(String fileName) throws IOException {
 		out.writeObject(LOAD_FILE);
 		out.writeObject(fileName);
-
 		String serverAnswer;
 		try {
 			serverAnswer = (String) in.readObject();
@@ -161,5 +160,13 @@ public class ServerModel {
 			e.printStackTrace();
 		}
 		return distances;
+	}
+	
+	public String getIP() {
+		return server.getInetAddress().getCanonicalHostName();
+	}
+	
+	public int getPort() {
+		return server.getPort();
 	}
 }

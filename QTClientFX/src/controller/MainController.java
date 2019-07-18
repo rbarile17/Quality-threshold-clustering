@@ -79,12 +79,18 @@ public class MainController extends Controller {
 		}
 	}
 
-	public void connect(String ip, int port) throws IOException {
-		this.serverModel = new ServerModel(ip, port);
-		connected.setText("Connected");
-		connected.setTextFill(Color.GREEN);
-		loadDB.setDisable(false);
-		loadFile.setDisable(false);
+	public boolean connect(String ip, int port) throws IOException {
+		if(serverModel != null && serverModel.getIP().equals(ip) && serverModel.getPort() == port) {
+			new ExceptionAlert("Same server","You are already connected to this server!",AlertType.WARNING);
+			return false;
+		}
+
+			this.serverModel = new ServerModel(ip, port);
+			connected.setText("Connected");
+			connected.setTextFill(Color.GREEN);
+			loadDB.setDisable(false);
+			loadFile.setDisable(false);
+			return true;
 	}
 
 	public void disconnect() throws IOException {

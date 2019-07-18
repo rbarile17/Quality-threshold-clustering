@@ -42,8 +42,8 @@ public class SettingsController extends Controller {
 			return;
 		}
 		try {
-			main.connect(ipS, portI);
-			((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+			if(main.connect(ipS, portI))
+				((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
