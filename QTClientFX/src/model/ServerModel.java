@@ -150,9 +150,7 @@ public class ServerModel {
 	
 	public LinkedList<List<Double>> getDistances() throws IOException {
 		LinkedList<List<Double>> distances = null;
-		System.out.println("vabb");
-		out.write(RECEIVE_DISTANCES);
-		System.out.println("mandato");
+		out.writeObject(RECEIVE_DISTANCES);
 		try {
 			distances = (LinkedList<List<Double>>) in.readObject();
 			System.out.println("ricevuto");

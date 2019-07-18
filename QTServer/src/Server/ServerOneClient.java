@@ -24,7 +24,6 @@ public class ServerOneClient extends Thread {
 	private ObjectOutputStream out;
 	private QTMiner kmeans;
 
-
 	private static final int CONNECTION_CLOSING = -1;
 	private static final int GOING_BACK = 0;
 	private static final int DB_CLUSTERING = 1;
@@ -55,19 +54,14 @@ public class ServerOneClient extends Thread {
 						break;
 					compute(data);
 					while (true) {
-						System.out.println("ascolto");
 						int choice = (int) in.readObject();
-						System.out.println("capito");
 						if (choice == FILE_SAVING)
 							storeClusterInFile(data);
 						else if (choice == DATA_SENDING)
 							out.writeObject(data.toList(kmeans.getC()));
 						else if (choice == DISTANCES_SENDING) {
-							System.out.println("pronto");
 							out.writeObject(data.getDistances(kmeans.getC()));
-							System.out.println("madnato");
-						}
-						else if (choice == CONNECTION_CLOSING || choice == GOING_BACK)
+						} else if (choice == CONNECTION_CLOSING || choice == GOING_BACK)
 							break;
 					}
 					break;
