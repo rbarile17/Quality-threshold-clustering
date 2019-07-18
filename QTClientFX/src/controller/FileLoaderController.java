@@ -64,7 +64,7 @@ public class FileLoaderController extends Controller {
 		}
 	}
 	
-	public void onHomeClick(/*ActionEvent event*/) {
+	public void onHomeClick() {
 		Stage stage = ((Stage) (home.getScene().getWindow()));
 		stage.setScene(homeScene);
 		stage.show();

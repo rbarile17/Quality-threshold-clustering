@@ -116,7 +116,7 @@ public class DBLoaderController extends Controller {
 		}
 	}
 	
-	public void onHomeClick(/*ActionEvent event*/) {
+	public void onHomeClick() {
 		Stage stage = ((Stage) (home.getScene().getWindow()));
 		serverModel.goBack();
 		stage.setScene(homeScene);
