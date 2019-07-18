@@ -19,7 +19,6 @@ import model.ServerModel;
 import utility.ExceptionAlert;
 
 public class ClustersTuplesController extends Controller{
-	private ServerModel serverModel;
 	private LinkedList<LinkedList<String>> centroids;
 	private LinkedList<List<List<String>>> tuples;
 	
@@ -32,9 +31,9 @@ public class ClustersTuplesController extends Controller{
 	@FXML
 	private TableView<List<StringProperty>> table;
 	
-	public void initialize(ServerModel serverModel, LinkedList<LinkedList<String>> centroids, LinkedList<String> names) {
-		this.serverModel = serverModel;
+	public void initialize(LinkedList<LinkedList<String>> centroids, LinkedList<String> names, LinkedList<List<List<String>>> tuples) {
 		this.centroids = centroids;
+		this.tuples = tuples;
 		
 		table.setRowFactory(tv -> new TableRow<List<StringProperty>>() {
 		    @Override
@@ -50,55 +49,49 @@ public class ClustersTuplesController extends Controller{
 		    }
 		});
 		
-		try {
-			tuples = serverModel.getData();
-			
-			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
-			
-			TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Centroid Index");
-			col.setCellValueFactory(data -> data.getValue().get(0));
-			table.getColumns().add(col);
-			col = new TableColumn<List<StringProperty>, String>("Distance");
-			col.setCellValueFactory(data -> data.getValue().get(1));
-			table.getColumns().add(col);
-			int i=2;
-			for(String s : names) {
-				final int j = i;
-				TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
-				c.setCellValueFactory(data -> data.getValue().get(j));
-				table.getColumns().add(c);
+		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
+		
+		TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Centroid Index");
+		col.setCellValueFactory(data -> data.getValue().get(0));
+		table.getColumns().add(col);
+		col = new TableColumn<List<StringProperty>, String>("Distance");
+		col.setCellValueFactory(data -> data.getValue().get(1));
+		table.getColumns().add(col);
+		int i=2;
+		for(String s : names) {
+			final int j = i;
+			TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
+			c.setCellValueFactory(data -> data.getValue().get(j));
+			table.getColumns().add(c);
+			i++;
+		}
+					
+		Iterator<LinkedList<String>> centroid = centroids.iterator();
+		int k=0;
+		for(List<List<String>> l : tuples) {
+			List<StringProperty> oList = new LinkedList<StringProperty>();
+			oList.add(0, new SimpleStringProperty(k+" "));
+			oList.add(1, new SimpleStringProperty("0.0"));
+			i = 2;
+			for(String s : centroid.next()) {
+				oList.add(i, new SimpleStringProperty(s));
 				i++;
-			}
-						
-			Iterator<LinkedList<String>> centroid = centroids.iterator();
-			int k=0;
-			for(List<List<String>> l : tuples) {
-				List<StringProperty> oList = new LinkedList<StringProperty>();
-				oList.add(0, new SimpleStringProperty(k+" "));
-				oList.add(1, new SimpleStringProperty("0.0"));
-				i = 2;
-				for(String s : centroid.next()) {
+			}	
+			list.add(oList);
+			
+			for(List<String> example : l) {
+				oList = new LinkedList<StringProperty>();
+				oList.add(0, new SimpleStringProperty(String.valueOf(k)));
+				i = 1;
+				for(String s : example) {
 					oList.add(i, new SimpleStringProperty(s));
 					i++;
-				}	
-				list.add(oList);
-				
-				for(List<String> example : l) {
-					oList = new LinkedList<StringProperty>();
-					oList.add(0, new SimpleStringProperty(String.valueOf(k)));
-					i = 1;
-					for(String s : example) {
-						oList.add(i, new SimpleStringProperty(s));
-						i++;
-					}
-					list.add(oList);
 				}
-				k++;
+				list.add(oList);
 			}
-			table.setItems(list);
-		} catch (IOException e) {
-			new ExceptionAlert(e);
-		}		
+			k++;
+		}
+		table.setItems(list);		
 	}
 	
 	

@@ -24,12 +24,14 @@ public class ServerOneClient extends Thread {
 	private ObjectOutputStream out;
 	private QTMiner kmeans;
 
-	private static final int FILE_LOADING = 3;
-	private static final int FILE_SAVING = 2;
-	private static final int DB_CLUSTERING = 1;
+
 	private static final int CONNECTION_CLOSING = -1;
-	private static final int DATA_SENDING = 4;
 	private static final int GOING_BACK = 0;
+	private static final int DB_CLUSTERING = 1;
+	private static final int FILE_SAVING = 2;
+	private static final int FILE_LOADING = 3;
+	private static final int DATA_SENDING = 4;
+	private static final int DISTANCES_SENDING = 5;
 	private static final String OK = "OK";
 
 	public ServerOneClient(Socket s) throws IOException {
@@ -58,6 +60,8 @@ public class ServerOneClient extends Thread {
 							storeClusterInFile(data);
 						else if (choice == DATA_SENDING)
 							out.writeObject(data.toList(kmeans.getC()));
+						else if (choice == DISTANCES_SENDING)
+							out.writeObject(data.getDistances(kmeans.getC()));
 						else if (choice == CONNECTION_CLOSING || choice == GOING_BACK)
 							break;
 					}
