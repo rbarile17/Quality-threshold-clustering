@@ -20,7 +20,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Button layoutX="344.0" layoutY="222.0" mnemonicParsing="false" text="Apply filter" />
-      <TextField layoutX="102.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="Type centroid number" />
+      <Button fx:id="applyFilter" layoutX="341.0" layoutY="222.0" mnemonicParsing="false" onAction="#applyFilterClick" text="Apply filter" />
+      <TextField fx:id="filter" layoutX="102.0" layoutY="222.0" prefHeight="25.0" prefWidth="220.0" promptText="Type centroid number" />
    </children>
 </AnchorPane>
