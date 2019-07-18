@@ -95,11 +95,11 @@ public class Data {
 	
 	public LinkedList<List<Double>> getDistances(ClusterSet C) {
 		LinkedList<List<Double>> distances = new LinkedList<List<Double>>();
-
+		Tuple first = C.iterator().next().getCentroid();
 		for (Cluster c : C) {
 			LinkedList<Double> l = new LinkedList<Double>();
 			for (int i : c) {
-				l.add(this.getItemSet(i).getDistance(c.getCentroid()));
+				l.add(this.getItemSet(i).getDistance(first));
 			}
 			distances.add(l);
 		}

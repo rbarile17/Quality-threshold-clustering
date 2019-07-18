@@ -125,10 +125,8 @@ public class DBLoaderController extends Controller {
 	
 	public void onGraphicClick(ActionEvent event) {
 		try {
-			System.out.println("ok");
 			if(distances == null) {
 				distances = serverModel.getDistances();
-				System.out.println("sitance");
 			}
 			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml")).initialize(distances);
 		} catch (IOException | NullPointerException e) {

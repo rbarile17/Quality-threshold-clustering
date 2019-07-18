@@ -10,13 +10,13 @@ import javafx.scene.chart.XYChart;
 public class ScatterPlotController extends Controller{
 
 	@FXML
-	ScatterChart<String, Integer> chart;
+	ScatterChart<String, Double> chart;
 
 	public void initialize(LinkedList<List<Double>> elements) {
 		for (List<Double> list : elements) {
-			XYChart.Series<String, Integer> xValues = new XYChart.Series<String, Integer>();
+			XYChart.Series<String, Double> xValues = new XYChart.Series<String, Double>();
 			for (Double xValue : list) {
-				xValues.getData().add(new XYChart.Data<String, Integer>(String.valueOf(xValue), 1));
+				xValues.getData().add(new XYChart.Data<String, Double>("",xValue));
 			}
 			chart.getData().add(xValues);
 		}
