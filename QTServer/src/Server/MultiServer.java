@@ -6,27 +6,32 @@ import java.io.IOException;
 
 public class MultiServer {
 	private int PORT = 8080;
-	public static void main(String[] args) { //istanzia un oggetto di tipo MultiServer.
+
+	public static void main(String[] args) { // istanzia un oggetto di tipo MultiServer.
 		new MultiServer(8080);
 	}
-	public MultiServer(int port) {//Costruttore di classe. Inizializza la porta ed invoca run()
+
+	public MultiServer(int port) {// Costruttore di classe. Inizializza la porta ed invoca run()
 		this.PORT = port;
 		listen();
 	}
-	private void listen() {// Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di richiesta di connessioni da parte del client. Ad ogni nuova richiesta connessione si istanzia ServerOneClient.
+
+	private void listen() {// Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di
+							// richiesta di connessioni da parte del client. Ad ogni nuova richiesta
+							// connessione si istanzia ServerOneClient.
 		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(PORT);
-			while(true) {
+			while (true) {
 				Socket socket = serverSocket.accept();
 				try {
 					new ServerOneClient(socket);
-				} catch(IOException e) {
+				} catch (IOException e) {
 					socket.close();
 				}
 			}
-		} catch(IOException e) {
-			
+		} catch (IOException e) {
+
 		}
-	}	   
+	}
 }

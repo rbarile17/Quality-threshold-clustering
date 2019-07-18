@@ -1,4 +1,5 @@
 package utility;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -8,40 +9,40 @@ public class ExceptionAlert extends Alert {
 
 	public ExceptionAlert(Exception e) {
 		super(AlertType.ERROR);
-		
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        this.setTitle("Exception");
-        this.setHeaderText("Exception Thrown");
-        this.setContentText(e.toString());
-        this.show();
+
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		this.setTitle("Exception");
+		this.setHeaderText("Exception Thrown");
+		this.setContentText(e.toString());
+		this.show();
 	}
 
 	public ExceptionAlert(String s) {
 		super(AlertType.ERROR);
-		
-        this.setTitle("Exception");
-        this.setHeaderText("Error");
-        this.setContentText(s);
-        this.show();
+
+		this.setTitle("Exception");
+		this.setHeaderText("Error");
+		this.setContentText(s);
+		this.show();
 	}
-	
+
 	public ExceptionAlert(String s, AlertType at) {
 		super(at);
-		
-        this.setTitle("Exception");
-        this.setHeaderText(at.toString());
-        this.setContentText(s);
-        this.show();
+
+		this.setTitle("Exception");
+		this.setHeaderText(at.toString());
+		this.setContentText(s);
+		this.show();
 	}
-	
+
 	public ExceptionAlert(String subTitle, String content, AlertType at) {
 		super(at);
-        this.setTitle(at.toString());
-        this.setHeaderText(subTitle);
-        this.setContentText(content);
-        this.show();
+		this.setTitle(at.toString());
+		this.setHeaderText(subTitle);
+		this.setContentText(content);
+		this.show();
 	}
-	
+
 }

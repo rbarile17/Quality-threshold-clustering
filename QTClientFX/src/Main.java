@@ -12,8 +12,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("graphic/Main.fxml").openStream());  
-			MainController controller = (MainController)loader.getController(); 
+			Pane root = loader.load(getClass().getResource("graphic/Main.fxml").openStream());
+			MainController controller = (MainController) loader.getController();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("graphic/application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -27,11 +27,11 @@ public class Main extends Application {
 			});
 			primaryStage.setTitle("QT Clustering");
 			primaryStage.show();
-		} catch(IOException | NullPointerException e) {
+		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

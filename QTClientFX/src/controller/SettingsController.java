@@ -16,7 +16,7 @@ public class SettingsController extends Controller {
 	private TextField ip;
 	@FXML
 	private TextField port;
-	
+
 	private MainController main;
 
 	public void applyClick(ActionEvent event) {
@@ -27,13 +27,13 @@ public class SettingsController extends Controller {
 		if (portS.equals(""))
 			portS = "8080";
 		try {
-			main.connect(ipS,portS);
-			((Stage)((Node) event.getSource()).getScene().getWindow()).close();
+			main.connect(ipS, portS);
+			((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
 	}
-	
+
 	public void initialize(MainController main) {
 		this.main = main;
 	}
