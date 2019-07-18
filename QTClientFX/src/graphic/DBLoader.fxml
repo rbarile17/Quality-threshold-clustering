@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DBLoaderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DBLoaderController">
    <children>
       <Label layoutX="157.0" layoutY="36.0" text="Clustering DataBase table">
          <font>
@@ -36,6 +37,9 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="home" fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#onHomeClick" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="home" fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#onHomeClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:resources/home.png" />
+         </image></ImageView>
    </children>
 </AnchorPane>
