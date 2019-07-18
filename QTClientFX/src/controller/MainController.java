@@ -94,11 +94,15 @@ public class MainController extends Controller {
 	}
 
 	public void disconnect() throws IOException {
-		serverModel.close();
-		connected.setText("Disonnected");
-		connected.setTextFill(Color.RED);
-		loadDB.setDisable(true);
-		loadFile.setDisable(true);
+		try {
+			serverModel.close();
+			connected.setText("Disonnected");
+			connected.setTextFill(Color.RED);
+			loadDB.setDisable(true);
+			loadFile.setDisable(true);
+		} catch (NullPointerException e) {
+			
+		}
 	}
 
 }
