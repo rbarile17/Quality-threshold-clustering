@@ -24,8 +24,8 @@ public class ServerModel {
 	private static final int DB_CLUSTERING = 1;
 	private static final int CONNECTION_CLOSING = -1;
 
-	public ServerModel(String ip, String port) throws IOException, UnknownHostException {
-		this.server = new Socket(InetAddress.getByName(ip), Integer.parseInt(port));
+	public ServerModel(String ip, int port) throws IOException, UnknownHostException {
+		this.server = new Socket(InetAddress.getByName(ip), port);
 		out = new ObjectOutputStream(server.getOutputStream());
 		in = new ObjectInputStream(server.getInputStream());
 	}

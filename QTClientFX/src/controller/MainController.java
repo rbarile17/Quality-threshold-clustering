@@ -74,7 +74,7 @@ public class MainController extends Controller {
 		}
 	}
 
-	public void connect(String ip, String port) throws IOException {
+	public void connect(String ip, int port) throws IOException {
 		this.serverModel = new ServerModel(ip, port);
 		connected.setText("Connected");
 		connected.setTextFill(Color.GREEN);

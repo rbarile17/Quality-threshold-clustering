@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import utility.ExceptionAlert;
 
@@ -20,14 +21,28 @@ public class SettingsController extends Controller {
 	private MainController main;
 
 	public void applyClick(ActionEvent event) {
-		String ipS = ip.getText();
-		String portS = port.getText();
+		String ipS = "", portS = "";
+		int portI = -1;
+
+		ipS = ip.getText();
+		portS = port.getText();
 		if (ipS.equals(""))
 			ipS = "127.0.0.1";
 		if (portS.equals(""))
 			portS = "8080";
+			
 		try {
-			main.connect(ipS, portS);
+			portI = Integer.parseInt(portS);
+			if (portI < 1 || portI > 65536) {
+				new ExceptionAlert("Port error", "Port must be a number between 1 and 65536", AlertType.WARNING);
+				return;
+			}
+		} catch (NumberFormatException e) {
+			new ExceptionAlert("Port error", "Port must be a number!", AlertType.WARNING);
+			return;
+		}
+		try {
+			main.connect(ipS, portI);
 			((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
 			new ExceptionAlert(e);
