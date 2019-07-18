@@ -22,7 +22,7 @@ public class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializ
 		clusteredData = new HashSet<Integer>();
 	}
 
-	Tuple getCentroid() {
+	public Tuple getCentroid() {
 		return centroid;
 	}
 

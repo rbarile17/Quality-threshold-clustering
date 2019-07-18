@@ -82,7 +82,10 @@ public class Data {
 		for (Cluster c : C) {
 			LinkedList<List<String>> l = new LinkedList<List<String>>();
 			for (int i : c) {
-				l.add(this.getItemSet(i).toList());
+				List<String> tuple = new LinkedList<String>();
+				tuple.add(String.valueOf(this.getItemSet(i).getDistance(c.getCentroid())));
+				tuple.addAll(this.getItemSet(i).toList());
+				l.add(tuple);
 			}
 			data.add(l);
 		}

@@ -42,7 +42,7 @@ public class ClustersTuplesController extends Controller{
 		        super.updateItem(item, empty) ;
 		        if (item == null) {
 		            setStyle("");
-		        } else if (item.get(0).getValue().equals("")) {
+		        } else if (item.get(0).getValue().charAt(item.get(0).getValue().length() - 1) == ' ') {
 		            setStyle("-fx-background-color: lightblue;");
 		        } else {
 		            setStyle("");
@@ -55,11 +55,13 @@ public class ClustersTuplesController extends Controller{
 			
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 			
-			TableColumn<List<StringProperty>, String> centroidIndex = new TableColumn<List<StringProperty>, String>("Centroid Index");
-			centroidIndex.setCellValueFactory(data -> data.getValue().get(0));
-
-			table.getColumns().add(centroidIndex);
-			int i=1;
+			TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Centroid Index");
+			col.setCellValueFactory(data -> data.getValue().get(0));
+			table.getColumns().add(col);
+			col = new TableColumn<List<StringProperty>, String>("Distance");
+			col.setCellValueFactory(data -> data.getValue().get(1));
+			table.getColumns().add(col);
+			int i=2;
 			for(String s : names) {
 				final int j = i;
 				TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
@@ -72,8 +74,9 @@ public class ClustersTuplesController extends Controller{
 			int k=0;
 			for(List<List<String>> l : tuples) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
-				oList.add(0, new SimpleStringProperty(""));
-				i = 1;
+				oList.add(0, new SimpleStringProperty(k+" "));
+				oList.add(1, new SimpleStringProperty("0.0"));
+				i = 2;
 				for(String s : centroid.next()) {
 					oList.add(i, new SimpleStringProperty(s));
 					i++;
@@ -114,8 +117,9 @@ public class ClustersTuplesController extends Controller{
 		table.setItems(list);
 		
 		List<StringProperty> oList = new LinkedList<StringProperty>();
-		int j = 1;
-		oList.add(0, new SimpleStringProperty(""));
+		oList.add(0, new SimpleStringProperty(centroidIndex+" "));
+		oList.add(1, new SimpleStringProperty("0.0"));
+		int j = 2;
 		for(String s : centroids.get(centroidIndex)) {
 			oList.add(j, new SimpleStringProperty(s));
 			j++;
