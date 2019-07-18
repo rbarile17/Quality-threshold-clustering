@@ -47,6 +47,7 @@ public class DBLoaderController extends Controller {
 	private Scene homeScene;
 
 	private ServerModel serverModel;
+	private LinkedList<List<List<String>>> tuples;
 	private LinkedList<LinkedList<String>> centroids;
 	LinkedList<String> names;
 
@@ -88,8 +89,11 @@ public class DBLoaderController extends Controller {
 
 	public void tabularClick() {
 		try {
+			if(tuples == null) {
+				tuples = serverModel.getData();
+			}
 			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml"))
-					.initialize(serverModel, centroids, names);
+					.initialize(centroids, names, tuples);
 			System.out.println("fasfd");
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);

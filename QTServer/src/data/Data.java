@@ -92,6 +92,20 @@ public class Data {
 
 		return data;
 	}
+	
+	public List<List<Double>> getDistances(ClusterSet C) {
+		List<List<Double>> distances = new LinkedList<List<Double>>();
+
+		for (Cluster c : C) {
+			LinkedList<Double> l = new LinkedList<Double>();
+			for (int i : c) {
+				l.add(this.getItemSet(i).getDistance(c.getCentroid()));
+			}
+			distances.add(l);
+		}
+
+		return distances;
+	}
 
 	public Tuple getItemSet(int index) {
 		Tuple tuple = new Tuple(this.getNumberOfAttributes());
