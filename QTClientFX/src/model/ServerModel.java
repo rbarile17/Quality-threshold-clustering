@@ -42,7 +42,7 @@ public class ServerModel {
 	 * Initialize the socket and the streams
 	 * 
 	 * @param ip      The ip of the server
-	 * @param portThe port of the server
+	 * @param port The port of the server
 	 * @throws IOException          if the connection to the server fails
 	 * @throws UnknownHostException if the host isn't found
 	 */
@@ -66,7 +66,7 @@ public class ServerModel {
 		try {
 			serverAnswer = (String) in.readObject();
 			if (!serverAnswer.equals(OK)) {
-				new ExceptionAlert(serverAnswer);
+				new ExceptionAlert("File loading error",serverAnswer,AlertType.ERROR);
 				return false;
 			}
 		} catch (ClassNotFoundException e) {
@@ -83,7 +83,7 @@ public class ServerModel {
 		try {
 			String serverAnswer = (String) in.readObject();
 			if (!serverAnswer.equals(OK)) {
-				new ExceptionAlert(serverAnswer);
+				new ExceptionAlert("DB clustering error",serverAnswer,AlertType.ERROR);
 				return false;
 			}
 		} catch (ClassNotFoundException e) {

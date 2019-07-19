@@ -1,42 +1,37 @@
 package utility;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import javafx.scene.control.Alert;
 
+/**
+ * Generate and shows an Alert when constructed
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class ExceptionAlert extends Alert {
 
+	/**
+	 * Construct and shows the alert with the message of the Exception e
+	 * 
+	 * @param e The exception shown by the Alert
+	 */
 	public ExceptionAlert(Exception e) {
 		super(AlertType.ERROR);
 
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
 		this.setTitle("Exception");
 		this.setHeaderText("Exception Thrown");
 		this.setContentText(e.toString());
 		this.show();
 	}
 
-	public ExceptionAlert(String s) {
-		super(AlertType.ERROR);
-
-		this.setTitle("Exception");
-		this.setHeaderText("Error");
-		this.setContentText(s);
-		this.show();
-	}
-
-	public ExceptionAlert(String s, AlertType at) {
-		super(at);
-
-		this.setTitle("Exception");
-		this.setHeaderText(at.toString());
-		this.setContentText(s);
-		this.show();
-	}
-
+	/**
+	 * Construct and shows the alert set with the parameters
+	 * 
+	 * @param subTitle The string that will be used as subtitle
+	 * @param content The string that will be used as text of the Alert
+	 * @param at The AlertType
+	 */
 	public ExceptionAlert(String subTitle, String content, AlertType at) {
 		super(at);
 		this.setTitle(at.toString());

@@ -21,6 +21,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import utility.Fractions;
 
+/**
+ * The controller class of the window that shows the whole tuples of the
+ * clustering
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class ClustersTuplesController extends Controller {
 	private LinkedList<List<List<String>>> tuples;
 	LinkedList<String> names;
@@ -40,6 +48,12 @@ public class ClustersTuplesController extends Controller {
 	@FXML
 	private TableView<List<StringProperty>> table;
 
+	/**
+	 * Initialize the attributes and fills the table
+	 * 
+	 * @param names The names of the columns
+	 * @param tuples The tuples of the clustring
+	 */
 	public void initialize(LinkedList<String> names, LinkedList<List<List<String>>> tuples) {
 		this.tuples = tuples;
 		this.names = names;
@@ -49,6 +63,9 @@ public class ClustersTuplesController extends Controller {
 		this.fillTable();
 	}
 
+	/**
+	 * set the table listeners and adds the columns, and indexes
+	 */
 	private void setTable() {
 		table.setRowFactory(tv -> new TableRow<List<StringProperty>>() {
 			@Override
@@ -80,6 +97,9 @@ public class ClustersTuplesController extends Controller {
 		}
 	}
 
+	/**
+	 * Set the menu filter with the clusters
+	 */
 	private void setFilter() {
 		for (int i = 0; i < tuples.size(); i++) {
 			CheckMenuItem menuItem = new CheckMenuItem();
@@ -88,6 +108,9 @@ public class ClustersTuplesController extends Controller {
 		}
 	}
 
+	/**
+	 * Fill the table with the tuples
+	 */
 	private void fillTable() {
 		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 		int k = 0;
@@ -112,12 +135,17 @@ public class ClustersTuplesController extends Controller {
 
 	}
 
-	private void fillTable(TreeSet<Integer> notFiltered) {
+	/**
+	 * Shows the filtered tuples on the table
+	 * 
+	 * @param filtered The TreeSet that indicates the indixes of the tuples filtered
+	 */
+	private void fillTable(TreeSet<Integer> filtered) {
 		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 
 		int k = 0;
-		for (int j : notFiltered) {
-			List<StringProperty> oList = new LinkedList<StringProperty>();
+		for (int j : filtered) {
+			List<StringProperty> oList;
 
 			for (List<String> example : tuples.get(j)) {
 				oList = new LinkedList<StringProperty>();
@@ -134,6 +162,9 @@ public class ClustersTuplesController extends Controller {
 		table.setItems(list);
 	}
 
+	/**
+	 * Set filters to the table taken from the filter menu when the relative button is clicked
+	 */
 	public void applyFilterClick() {
 		TreeSet<Integer> notFiltered = filter.getItems().stream().filter(
 				menuItem -> CheckMenuItem.class.isInstance(menuItem) && CheckMenuItem.class.cast(menuItem).isSelected())
@@ -143,6 +174,9 @@ public class ClustersTuplesController extends Controller {
 		this.fillTable(notFiltered);
 	}
 
+	/**
+	 * Remove the filters from the menu when the relative button is clicked
+	 */
 	public void removeFilterClick() {
 		this.fillTable();
 		filter.getItems().stream().filter(

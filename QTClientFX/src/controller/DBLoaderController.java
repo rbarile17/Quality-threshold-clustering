@@ -24,6 +24,13 @@ import javafx.stage.Stage;
 import model.ServerModel;
 import utility.ExceptionAlert;
 
+/**
+ * The controller class of the DB clustering window
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class DBLoaderController extends Controller {
 	@FXML
 	private Label centroidsLabel;
@@ -33,19 +40,19 @@ public class DBLoaderController extends Controller {
 
 	@FXML
 	private Button tabular;
-	
+
 	@FXML
 	private Button graphic;
 
 	@FXML
 	private Button saveOnFile;
-	
+
 	@FXML
 	private ImageView home;
 
 	@FXML
 	private TextField fileName;
-	
+
 	private Scene homeScene;
 	private BooleanProperty connection;
 
@@ -55,11 +62,19 @@ public class DBLoaderController extends Controller {
 	private LinkedList<String> names;
 	private LinkedList<List<Double>> distances;
 
+	/**
+	 * initialize the window taking the centroids from the ServerModel class
+	 * 
+	 * @param serverModel The serverModel class used to get the centroids
+	 * @param homeScene   The scene to set when the home image is cliked
+	 * @param connection  The BooleanProperty binded with the MainController, which
+	 *                    can interrupt the connection
+	 */
 	public void initialize(ServerModel serverModel, Scene homeScene, BooleanProperty connection) {
 		this.serverModel = serverModel;
 		this.homeScene = homeScene;
 		this.connection = connection;
-		
+
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();
 			centroidsLabel.setText(centroidsNumber + " " + centroidsLabel.getText());
@@ -89,22 +104,31 @@ public class DBLoaderController extends Controller {
 			table.setItems(list);
 		} catch (IOException e) {
 			this.connection.set(false);
-			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
+			new ExceptionAlert("Connecton lost", "The connection to the server has been lost", AlertType.ERROR);
 		}
 	}
 
+	/**
+	 * Open a new window that shows the whole tuples
+	 */
 	public void tabularClick() {
 		try {
-			if(tuples == null) {
+			if (tuples == null) {
 				tuples = serverModel.getData();
 			}
 			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml", true))
 					.initialize(names, tuples);
 		} catch (IOException | NullPointerException e) {
-			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
+			new ExceptionAlert("Connecton lost", "The connection to the server has been lost", AlertType.ERROR);
 		}
 	}
 
+	/**
+	 * Get the string from the text field and calls the ServerModel method to save
+	 * the file on the server
+	 * 
+	 * @throws ClassNotFoundException
+	 */
 	public void onSaveClick() throws ClassNotFoundException {
 		String name = fileName.getText();
 		if (name.equals("")) {
@@ -121,17 +145,25 @@ public class DBLoaderController extends Controller {
 			new ExceptionAlert("Connection lost", "File not saved", AlertType.ERROR);
 		}
 	}
-	
+
+	/**
+	 * Goes back to the main window
+	 */
 	public void onHomeClick() {
 		Stage stage = ((Stage) (home.getScene().getWindow()));
 		serverModel.goBack();
 		stage.setScene(homeScene);
 		stage.show();
 	}
-	
+
+	/**
+	 * Opens the new window with the graphic rapresentation of the clustering
+	 * 
+	 * @param event
+	 */
 	public void onGraphicClick(ActionEvent event) {
 		try {
-			if(distances == null) {
+			if (distances == null) {
 				distances = serverModel.getDistances();
 			}
 			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml", true)).initialize(distances);

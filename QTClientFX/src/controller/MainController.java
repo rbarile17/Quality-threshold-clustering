@@ -142,13 +142,13 @@ public class MainController extends Controller {
 	}
 
 	/**
-	 * Connects to the server specified by 'ip' and 'port' and set the label
-	 * 'Disconnected' to 'Connected' in green
+	 * Connects to the server specified by 'ip' and 'port' initializing the
+	 * ServerModel and set the label 'Disconnected' to 'Connected' in green
 	 * 
 	 * @param ip:   the ip of the server
 	 * @param port: the port of the server
 	 * @return true if the connection is completed, else false
-	 * @throws IOException
+	 * @throws IOException if the S
 	 */
 	public boolean connect(String ip, int port) throws IOException {
 
@@ -169,13 +169,13 @@ public class MainController extends Controller {
 	/**
 	 * Disconnect from the server and set the label to 'Disconnected' in red
 	 * 
-	 * @param regualClosing: true if the disconnection is regularly chosen by the
-	 *                       user, false if is due to an Exception
+	 * @param regularClosing: true if the disconnection is regularly chosen by the
+	 *                        user, false if is due to an Exception
 	 */
-	public void disconnect(boolean regualClosing) {
+	public void disconnect(boolean regularClosing) {
 		try {
 			if (serverModel.isConnected())
-				serverModel.close(regualClosing);
+				serverModel.close(regularClosing);
 		} catch (NullPointerException e) {
 			return;
 		}
