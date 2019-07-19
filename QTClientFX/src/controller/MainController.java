@@ -1,6 +1,11 @@
 package controller;
 
 import java.io.IOException;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -41,7 +46,22 @@ public class MainController extends Controller {
 	private AnchorPane anchorPane;
 
 	private ServerModel serverModel;
+	
+	private BooleanProperty connection;
 
+	public void initialize() {
+		connection = new SimpleBooleanProperty();
+		connection.addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(!newValue)
+					disconnect(false);
+			}
+			
+		});
+	}
+	
 	public void connectClick() {
 		try {
 			((SettingsController) newWindow(new Stage(), "../graphic/Settings.fxml")).initialize(this);
@@ -54,33 +74,51 @@ public class MainController extends Controller {
 		try {
 			try {
 				if (serverModel.clusterDBTable(tableName.getText(), Double.parseDouble(radius.getText())) == true) {
+					DBLoaderController controller;
 					Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 					Scene mainScene = mainStage.getScene();
-					((DBLoaderController) newWindow(mainStage,"../graphic/DBLoader.fxml")).initialize(serverModel,mainScene);
+					try {
+						controller = ((DBLoaderController) newWindow(mainStage,"../graphic/DBLoader.fxml"));
+					} catch (IOException ex) {
+						new ExceptionAlert(ex);
+						return;
+					}
+					controller.initialize(serverModel,mainScene,connection);
 				}
 			} catch (NumberFormatException e) {
 				new ExceptionAlert("Radius error", "Radius must be a number!", AlertType.WARNING);
 			}
-		} catch (IOException | NullPointerException e) {
-			new ExceptionAlert(e);
+		} catch (IOException e) {
+			disconnect(false);
+			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
 		}
 	}
 
 	public void loadFileClick(ActionEvent event) {
 		try {
-
+			FileLoaderController fileLoaderController;
 			if (serverModel.loadFile(fileName.getText()) == true) {
 				Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Scene mainScene = mainStage.getScene();
-				((FileLoaderController) newWindow(mainStage,"../graphic/FileLoader.fxml")).initialize(serverModel,mainScene);
+				try {
+					fileLoaderController = ((FileLoaderController) newWindow(mainStage,"../graphic/FileLoader.fxml"));
+				} catch(IOException ex) {
+					new ExceptionAlert(ex);
+					return;
+				}
+				fileLoaderController.initialize(serverModel,mainScene);
 			}
-		} catch (IOException | NullPointerException e) {
-			new ExceptionAlert(e);
+		} catch (IOException e) {
+			disconnect(false);
+			System.out.println(serverModel.isConnected());
+			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
 		}
 	}
 
 	public boolean connect(String ip, int port) throws IOException {
-		if(serverModel != null && serverModel.getIP().equals(ip) && serverModel.getPort() == port) {
+		
+		
+		if(serverModel != null && serverModel.isConnected() && serverModel.getIP().equals(ip) && serverModel.getPort() == port) {
 			new ExceptionAlert("Same server","You are already connected to this server!",AlertType.WARNING);
 			return false;
 		}
@@ -93,16 +131,16 @@ public class MainController extends Controller {
 			return true;
 	}
 
-	public void disconnect() throws IOException {
+	public void disconnect(Boolean regualClosing) {
 		try {
-			serverModel.close();
-			connected.setText("Disonnected");
-			connected.setTextFill(Color.RED);
-			loadDB.setDisable(true);
-			loadFile.setDisable(true);
+			if(serverModel.isConnected())
+				serverModel.close(regualClosing);
 		} catch (NullPointerException e) {
-			
+			return;
 		}
+		connected.setText("Disonnected");
+		connected.setTextFill(Color.RED);
+		loadDB.setDisable(true);
+		loadFile.setDisable(true);
 	}
-
 }

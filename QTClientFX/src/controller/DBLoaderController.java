@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -45,6 +47,7 @@ public class DBLoaderController extends Controller {
 	private TextField fileName;
 	
 	private Scene homeScene;
+	private BooleanProperty connection;
 
 	private ServerModel serverModel;
 	private LinkedList<List<List<String>>> tuples;
@@ -52,9 +55,10 @@ public class DBLoaderController extends Controller {
 	private LinkedList<String> names;
 	private LinkedList<List<Double>> distances;
 
-	public void initialize(ServerModel serverModel, Scene homeScene) {
+	public void initialize(ServerModel serverModel, Scene homeScene, BooleanProperty connection) {
 		this.serverModel = serverModel;
 		this.homeScene = homeScene;
+		this.connection = connection;
 		
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();
@@ -84,7 +88,8 @@ public class DBLoaderController extends Controller {
 			}
 			table.setItems(list);
 		} catch (IOException e) {
-			new ExceptionAlert(e);
+			this.connection.set(false);
+			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
 		}
 	}
 
@@ -96,7 +101,7 @@ public class DBLoaderController extends Controller {
 			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml", true))
 					.initialize(names, tuples);
 		} catch (IOException | NullPointerException e) {
-			new ExceptionAlert(e);
+			new ExceptionAlert("Connecton lost","The connection to the server has been lost",AlertType.ERROR);
 		}
 	}
 
@@ -112,6 +117,7 @@ public class DBLoaderController extends Controller {
 				new ExceptionAlert("Saved!", "File successfully saved", AlertType.INFORMATION);
 			}
 		} catch (IOException e) {
+			connection.set(false);
 			new ExceptionAlert("Connection lost", "File not saved", AlertType.ERROR);
 		}
 	}

@@ -18,7 +18,7 @@ import utility.ExceptionAlert;
 
 public class ServerModel {
 
-	private Socket server;
+	public Socket server;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";
@@ -40,7 +40,8 @@ public class ServerModel {
 
 			@Override
 			public void changed(ObservableValue<? extends Object> arg0, Object arg1, Object arg2) {
-				System.out.println("Chiuso");				
+				System.out.println("Chiuso");	
+				
 			}
 		});
 	}
@@ -133,13 +134,21 @@ public class ServerModel {
 		return data;
 	}
 
-	public void close() {
-		try {
-			out.writeObject(CLOSE_CONNECTION);
-			server.close();
-		} catch (IOException e) {
-			new ExceptionAlert(e);
+	public void close(Boolean regularClosing) {
+		if (isConnected()) {
+			try {
+				if(regularClosing)
+					out.writeObject(CLOSE_CONNECTION);
+				server.close();
+			} catch (IOException e) {
+				new ExceptionAlert("Connecton lost","Failed to properly closing connection",AlertType.ERROR);
+			}
 		}
+		server = null;
+	}
+	
+	public boolean isConnected() {
+		return server != null;
 	}
 
 	public String saveFile(String file) throws IOException, ClassNotFoundException {
