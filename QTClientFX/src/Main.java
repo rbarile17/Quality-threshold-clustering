@@ -18,7 +18,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("graphic/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
-			primaryStage.setOnCloseRequest((e) -> controller.disconnect(true));
+			primaryStage.setOnCloseRequest((e) -> {controller.disconnect(true);System.out.println("chuiso");});
 			primaryStage.setTitle("QT Clustering");
 			primaryStage.show();
 		} catch (IOException | NullPointerException e) {

@@ -53,16 +53,26 @@ public class ServerOneClient extends Thread {
 					if (data == null)
 						break;
 					compute(data);
-					while (true) {
+					boolean DB = true;
+					while (DB) {
 						int choice = (int) in.readObject();
-						if (choice == FILE_SAVING)
+						switch (choice) {
+						case FILE_SAVING:
 							storeClusterInFile(data);
-						else if (choice == DATA_SENDING)
-							out.writeObject(data.toList(kmeans.getC()));
-						else if (choice == DISTANCES_SENDING) {
-							out.writeObject(data.getDistances(kmeans.getC()));
-						} else if (choice == CONNECTION_CLOSING || choice == GOING_BACK)
 							break;
+						case DATA_SENDING:
+							out.writeObject(data.toList(kmeans.getC()));
+							break;
+						case DISTANCES_SENDING: 
+							out.writeObject(data.getDistances(kmeans.getC()));
+							break;
+						case CONNECTION_CLOSING:
+							DB = false;
+							active = false;
+							break;
+						case GOING_BACK:
+							DB = false;
+						}
 					}
 					break;
 				case FILE_LOADING:
