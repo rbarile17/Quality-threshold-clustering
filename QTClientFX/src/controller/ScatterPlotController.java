@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.sun.glass.ui.Screen;
-import utility.Fractions;
+import utility.ScreenFractions;
 import javafx.fxml.FXML;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
@@ -62,10 +62,10 @@ public class ScatterPlotController extends Controller {
 	 * @param tupleNumber The number of tuples
 	 */
 	private void setWindow(int tupleNumber) {
-		pane.setPrefHeight(Fractions.HEIGHT_1 * Fractions.SCREEN_HEIGHT);
-		pane.setPrefWidth(Fractions.WIDTH_1 * Fractions.SCREEN_WIDTH * tupleNumber);
+		pane.setPrefHeight(ScreenFractions.HEIGHT_1 * ScreenFractions.SCREEN_HEIGHT);
+		pane.setPrefWidth(ScreenFractions.QUARTER_WIDTH * ScreenFractions.SCREEN_WIDTH * tupleNumber);
 		Stage current = ((Stage) pane.getScene().getWindow());
-		current.setY(Fractions.HEIGHT_2 * Fractions.SCREEN_HEIGHT);
+		current.setY(ScreenFractions.HEIGHT_2 * ScreenFractions.SCREEN_HEIGHT);
 		current.sizeToScene();
 	}
 

@@ -9,10 +9,10 @@ import com.sun.glass.ui.Screen;
  * @author Roberto Barile
  * @author Sergio Caputo
  */
-public abstract class Fractions {
+public abstract class ScreenFractions {
 	public static final double HEIGHT_1 = 0.85;
 	public static final double HEIGHT_2 = 0.02;
-	public static final double WIDTH_1 = 0.025;
+	public static final double QUARTER_WIDTH = 0.025;
 	public static final double SCREEN_HEIGHT = Screen.getMainScreen().getHeight();
 	public static final double SCREEN_WIDTH = Screen.getMainScreen().getWidth();
 }
