@@ -52,21 +52,6 @@ public class ClustersTuplesController extends Controller{
 		    }
 		});
 		
-		this.setFilter();
-		this.fillTable();
-	}
-	
-	private void setFilter() {
-		for(int i=0; i<centroids.size(); i++) {
-			CheckMenuItem menuItem = new CheckMenuItem();
-			menuItem.setText(String.valueOf(i));
-			filter.getItems().add(menuItem);
-		}
-	}
-	
-	private void fillTable() {
-		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
-		
 		TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Centroid Index");
 		col.setCellValueFactory(data -> data.getValue().get(0));
 		table.getColumns().add(col);
@@ -81,6 +66,21 @@ public class ClustersTuplesController extends Controller{
 			table.getColumns().add(c);
 			i++;
 		}
+		
+		this.setFilter();
+		this.fillTable();
+	}
+	
+	private void setFilter() {
+		for(int i=0; i<centroids.size(); i++) {
+			CheckMenuItem menuItem = new CheckMenuItem();
+			menuItem.setText(String.valueOf(i));
+			filter.getItems().add(menuItem);
+		}
+	}
+	
+	private void fillTable() {
+		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 					
 		Iterator<LinkedList<String>> centroid = centroids.iterator();
 		int k=0;
@@ -88,7 +88,7 @@ public class ClustersTuplesController extends Controller{
 			List<StringProperty> oList = new LinkedList<StringProperty>();
 			oList.add(0, new SimpleStringProperty(k+" "));
 			oList.add(1, new SimpleStringProperty("0.0"));
-			i = 2;
+			int i = 2;
 			for(String s : centroid.next()) {
 				oList.add(i, new SimpleStringProperty(s));
 				i++;
@@ -111,29 +111,14 @@ public class ClustersTuplesController extends Controller{
 	}
 	
 	private void fillTable(TreeSet<Integer> notFiltered) {
-		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
-		
-		TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Centroid Index");
-		col.setCellValueFactory(data -> data.getValue().get(0));
-		table.getColumns().add(col);
-		col = new TableColumn<List<StringProperty>, String>("Distance");
-		col.setCellValueFactory(data -> data.getValue().get(1));
-		table.getColumns().add(col);
-		int i=2;
-		for(String s : names) {
-			final int j = i;
-			TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
-			c.setCellValueFactory(data -> data.getValue().get(j));
-			table.getColumns().add(c);
-			i++;
-		}
+		ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();		
 					
 		int k=0;
 		for(int j : notFiltered) {
 			List<StringProperty> oList = new LinkedList<StringProperty>();
 			oList.add(0, new SimpleStringProperty(k+" "));
 			oList.add(1, new SimpleStringProperty("0.0"));
-			i = 2;
+			int i = 2;
 			for(String s : centroids.get(j)) {
 				oList.add(i, new SimpleStringProperty(s));
 				i++;
@@ -167,5 +152,8 @@ public class ClustersTuplesController extends Controller{
 	
 	public void removeFilterClick() {
 		this.fillTable();
+		filter.getItems().stream()
+		.filter(menuItem -> CheckMenuItem.class.isInstance(menuItem) && CheckMenuItem.class.cast(menuItem).isSelected())
+		.forEach(menuItem -> CheckMenuItem.class.cast(menuItem).setSelected(false));
 	}
 }
