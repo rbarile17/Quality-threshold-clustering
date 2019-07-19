@@ -172,7 +172,7 @@ public class MainController extends Controller {
 	 * @param regualClosing: true if the disconnection is regularly chosen by the
 	 *                       user, false if is due to an Exception
 	 */
-	public void disconnect(Boolean regualClosing) {
+	public void disconnect(boolean regualClosing) {
 		try {
 			if (serverModel.isConnected())
 				serverModel.close(regualClosing);
