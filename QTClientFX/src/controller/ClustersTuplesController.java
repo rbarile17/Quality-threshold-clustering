@@ -16,7 +16,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 public class ClustersTuplesController extends Controller {
-	private LinkedList<LinkedList<String>> centroids;
 	private LinkedList<List<List<String>>> tuples;
 	LinkedList<String> names;
 
