@@ -166,15 +166,12 @@ public class MainController extends Controller {
 		return true;
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Disconnect from the server and set the label to 'Disconnected' in red
 	 * 
 	 * @param regualClosing: true if the disconnection is regularly chosen by the
 	 *                       user, false if is due to an Exception
 	 */
-=======
->>>>>>> 8962f8b381717cf545a9da5b7bd6f04aa2af047f
 	public void disconnect(boolean regualClosing) {
 		try {
 			if (serverModel.isConnected())
