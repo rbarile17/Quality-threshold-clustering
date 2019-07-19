@@ -9,19 +9,19 @@
 
 <AnchorPane prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClustersTuplesController">
    <children>
-      <Label layoutX="201.0" layoutY="32.0" text="Whole Clustering">
+      <Label layoutX="44.0" layoutY="29.0" text="Whole Clustering" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="358.0">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <TableView fx:id="table" layoutX="44.0" layoutY="85.0" prefHeight="194.0" prefWidth="512.0" />
-      <Label layoutX="44.0" layoutY="303.0" text="Filter">
+      <TableView fx:id="table" layoutX="44.0" layoutY="85.0" prefHeight="194.0" prefWidth="512.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="85.0" />
+      <Label layoutX="44.0" layoutY="303.0" text="Filter" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="44.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Button fx:id="applyFilter" layoutX="341.0" layoutY="304.0" mnemonicParsing="false" onAction="#applyFilterClick" text="Apply filter" />
-      <Button fx:id="removeFilter" layoutX="431.0" layoutY="304.0" mnemonicParsing="false" onAction="#removeFilterClick" text="Remove filter" />
-      <MenuButton fx:id="filter" layoutX="111.0" layoutY="304.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" text="Choose centroids" />
+      <Button fx:id="applyFilter" layoutX="341.0" layoutY="304.0" mnemonicParsing="false" onAction="#applyFilterClick" text="Apply filter" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="341.0" />
+      <Button fx:id="removeFilter" layoutX="442.0" layoutY="304.0" mnemonicParsing="false" onAction="#removeFilterClick" text="Remove filter" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="429.0" />
+      <MenuButton fx:id="filter" layoutX="111.0" layoutY="304.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" text="Choose centroids" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="111.0" />
    </children>
 </AnchorPane>

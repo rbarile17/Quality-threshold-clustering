@@ -93,8 +93,8 @@ public class DBLoaderController extends Controller {
 			if(tuples == null) {
 				tuples = serverModel.getData();
 			}
-			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml"))
-					.initialize(centroids, names, tuples);
+			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml", true))
+					.initialize(names, tuples);
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
 		}
@@ -128,7 +128,7 @@ public class DBLoaderController extends Controller {
 			if(distances == null) {
 				distances = serverModel.getDistances();
 			}
-			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml")).initialize(distances);
+			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml", true)).initialize(distances);
 		} catch (IOException | NullPointerException e) {
 			e.printStackTrace();
 			new ExceptionAlert(e);
