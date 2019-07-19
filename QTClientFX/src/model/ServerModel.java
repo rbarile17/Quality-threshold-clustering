@@ -174,7 +174,6 @@ public class ServerModel {
 		out.writeObject(RECEIVE_DISTANCES);
 		try {
 			distances = (LinkedList<List<Double>>) in.readObject();
-			System.out.println("ricevuto");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
