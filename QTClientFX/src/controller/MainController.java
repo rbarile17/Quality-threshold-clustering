@@ -131,7 +131,7 @@ public class MainController extends Controller {
 			return true;
 	}
 
-	public void disconnect(Boolean regualClosing) {
+	public void disconnect(boolean regualClosing) {
 		try {
 			if(serverModel.isConnected())
 				serverModel.close(regualClosing);

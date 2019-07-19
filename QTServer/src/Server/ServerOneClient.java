@@ -43,7 +43,7 @@ public class ServerOneClient extends Thread {
 	public void run() {
 		System.out.println("Client accepted");
 		Data data;
-		Boolean active = true;
+		boolean active = true;
 		try {
 			while (active) {
 				int answer = (int) in.readObject();
