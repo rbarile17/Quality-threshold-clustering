@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import database.TableData;
 import database.Example;
 import database.NoValueException;
@@ -95,15 +97,17 @@ public class Data {
 	
 	public LinkedList<List<Double>> getDistances(ClusterSet C) {
 		LinkedList<List<Double>> distances = new LinkedList<List<Double>>();
-		Tuple first = C.iterator().next().getCentroid();
+		Cluster last = null;
+		for (Cluster element : C) {
+	        last = element;
+	    }
 		for (Cluster c : C) {
 			LinkedList<Double> l = new LinkedList<Double>();
 			for (int i : c) {
-				l.add(this.getItemSet(i).getDistance(first));
+				l.add(this.getItemSet(i).getDistance(last.getCentroid()));
 			}
 			distances.add(l);
 		}
-
 		return distances;
 	}
 
