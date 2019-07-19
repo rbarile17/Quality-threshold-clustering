@@ -35,15 +35,6 @@ public class ServerModel {
 		this.server = new Socket(InetAddress.getByName(ip), port);
 		out = new ObjectOutputStream(server.getOutputStream());
 		in = new ObjectInputStream(server.getInputStream());
-		BooleanProperty closed = new SimpleBooleanProperty(server.isClosed());
-		closed.addListener(new ChangeListener<Object>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Object> arg0, Object arg1, Object arg2) {
-				System.out.println("Chiuso");	
-				
-			}
-		});
 	}
 
 	public boolean loadFile(String fileName) throws IOException {
