@@ -52,9 +52,11 @@ public class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializ
 	}
 
 	public String toString() {
-		String str = "Centroid=(";
-		for (int i = 0; i < centroid.getLength(); i++)
-			str += centroid.get(i);
+		String str = "Centroid=( ";
+		int i;
+		for (i=0; i < centroid.getLength() - 1; i++)
+			str += centroid.get(i) + ", ";
+		str += centroid.get(i);
 		str += ")";
 		return str;
 
