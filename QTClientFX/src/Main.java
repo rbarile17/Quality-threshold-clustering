@@ -7,7 +7,20 @@ import utility.ExceptionAlert;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
+/**
+ * The main class of the application, start point of the program
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class Main extends Application {
+
+	/**
+	 * Generate tha main window
+	 * 
+	 * @param primaryStage The main window that wrap the scene
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -18,7 +31,9 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("graphic/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
-			primaryStage.setOnCloseRequest((e) -> {controller.disconnect(true);System.out.println("chuiso");});
+			primaryStage.setOnCloseRequest((e) -> {
+				controller.disconnect(true);
+			});
 			primaryStage.setTitle("QT Clustering");
 			primaryStage.show();
 		} catch (IOException | NullPointerException e) {

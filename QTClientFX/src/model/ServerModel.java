@@ -16,6 +16,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert.AlertType;
 import utility.ExceptionAlert;
 
+/**
+ * Communicates with the server to receive the mining results
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class ServerModel {
 
 	public Socket server;
@@ -30,13 +37,28 @@ public class ServerModel {
 	private static final int LOAD_FILE = 3;
 	private static final int RECEIVE_DATA = 4;
 	private static final int RECEIVE_DISTANCES = 5;
-	
+
+	/**
+	 * Initialize the socket and the streams
+	 * 
+	 * @param ip      The ip of the server
+	 * @param portThe port of the server
+	 * @throws IOException          if the connection to the server fails
+	 * @throws UnknownHostException if the host isn't found
+	 */
 	public ServerModel(String ip, int port) throws IOException, UnknownHostException {
 		this.server = new Socket(InetAddress.getByName(ip), port);
 		out = new ObjectOutputStream(server.getOutputStream());
 		in = new ObjectInputStream(server.getInputStream());
 	}
 
+	/**
+	 * Tells the server to load and sent the file with the specified name
+	 * 
+	 * @param fileName The name of the file to be requested to the server
+	 * @return true if the file name has been corrected sent and it exists
+	 * @throws IOException if the communication with the server is interrupted
+	 */
 	public boolean loadFile(String fileName) throws IOException {
 		out.writeObject(LOAD_FILE);
 		out.writeObject(fileName);
@@ -128,16 +150,16 @@ public class ServerModel {
 	public void close(Boolean regularClosing) {
 		if (isConnected()) {
 			try {
-				if(regularClosing)
+				if (regularClosing)
 					out.writeObject(CLOSE_CONNECTION);
 				server.close();
 			} catch (IOException e) {
-				new ExceptionAlert("Connecton lost","Failed to properly closing connection",AlertType.ERROR);
+				new ExceptionAlert("Connecton lost", "Failed to properly closing connection", AlertType.ERROR);
 			}
 		}
 		server = null;
 	}
-	
+
 	public boolean isConnected() {
 		return server != null;
 	}
@@ -151,7 +173,7 @@ public class ServerModel {
 		else
 			return answer;
 	}
-	
+
 	public void goBack() {
 		try {
 			out.writeObject(GO_BACK);
@@ -159,7 +181,7 @@ public class ServerModel {
 			new ExceptionAlert(e);
 		}
 	}
-	
+
 	public LinkedList<List<Double>> getDistances() throws IOException {
 		LinkedList<List<Double>> distances = null;
 		out.writeObject(RECEIVE_DISTANCES);
@@ -170,11 +192,11 @@ public class ServerModel {
 		}
 		return distances;
 	}
-	
+
 	public String getIP() {
 		return server.getInetAddress().getCanonicalHostName();
 	}
-	
+
 	public int getPort() {
 		return server.getPort();
 	}

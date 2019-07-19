@@ -10,7 +10,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import utility.ExceptionAlert;
 
-public class SettingsController extends Controller {
+/**
+ * Controls the events of the connection settings window
+ * 
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
+class SettingsController extends Controller {
 	@FXML
 	private Button apply;
 	@FXML
@@ -20,6 +27,12 @@ public class SettingsController extends Controller {
 
 	private MainController main;
 
+	/**
+	 * Takes the ip and port string from the text fields, and tries to connect to
+	 * the server
+	 * 
+	 * @param event
+	 */
 	public void applyClick(ActionEvent event) {
 		String ipS = "", portS = "";
 		int portI = -1;
@@ -30,7 +43,7 @@ public class SettingsController extends Controller {
 			ipS = "127.0.0.1";
 		if (portS.equals(""))
 			portS = "8080";
-			
+
 		try {
 			portI = Integer.parseInt(portS);
 			if (portI < 1 || portI > 65536) {
@@ -42,13 +55,18 @@ public class SettingsController extends Controller {
 			return;
 		}
 		try {
-			if(main.connect(ipS, portI))
+			if (main.connect(ipS, portI))
 				((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
 			new ExceptionAlert(e);
 		}
 	}
 
+	/**
+	 * Initialize the attributes
+	 * 
+	 * @param main The controller of the main window
+	 */
 	public void initialize(MainController main) {
 		this.main = main;
 	}
