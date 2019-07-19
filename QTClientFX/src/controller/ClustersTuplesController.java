@@ -3,6 +3,9 @@ package controller;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.sun.glass.ui.Screen;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -14,10 +17,16 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import utility.Fractions;
 
 public class ClustersTuplesController extends Controller {
 	private LinkedList<List<List<String>>> tuples;
 	LinkedList<String> names;
+
+	@FXML
+	private AnchorPane pane;
 
 	@FXML
 	private Button applyFilter;
@@ -35,6 +44,12 @@ public class ClustersTuplesController extends Controller {
 		this.tuples = tuples;
 		this.names = names;
 
+		this.setFilter();
+		this.setTable();
+		this.fillTable();
+	}
+
+	private void setTable() {
 		table.setRowFactory(tv -> new TableRow<List<StringProperty>>() {
 			@Override
 			public void updateItem(List<StringProperty> item, boolean empty) {
@@ -63,9 +78,6 @@ public class ClustersTuplesController extends Controller {
 			table.getColumns().add(c);
 			i++;
 		}
-
-		this.setFilter();
-		this.fillTable();
 	}
 
 	private void setFilter() {
@@ -84,7 +96,8 @@ public class ClustersTuplesController extends Controller {
 
 			for (List<String> example : l) {
 				oList = new LinkedList<StringProperty>();
-				oList.add(0, new SimpleStringProperty(String.valueOf(k)));
+				String index = String.valueOf(k);
+				oList.add(0, new SimpleStringProperty(String.valueOf(index)));
 				int i = 1;
 				for (String s : example) {
 					oList.add(i, new SimpleStringProperty(s));
@@ -92,9 +105,11 @@ public class ClustersTuplesController extends Controller {
 				}
 				list.add(oList);
 			}
+
 			k++;
 		}
 		table.setItems(list);
+
 	}
 
 	private void fillTable(TreeSet<Integer> notFiltered) {

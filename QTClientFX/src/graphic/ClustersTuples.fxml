@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="358.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClustersTuplesController">
+<AnchorPane fx:id="pane" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClustersTuplesController">
    <children>
       <Label layoutX="44.0" layoutY="29.0" text="Whole Clustering" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="358.0">
          <font>

@@ -3,7 +3,8 @@ package controller;
 import java.util.LinkedList;
 import java.util.List;
 
-
+import com.sun.glass.ui.Screen;
+import utility.Fractions;
 import javafx.fxml.FXML;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
@@ -11,18 +12,35 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class ScatterPlotController extends Controller{
+public class ScatterPlotController extends Controller {
 
 	@FXML
 	ScatterChart<String, Double> chart;
-	
+
 	@FXML
 	AnchorPane pane;
-	
+
 	@FXML
 	Label title;
+	
+	LinkedList<List<Double>> elements;
 
 	public void initialize(LinkedList<List<Double>> elements) {
+		this.elements = elements;
+		
+		int tupleNumber = this.fillChart();
+		this.setWindow(tupleNumber);
+	}
+
+	private void setWindow(int tupleNumber) {	
+		pane.setPrefHeight(Fractions.HEIGHT_1 * Fractions.SCREEN_HEIGHT);
+		pane.setPrefWidth(Fractions.WIDTH_1 * Fractions.SCREEN_WIDTH * tupleNumber);
+		Stage current = ((Stage) pane.getScene().getWindow());
+		current.setY(Fractions.HEIGHT_2 * Fractions.SCREEN_HEIGHT);
+		current.sizeToScene();
+	}
+	
+	private int fillChart() {
 		int i = 0;
 		int j = 0;
 		for (List<Double> list : elements) {
@@ -30,13 +48,12 @@ public class ScatterPlotController extends Controller{
 			xValues.setName(String.valueOf(i));
 			i++;
 			for (Double xValue : list) {
-				xValues.getData().add(new XYChart.Data<String, Double>(String.valueOf(j),xValue));
+				xValues.getData().add(new XYChart.Data<String, Double>(String.valueOf(j), xValue));
 				j++;
 			}
 			chart.getData().add(xValues);
-			pane.setPrefWidth(100*i);
-			((Stage)pane.getScene().getWindow()).sizeToScene();
 		}
+		
+		return j;
 	}
-
 }
