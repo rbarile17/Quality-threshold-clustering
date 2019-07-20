@@ -23,6 +23,18 @@ import utility.ExceptionAlert;
  * @author Roberto Barile
  * @author Sergio Caputo
  */
+/**
+ * @author PasqualeDeMarinis
+ *
+ */
+/**
+ * @author PasqualeDeMarinis
+ *
+ */
+/**
+ * @author PasqualeDeMarinis
+ *
+ */
 public class ServerModel {
 
 	public Socket server;
@@ -77,6 +89,15 @@ public class ServerModel {
 		return true;
 	}
 
+	/**
+	 * Communicates the server to cluster the specified DB table with certain radius
+	 * 
+	 * @param tableName The DB table to cluster
+	 * @param radius    The radius given to the QT algorithm
+	 * @return True If the table is correctly loaded and clustered, else false
+	 * @throws IOException IOException If the connection with the server isnt'active
+	 *                     or is interrupted
+	 */
 	public boolean clusterDBTable(String tableName, double radius) throws IOException {
 		out.writeObject(CLUSTER_DB);
 		out.writeObject(tableName);
@@ -94,6 +115,13 @@ public class ServerModel {
 		return true;
 	}
 
+	/**
+	 * Get the name of the attributes of the loaded table from the server
+	 * 
+	 * @return The LinkedList of strings attributes
+	 * @throws IOException If the connection with the server isnt'active or is
+	 *                     interrupted
+	 */
 	public LinkedList<String> getAttributesNames() throws IOException {
 		LinkedList<String> names = null;
 
@@ -106,6 +134,11 @@ public class ServerModel {
 		return names;
 	}
 
+	/**
+	 * @return The number of centroids of the clustering from the server
+	 * @throws IOException If the connection with the server isnt'active or is
+	 *                     interrupted
+	 */
 	public int getCentroidsNumber() throws IOException {
 		int centroidsNumber = 1;
 
@@ -121,6 +154,11 @@ public class ServerModel {
 		return centroidsNumber;
 	}
 
+	/**
+	 * @return The centroids tuples of the clustering from the server
+	 * @throws IOException If the connection with the server isnt'active or is
+	 *                     interrupted
+	 */
 	public LinkedList<LinkedList<String>> getCentroids() throws IOException {
 		LinkedList<LinkedList<String>> data = null;
 
@@ -133,6 +171,11 @@ public class ServerModel {
 		return data;
 	}
 
+	/**
+	 * @return The whole data of the database table
+	 * @throws IOException If the connection with the server isnt'active or is
+	 *                     interrupted
+	 */
 	public LinkedList<List<List<String>>> getData() throws IOException {
 		LinkedList<List<List<String>>> data = null;
 
@@ -147,6 +190,12 @@ public class ServerModel {
 		return data;
 	}
 
+	/**
+	 * Close the communication with the server
+	 * 
+	 * @param regularClosing Specify if the connection has been voluntary closed or
+	 *                       is due to an exception
+	 */
 	public void close(Boolean regularClosing) {
 		if (isConnected()) {
 			try {
@@ -160,6 +209,9 @@ public class ServerModel {
 		server = null;
 	}
 
+	/**
+	 * @return True if the connection is regularly active, else false
+	 */
 	public boolean isConnected() {
 		return server != null;
 	}
@@ -174,6 +226,9 @@ public class ServerModel {
 			return answer;
 	}
 
+	/**
+	 * Get the server ready to listen another DB clustering or file loading request
+	 */
 	public void goBack() {
 		try {
 			out.writeObject(GO_BACK);
@@ -182,6 +237,12 @@ public class ServerModel {
 		}
 	}
 
+	/**
+	 * @return The lists of the distances from the centroid of the biggest cluster
+	 *         grouped by cluster
+	 * @throws IOException If the connection with the server isnt'active or is
+	 *                     interrupted
+	 */
 	public LinkedList<List<Double>> getDistances() throws IOException {
 		LinkedList<List<Double>> distances = null;
 		out.writeObject(RECEIVE_DISTANCES);
@@ -193,10 +254,16 @@ public class ServerModel {
 		return distances;
 	}
 
+	/**
+	 * @return The IP string of the server
+	 */
 	public String getIP() {
 		return server.getInetAddress().getCanonicalHostName();
 	}
 
+	/**
+	 * @return The number port of the server
+	 */
 	public int getPort() {
 		return server.getPort();
 	}
