@@ -19,18 +19,17 @@ class DiscreteItemTest {
 		set.add("c");
 		set.add("b");
 		d = new DiscreteAttribute("test", 0, set);
-		item = new DiscreteItem(d, "prova");
+		item = new DiscreteItem(d, "a");
 	}
 	
 	@Test
 	void testDistance() {
-		DiscreteItem item = new DiscreteItem(d, "prova");
-		assertEquals(0, item.distance("prova"));
-		assertEquals(1, item.distance("prova1"));
+		assertEquals(0, item.distance("a"));
+		assertEquals(1, item.distance("b"));
 	}
 	
 	@Test
 	void testToString() {
-		assertEquals("prova",item.toString());
+		assertEquals("a",item.toString());
 	}
 }
