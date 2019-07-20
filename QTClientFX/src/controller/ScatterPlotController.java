@@ -3,7 +3,6 @@ package controller;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sun.glass.ui.Screen;
 import utility.ScreenFractions;
 import javafx.fxml.FXML;
 import javafx.scene.chart.ScatterChart;
@@ -18,18 +17,6 @@ import javafx.stage.Stage;
  * @author Pasquale De Marinis
  * @author Roberto Barile
  * @author Sergio Caputo
- */
-/**
- * @author PasqualeDeMarinis
- *
- */
-/**
- * @author PasqualeDeMarinis
- *
- */
-/**
- * @author PasqualeDeMarinis
- *
  */
 public class ScatterPlotController extends Controller {
 
@@ -72,7 +59,7 @@ public class ScatterPlotController extends Controller {
 	/**
 	 * Fills the chart with the elements passed to the method 'initialize'
 	 * 
-	 * @return The number of elemnts of the chart
+	 * @return The number of elements of the chart
 	 */
 	private int fillChart() {
 		int i = 0;

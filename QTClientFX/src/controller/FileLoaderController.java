@@ -15,10 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.ServerModel;
-import utility.ExceptionAlert;
 
 /**
- * The controller class of the clutering loaded from file
+ * The controller class of the clustering loaded from file
  * 
  * @author Pasquale De Marinis
  * @author Roberto Barile
@@ -38,9 +37,9 @@ public class FileLoaderController extends Controller {
 	private Scene homeScene;
 
 	/**
-	 * @param serverModel The class which comminicates with the server to get the
+	 * @param serverModel The class which communicates with the server to get the
 	 *                    clustering
-	 * @param homeScene   The scene to set when the home image is cliked
+	 * @param homeScene   The scene to set when the home image is clicked
 	 * @throws IOException If the communication with the server fails
 	 */
 	public void initialize(ServerModel serverModel, Scene homeScene) throws IOException {
@@ -70,6 +69,9 @@ public class FileLoaderController extends Controller {
 		table.setItems(list);
 	}
 
+	/**
+	 * Goes back to the main window
+	 */
 	public void onHomeClick() {
 		Stage stage = ((Stage) (home.getScene().getWindow()));
 		stage.setScene(homeScene);

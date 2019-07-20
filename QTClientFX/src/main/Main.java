@@ -19,7 +19,7 @@ import javafx.scene.layout.Pane;
 public class Main extends Application {
 
 	/**
-	 * Generate tha main window
+	 * Generate the main window
 	 * 
 	 * @param primaryStage The main window that wrap the scene
 	 */
@@ -27,10 +27,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("graphic/Main.fxml").openStream());
+			Pane root = loader.load(getClass().getResource("../graphic/Main.fxml").openStream());
 			MainController controller = (MainController) loader.getController();
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("graphic/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("../graphic/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.setOnCloseRequest((e) -> {

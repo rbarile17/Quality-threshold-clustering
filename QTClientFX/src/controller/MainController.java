@@ -73,7 +73,7 @@ public class MainController extends Controller {
 	}
 
 	/**
-	 * Opens the Settings window, called when the button 'Connect' is clicked
+	 * Opens the Settings window, called when the 'Connect' button is clicked
 	 */
 	public void connectClick() {
 		try {
@@ -86,7 +86,7 @@ public class MainController extends Controller {
 	/**
 	 * Takes the text in the fields Table and Radius and calls the methods to tell
 	 * the server to cluster the table and opens the new scene, called when the
-	 * button 'load' is clicked
+	 * 'load' button is clicked
 	 * 
 	 * @param event
 	 */
@@ -116,7 +116,7 @@ public class MainController extends Controller {
 
 	/**
 	 * Takes the text in the fields 'file', to tell the server to load the file and
-	 * opens the relative new scene,called when the button 'load' is clicked.
+	 * opens the relative new scene,called when the 'load' button is clicked.
 	 * 
 	 * @param event
 	 */
@@ -148,7 +148,7 @@ public class MainController extends Controller {
 	 * @param ip:   the ip of the server
 	 * @param port: the port of the server
 	 * @return true if the connection is completed, else false
-	 * @throws IOException if the S
+	 * @throws IOException if the server connection fails
 	 */
 	public boolean connect(String ip, int port) throws IOException {
 

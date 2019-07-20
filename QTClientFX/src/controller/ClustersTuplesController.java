@@ -49,10 +49,10 @@ public class ClustersTuplesController extends Controller {
 	private TableView<List<StringProperty>> table;
 
 	/**
-	 * Initialize the attributes and fills the table
+	 * Initialize the attributes, set the filter and fills the table
 	 * 
-	 * @param names The names of the columns
-	 * @param tuples The tuples of the clustring
+	 * @param names  The names of the columns
+	 * @param tuples The tuples of the clustering
 	 */
 	public void initialize(LinkedList<String> names, LinkedList<List<List<String>>> tuples) {
 		this.tuples = tuples;
@@ -64,7 +64,8 @@ public class ClustersTuplesController extends Controller {
 	}
 
 	/**
-	 * set the table listeners and adds the columns, and indexes
+	 * set the table listeners and adds the attribute columns, the centroid index
+	 * column and the distance column
 	 */
 	private void setTable() {
 		table.setRowFactory(tv -> new TableRow<List<StringProperty>>() {
@@ -163,7 +164,8 @@ public class ClustersTuplesController extends Controller {
 	}
 
 	/**
-	 * Set filters to the table taken from the filter menu when the relative button is clicked
+	 * Set filters to the table taken from the filter menu when the relative button
+	 * is clicked
 	 */
 	public void applyFilterClick() {
 		TreeSet<Integer> notFiltered = filter.getItems().stream().filter(

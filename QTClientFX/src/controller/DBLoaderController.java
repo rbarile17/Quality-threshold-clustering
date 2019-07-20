@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -157,7 +156,7 @@ public class DBLoaderController extends Controller {
 	}
 
 	/**
-	 * Opens the new window with the graphic rapresentation of the clustering
+	 * Opens the new window with the graphic representation of the clustering
 	 * 
 	 * @param event
 	 */
