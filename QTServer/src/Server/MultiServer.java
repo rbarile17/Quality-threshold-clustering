@@ -4,21 +4,36 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
 
+/**
+ * Defines a class that describes a multiserver<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class MultiServer {
 	private int PORT = 8080;
 
-	public static void main(String[] args) { // istanzia un oggetto di tipo MultiServer.
+	/**
+	 * Instantiates a multiserver type object 
+	 * @param args
+	 */
+	public static void main(String[] args) { 
 		new MultiServer(8080);
 	}
 
-	public MultiServer(int port) {// Costruttore di classe. Inizializza la porta ed invoca run()
+	/**
+	 * Initializes the port and launches run()
+	 * @param port port of server
+	 */
+	public MultiServer(int port) {
 		this.PORT = port;
 		listen();
 	}
 
-	private void listen() {// Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di
-							// richiesta di connessioni da parte del client. Ad ogni nuova richiesta
-							// connessione si istanzia ServerOneClient.
+	/**
+	 * Instantiates a ServerSocket which waits connection requests from client. A ServerOneCient is instantiated for every connection request
+	 */
+	private void listen() {
 		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(PORT);

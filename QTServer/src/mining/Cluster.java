@@ -7,50 +7,78 @@ import java.io.Serializable;
 import data.Tuple;
 import data.Data;
 
+/**
+ * Defines a class that represents a cluster<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3998359756241982723L;
 
 	private Tuple centroid;
 
 	private Set<Integer> clusteredData;
 
+	/**
+	 * @param centroid for the cluster
+	 */
 	Cluster(Tuple centroid) {
 		this.centroid = centroid;
 		clusteredData = new HashSet<Integer>();
 	}
 
+	/**
+	 * @return centroid
+	 */
 	public Tuple getCentroid() {
 		return centroid;
 	}
 
-	// return true if the tuple is changing cluster
+	/**
+	 * Adds a transition to the cluster
+	 * @param id index of the transition
+	 * @return true if the tuple is changing cluster
+	 */
 	boolean addData(int id) {
 		return clusteredData.add(id);
-
 	}
 
-	// verifica se una transazione è clusterizzata nell'array corrente
+	/**
+	 * Checks if a transition is clustered in the current array
+	 * @param id index of the transition
+	 * @return true if the transition is clustered
+	 */
 	boolean contain(int id) {
 		return clusteredData.contains(id);
 	}
 
-	// remove the tuple that has changed the cluster
+	/**
+	 * Removes the tuple that has changed the cluster
+	 * @param id index of the transition
+	 */
 	void removeTuple(int id) {
 		clusteredData.remove(id);
-
 	}
 
+	/**
+	 * @return size of the cluster
+	 */
 	int getSize() {
 		return clusteredData.size();
 	}
 
+	/**
+	 * @return iterator for the clustered data
+	 */
 	public Iterator<Integer> iterator() {
 		return clusteredData.iterator();
 	}
-
+	
+	/**
+	 * @return centroid
+	 */
 	public String toString() {
 		String str = "Centroid=( ";
 		int i;
@@ -62,10 +90,17 @@ public class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializ
 
 	}
 
+	/**
+	 * @param c cluster to be compared with the current one 
+	 */
 	public int compareTo(Cluster c) {
 		return this.getSize() > c.getSize() ? 1 : -1;
 	}
 
+	/**
+	 * @param data transitions (examples)
+	 * @return centroid and examples
+	 */
 	public String toString(Data data) {
 		String str = "Centroid=(";
 		int value;

@@ -4,6 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Defines a class that handles a connection with the DB<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class DbAccess {
 	// private String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
 	private String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
@@ -28,7 +34,11 @@ public class DbAccess {
 
 	// gestisce una connessione
 	private Connection conn;
-
+	
+	/**
+	 * Connection details are used to initialize a connection with DB
+	 * @throws DatabaseConnectionException  if the connection with DB fails
+	 */
 	public void initConnection() throws DatabaseConnectionException {
 		try {
 			Class.forName(DRIVER_CLASS_NAME).newInstance();
@@ -45,10 +55,16 @@ public class DbAccess {
 		}
 	}
 
+	/**
+	 * @return connection
+	 */
 	public Connection getConnection() {
 		return conn;
 	}
 
+	/**
+	 * Close connection with DB
+	 */
 	public void closeConnection() {
 		try {
 			conn.close();

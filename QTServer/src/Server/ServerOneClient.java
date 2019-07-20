@@ -18,6 +18,12 @@ import database.EmptySetException;
 import database.NoValueException;
 import data.Data;
 
+/**
+ * Defines a class that describes a server<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class ServerOneClient extends Thread {
 	private Socket socket;
 	private ObjectInputStream in;
@@ -33,6 +39,11 @@ public class ServerOneClient extends Thread {
 	private static final int DISTANCES_SENDING = 5;
 	private static final String OK = "OK";
 
+	/**
+	 * Starts the thread associated to the connection with client
+	 * @param s socket for the connection with client
+	 * @throws IOException if thread associated to the connection is interrupted
+	 */
 	public ServerOneClient(Socket s) throws IOException {
 		this.socket = s;
 		out = new ObjectOutputStream(socket.getOutputStream());
@@ -40,6 +51,9 @@ public class ServerOneClient extends Thread {
 		this.start();
 	}
 
+	/**
+	 * Handles client requests
+	 */
 	public void run() {
 		System.out.println("Client accepted");
 		Data data;
@@ -88,6 +102,10 @@ public class ServerOneClient extends Thread {
 		System.out.println("Client connection closed");
 	}
 
+	/**
+	 * Uses DB table to cluster data
+	 * @return
+	 */
 	private Data learningFromDB() {
 		try {
 			String table = (String) in.readObject();
@@ -112,6 +130,9 @@ public class ServerOneClient extends Thread {
 		return null;
 	}
 
+	/**
+	 * Uses file to cluster data
+	 */
 	private void learningFromFile() {
 		try {
 			String fileName = (String) in.readObject();
@@ -130,6 +151,10 @@ public class ServerOneClient extends Thread {
 		}
 	}
 
+	/**
+	 * Clusters data
+	 * @param data data to be clustered
+	 */
 	private void compute(Data data) {
 		try {
 			double radius = (double) in.readObject();
@@ -150,6 +175,11 @@ public class ServerOneClient extends Thread {
 		}
 	}
 
+	/**
+	 * Saves data in a file
+	 * @param data data to be saved in a file given in input
+	 * @throws ClassNotFoundException
+	 */
 	private void storeClusterInFile(Data data) throws ClassNotFoundException {
 		try {
 			try {

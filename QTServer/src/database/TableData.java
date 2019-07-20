@@ -10,16 +10,32 @@ import java.util.TreeSet;
 
 import database.TableSchema.Column;
 
+/**
+ * Defines a class that models the set of transitions stored in a table<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class TableData {
 
 	DbAccess db;
 	TableSchema tSchema;
 
+	/**
+	 * @param db connection with the DB
+	 * @param table table to handle 
+	 * @throws SQLException if DB access fails
+	 */
 	public TableData(DbAccess db, String table) throws SQLException {
 		this.db = db;
 		tSchema = new TableSchema(db, table);
 	}
 
+	/**
+	 * @return list of transitions in the table
+	 * @throws SQLException if DB access fails
+	 * @throws EmptySetException if resultset returned is empty
+	 */
 	public List<Example> getDistinctTransactions() throws SQLException, EmptySetException {
 		LinkedList<Example> transSet = new LinkedList<Example>();
 		Statement statement;
@@ -57,6 +73,12 @@ public class TableData {
 		return transSet;
 	}
 
+	/**
+	 * @param table name of the table 
+	 * @param column name of the column in the table
+	 * @return set of ordered distinct values in the column of the table 
+	 * @throws SQLException if DB access fails
+	 */
 	public Set<String> getDistinctColumnValues(String table, Column column) throws SQLException {
 		Set<String> valueSet = new TreeSet<String>();
 		Statement statement;
@@ -82,6 +104,14 @@ public class TableData {
 		return valueSet;
 	}
 
+	/**
+	 * @param table name of the table
+	 * @param column name of the column
+	 * @param aggregate aggregate sql operator
+	 * @return aggregate required
+	 * @throws SQLException if DB access fails
+	 * @throws NoValueException if result set returned is empty
+	 */
 	public Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate)
 			throws SQLException, NoValueException {
 		Statement statement;

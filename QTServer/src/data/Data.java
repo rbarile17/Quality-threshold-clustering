@@ -18,12 +18,25 @@ import database.TableSchema;
 import mining.Cluster;
 import mining.ClusterSet;
 
+/**
+ * Defines a class that models the set of transitions (tuples) <br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class Data {
 	private List<Example> data = new ArrayList<Example>();
 
 	private int numberOfExamples;
 	private List<Attribute> attributeSet;
 
+	/**
+	 * @param table DB table name
+	 * @throws NoValueException if value in result set is not found 
+	 * @throws DatabaseConnectionException if connection with DB fails
+	 * @throws SQLException id DB access fails
+	 * @throws EmptySetException if empty result set is returned
+	 */
 	public Data(String table) throws NoValueException, DatabaseConnectionException, SQLException, EmptySetException {
 		attributeSet = new LinkedList<Attribute>();
 
@@ -52,22 +65,40 @@ public class Data {
 		}
 	}
 
+	/**
+	 * @return numberofExamples of data
+	 */
 	public int getNumberOfExamples() {
 		return numberOfExamples;
 	}
 
+	/**
+	 * @return numberofAttributes of data
+	 */
 	public int getNumberOfAttributes() {
 		return attributeSet.size();
 	}
 
+	/**
+	 * @param exampleIndex index of the example to be considered
+	 * @param attributeIndex index of the attribute to be considered
+	 * @return list of the example with exampleindex and attributeindex
+	 */
 	public Object getAttributeValue(int exampleIndex, int attributeIndex) {
 		return data.get(exampleIndex).get(attributeIndex);
 	}
 
+	/**
+	 * @param index
+	 * @return list of attribute
+	 */
 	Attribute getAttribute(int index) {
 		return attributeSet.get(index);
 	}
 
+	/**
+	 * @return list of attributes names
+	 */
 	public List<String> getAttributesNames() {
 		List<String> names = new LinkedList<String>();
 
@@ -78,6 +109,10 @@ public class Data {
 		return names;
 	}
 
+	/**
+	 * @param C cluster set to be converted in list
+	 * @return list of cluster 
+	 */
 	public List<List<List<String>>> toList(ClusterSet C) {
 		List<List<List<String>>> data = new LinkedList<List<List<String>>>();
 
@@ -95,6 +130,11 @@ public class Data {
 		return data;
 	}
 	
+	/**
+	 * Calculates distances between centroids in different clusters
+	 * @param C clusterset
+	 * @return list of distances between centroids in different clusters
+	 */
 	public LinkedList<List<Double>> getDistances(ClusterSet C) {
 		LinkedList<List<Double>> distances = new LinkedList<List<Double>>();
 		Cluster last = null;
@@ -111,6 +151,10 @@ public class Data {
 		return distances;
 	}
 
+	/**
+	 * @param index index of the row
+	 * @return tuple with attribute-value in index row
+	 */
 	public Tuple getItemSet(int index) {
 		Tuple tuple = new Tuple(this.getNumberOfAttributes());
 
@@ -126,6 +170,9 @@ public class Data {
 		return tuple;
 	}
 
+	/**
+	 * @return attribute set with examples in data
+	 */
 	public String toString() {
 		String str = "";
 

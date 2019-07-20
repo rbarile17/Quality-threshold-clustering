@@ -8,27 +8,50 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Defines a class that models the scheme of a table in the DB<br>
+ * @author Pasquale De Marinis
+ * @author Roberto Barile
+ * @author Sergio Caputo
+ */
 public class TableSchema {
 	DbAccess db;
 	String name;
 
+	/**
+	 * Defines a class that models the columns in the scheme
+	 *
+	 */
 	public class Column {
 		private String name;
 		private String type;
 
+		/**
+		 * @param name header of the column
+		 * @param type type of the column
+		 */
 		Column(String name, String type) {
 			this.name = name;
 			this.type = type;
 		}
 
+		/**
+		 * @return name of the column
+		 */
 		public String getColumnName() {
 			return name;
 		}
 
+		/**
+		 * @return true if type is number
+		 */
 		public boolean isNumber() {
 			return type.equals("number");
 		}
 
+		/**
+		 * @return the column model
+		 */
 		public String toString() {
 			return name + ":" + type;
 		}
@@ -36,6 +59,11 @@ public class TableSchema {
 
 	List<Column> tableSchema = new ArrayList<Column>();
 
+	/**
+	 * @param db connection with DB
+	 * @param tableName name of the table to schematize
+	 * @throws SQLException if DB table access fails
+	 */
 	public TableSchema(DbAccess db, String tableName) throws SQLException {
 		this.db = db;
 		this.name = tableName;
@@ -64,14 +92,24 @@ public class TableSchema {
 		res.close();
 	}
 
+	/**
+	 * @return number of attributes
+	 */
 	public int getNumberOfAttributes() {
 		return tableSchema.size();
 	}
 
+	/**
+	 * @param index index of the column to get
+	 * @return column in index position
+	 */
 	public Column getColumn(int index) {
 		return tableSchema.get(index);
 	}
 
+	/**
+	 * @return table name
+	 */
 	public String getTableName() {
 		return name;
 	}
