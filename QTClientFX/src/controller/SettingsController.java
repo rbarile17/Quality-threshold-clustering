@@ -17,7 +17,7 @@ import utility.ExceptionAlert;
  * @author Roberto Barile
  * @author Sergio Caputo
  */
-class SettingsController extends Controller {
+public class SettingsController extends Controller {
 	@FXML
 	private Button apply;
 	@FXML

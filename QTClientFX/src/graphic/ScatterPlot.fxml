@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="pane" prefHeight="840.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScatterPlotController">
    <children>
-      <ScatterChart fx:id="chart" layoutX="10.0" layoutY="23.0" prefHeight="809.0" prefWidth="580.0" title="Clustering Chart" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+      <ScatterChart fx:id="chart" layoutX="10.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="580.0" title="Clustering Chart" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
         <xAxis>
           <CategoryAxis disable="true" side="BOTTOM" tickLabelsVisible="false" tickLength="0.0" />
         </xAxis>

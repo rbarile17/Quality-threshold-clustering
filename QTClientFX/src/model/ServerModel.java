@@ -37,7 +37,7 @@ import utility.ExceptionAlert;
  */
 public class ServerModel {
 
-	public Socket server;
+	private Socket server;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private static final String OK = "OK";

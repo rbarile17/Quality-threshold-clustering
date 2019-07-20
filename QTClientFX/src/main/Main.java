@@ -1,5 +1,6 @@
 package main;
 
+
 import java.io.IOException;
 import controller.MainController;
 import javafx.application.Application;
@@ -7,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import utility.ExceptionAlert;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 /**
@@ -37,6 +39,7 @@ public class Main extends Application {
 				controller.disconnect(true);
 			});
 			primaryStage.setTitle("QT Clustering");
+			primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("icon.png")));
 			primaryStage.show();
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);

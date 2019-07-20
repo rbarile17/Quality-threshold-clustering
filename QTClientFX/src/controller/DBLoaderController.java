@@ -115,7 +115,7 @@ public class DBLoaderController extends Controller {
 			if (tuples == null) {
 				tuples = serverModel.getData();
 			}
-			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml", true))
+			((ClustersTuplesController) newWindow(new Stage(), "../graphic/ClustersTuples.fxml", true,"QT Clustering - Tuples table"))
 					.initialize(names, tuples);
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert("Connecton lost", "The connection to the server has been lost", AlertType.ERROR);
@@ -152,6 +152,8 @@ public class DBLoaderController extends Controller {
 		Stage stage = ((Stage) (home.getScene().getWindow()));
 		serverModel.goBack();
 		stage.setScene(homeScene);
+		stage.setResizable(false);
+		stage.sizeToScene();
 		stage.show();
 	}
 
@@ -165,7 +167,7 @@ public class DBLoaderController extends Controller {
 			if (distances == null) {
 				distances = serverModel.getDistances();
 			}
-			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml", true)).initialize(distances);
+			((ScatterPlotController) newWindow(new Stage(), "../graphic/ScatterPlot.fxml", true,"QT Clustering - Tuples chart")).initialize(distances);
 		} catch (IOException | NullPointerException e) {
 			e.printStackTrace();
 			new ExceptionAlert(e);

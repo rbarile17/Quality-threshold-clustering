@@ -77,9 +77,10 @@ public class MainController extends Controller {
 	 */
 	public void connectClick() {
 		try {
-			((SettingsController) newWindow(new Stage(), "../graphic/Settings.fxml")).initialize(this);
+			((SettingsController) newWindow(new Stage(), "../graphic/Settings.fxml",false,"QT Clustering - Connection settings")).initialize(this);
 		} catch (IOException | NullPointerException e) {
 			new ExceptionAlert(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -98,7 +99,7 @@ public class MainController extends Controller {
 					Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 					Scene mainScene = mainStage.getScene();
 					try {
-						controller = ((DBLoaderController) newWindow(mainStage, "../graphic/DBLoader.fxml"));
+						controller = ((DBLoaderController) newWindow(mainStage, "../graphic/DBLoader.fxml",true));
 					} catch (IOException ex) {
 						new ExceptionAlert(ex);
 						return;
@@ -127,7 +128,7 @@ public class MainController extends Controller {
 				Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Scene mainScene = mainStage.getScene();
 				try {
-					fileLoaderController = ((FileLoaderController) newWindow(mainStage, "../graphic/FileLoader.fxml"));
+					fileLoaderController = ((FileLoaderController) newWindow(mainStage, "../graphic/FileLoader.fxml",true));
 				} catch (IOException ex) {
 					new ExceptionAlert(ex);
 					return;
