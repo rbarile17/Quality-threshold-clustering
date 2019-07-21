@@ -58,7 +58,7 @@ public class SettingsController extends Controller {
 			if (main.connect(ipS, portI))
 				((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 		} catch (IOException e) {
-			new ExceptionAlert(e);
+			new ExceptionAlert("Connection failed",e.getMessage(),AlertType.ERROR);
 		}
 	}
 
