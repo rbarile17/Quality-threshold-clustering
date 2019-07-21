@@ -94,10 +94,10 @@ public class DBLoaderController extends Controller {
 			
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 
-			//TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Avg distance");
-			//col.setCellValueFactory(data -> data.getValue().get(0));
-			//table.getColumns().add(col);
-			int i = 0;
+			TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Avg distance");
+			col.setCellValueFactory(data -> data.getValue().get(0));
+			table.getColumns().add(col);
+			int i = 1;
 			for (String s : names) {
 				final int j = i;
 				TableColumn<List<StringProperty>, String> c = new TableColumn<List<StringProperty>, String>(s);
@@ -106,11 +106,11 @@ public class DBLoaderController extends Controller {
 				i++;
 			}
 
-			int j=0;
+			Iterator<Double> it = avgDistances.iterator();
 			for (LinkedList<String> l : centroids) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
-				//oList.add(0, new SimpleStringProperty(String.valueOf(avgDistances.get(j))));
-				i = 0;
+				oList.add(0, new SimpleStringProperty(String.valueOf(it.next())));
+				i = 1;
 				for (String s : l) {
 					oList.add(i, new SimpleStringProperty(s));
 					i++;
