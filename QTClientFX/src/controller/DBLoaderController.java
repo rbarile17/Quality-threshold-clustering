@@ -89,9 +89,7 @@ public class DBLoaderController extends Controller {
 			names = serverModel.getAttributesNames();
 			centroids = serverModel.getCentroids();
 			avgDistances = serverModel.getAvgDistances();
-			
-			System.out.println(centroids.size());
-			
+
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 
 			TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Avg distance");
