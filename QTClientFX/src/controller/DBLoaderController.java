@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,12 +61,13 @@ public class DBLoaderController extends Controller {
 	private LinkedList<LinkedList<String>> centroids;
 	private LinkedList<String> names;
 	private LinkedList<List<Double>> distances;
+	private LinkedList<Double> avgDistances;
 
 	/**
-	 * initialize the window taking the centroids from the ServerModel class
+	 * initialize the class attribute and calls the method that fill the table
 	 * 
 	 * @param serverModel The serverModel class used to get the centroids
-	 * @param homeScene   The scene to set when the home image is cliked
+	 * @param homeScene   The scene to set when the home image is clicked
 	 * @param connection  The BooleanProperty binded with the MainController, which
 	 *                    can interrupt the connection
 	 */
@@ -73,15 +75,28 @@ public class DBLoaderController extends Controller {
 		this.serverModel = serverModel;
 		this.homeScene = homeScene;
 		this.connection = connection;
-
+		
+		this.fillTable();
+	}
+	
+	/**
+	 * Fill the table with the data received from the server
+	 */
+	private void fillTable() {
 		try {
 			int centroidsNumber = serverModel.getCentroidsNumber();
 			centroidsLabel.setText(centroidsNumber + " " + centroidsLabel.getText());
 			names = serverModel.getAttributesNames();
 			centroids = serverModel.getCentroids();
-
+			avgDistances = serverModel.getAvgDistances();
+			
+			System.out.println(centroids.size());
+			
 			ObservableList<List<StringProperty>> list = FXCollections.observableArrayList();
 
+			//TableColumn<List<StringProperty>, String> col = new TableColumn<List<StringProperty>, String>("Avg distance");
+			//col.setCellValueFactory(data -> data.getValue().get(0));
+			//table.getColumns().add(col);
 			int i = 0;
 			for (String s : names) {
 				final int j = i;
@@ -91,12 +106,14 @@ public class DBLoaderController extends Controller {
 				i++;
 			}
 
+			int j=0;
 			for (LinkedList<String> l : centroids) {
 				List<StringProperty> oList = new LinkedList<StringProperty>();
-				int j = 0;
+				//oList.add(0, new SimpleStringProperty(String.valueOf(avgDistances.get(j))));
+				i = 0;
 				for (String s : l) {
-					oList.add(j, new SimpleStringProperty(s));
-					j++;
+					oList.add(i, new SimpleStringProperty(s));
+					i++;
 				}
 				list.add(oList);
 			}
@@ -106,7 +123,7 @@ public class DBLoaderController extends Controller {
 			new ExceptionAlert("Connecton lost", "The connection to the server has been lost", AlertType.ERROR);
 		}
 	}
-
+	
 	/**
 	 * Open a new window that shows the whole tuples
 	 */

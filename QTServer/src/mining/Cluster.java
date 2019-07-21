@@ -102,21 +102,29 @@ public class Cluster implements Iterable<Integer>, Comparable<Cluster>, Serializ
 	 * @return centroid and examples
 	 */
 	public String toString(Data data) {
-		String str = "Centroid=(";
-		int value;
-		for (int i = 0; i < centroid.getLength(); i++)
+		String str = "Centroid=( ";
+		for(int i=0; i<centroid.getLength(); i++)
 			str += centroid.get(i) + " ";
 		str += ")\nExamples:\n";
-		Iterator<Integer> it = clusteredData.iterator();
-		while (it.hasNext()) {
-			str += "[";
-			value = it.next();
-			for (int j = 0; j < data.getNumberOfAttributes(); j++)
-				str += data.getAttributeValue(value, j) + " ";
-			str += "] dist=" + getCentroid().getDistance(data.getItemSet(value)) + "\n";
 
+		for(int i : this){
+			str += "[";
+			for(int j=0; j<data.getNumberOfAttributes(); j++)
+				str += data.getAttributeValue(i, j)+" ";
+			str += "] dist=" + getCentroid().getDistance(data.getItemSet(i)) + "\n";
 		}
-		str += "\nAvgDistance=" + getCentroid().avgDistance(data, this.clusteredData);
+		str+="\nAvgDistance="+getCentroid().avgDistance(data, clusteredData);
+		
 		return str;
+	}
+	
+	/**
+	 * Returns the avg distance of the cluster tuples to the cluster centroidd
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public double getAvgDistance(Data data) {
+		return this.getCentroid().avgDistance(data, clusteredData);
 	}
 }

@@ -3,9 +3,6 @@ package controller;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
-
-import com.sun.glass.ui.Screen;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -18,8 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import utility.ScreenFractions;
+
 
 /**
  * The controller class of the window that shows the whole tuples of the

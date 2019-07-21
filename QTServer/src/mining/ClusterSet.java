@@ -72,6 +72,21 @@ public class ClusterSet implements Iterable<Cluster>, Serializable {
 	}
 	
 	/**
+	 * Returns the list of the avg distances, each element is a cluster avg distance
+	 * @param data clustered data
+	 * @return
+	 */
+	public List<Double> avgDistanceList(Data data) {
+		List<Double> distances = new LinkedList<Double>();
+		
+		for(Cluster c : this.C) {
+			distances.add(c.getAvgDistance(data));
+		}
+		
+		return distances;
+	}
+	
+	/**
 	 * @return iterator for cluster
 	 */
 	public Iterator<Cluster> iterator() {

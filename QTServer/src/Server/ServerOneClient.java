@@ -170,6 +170,7 @@ public class ServerOneClient extends Thread {
 			List<String> names = data.getAttributesNames();
 			out.writeObject(names);
 			out.writeObject(kmeans.getC().toList());
+			out.writeObject(kmeans.getC().avgDistanceList(data));
 		} catch (IOException | ClassNotFoundException | EmptyDatasetException e) {
 			e.printStackTrace();
 		}

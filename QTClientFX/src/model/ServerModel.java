@@ -8,11 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
-
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert.AlertType;
 import utility.ExceptionAlert;
 
@@ -113,6 +108,17 @@ public class ServerModel {
 		}
 		out.writeObject(radius);
 		return true;
+	}
+	
+	public LinkedList<Double> getAvgDistances() throws IOException{
+		LinkedList<Double> avgDistances = null;
+		try {
+			avgDistances = (LinkedList<Double>) in.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return avgDistances;
 	}
 
 	/**
@@ -216,6 +222,14 @@ public class ServerModel {
 		return server != null;
 	}
 
+	/**
+	 * Send to the server the file name where to write clustering result 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	
 	public String saveFile(String file) throws IOException, ClassNotFoundException {
 		out.writeObject(SAVE_FILE);
 		out.writeObject(file);

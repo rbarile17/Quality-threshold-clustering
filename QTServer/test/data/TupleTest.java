@@ -7,6 +7,9 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import mining.ClusterSet;
+import mining.QTMiner;
+
 class TupleTest {
 	
 	private static Tuple t;
@@ -44,11 +47,13 @@ class TupleTest {
 		t2.add(new DiscreteItem(d,"b"), 1);
 		t2.add(new DiscreteItem(d,"a"), 2);
 		t2.add(new DiscreteItem(d,"b"), 3);
-		assertEquals(2,t.getDistance(t));
+		assertEquals(2, t.getDistance(t2));
 	}
 
 	@Test
 	void testAvgDistance() {
+		data = new Data("test");
+		
 		fail("Not yet implemented");
 	}
 
